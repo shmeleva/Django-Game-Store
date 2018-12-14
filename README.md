@@ -106,14 +106,3 @@ We communicate using Telegram and we meet a couple of times a week to see how th
 * GameCategory
   * gameId
   * categoryId
-
-
-### 5. Testing
-
-Every module is dropped from 3rd floor and the remaining parts
-go into the envelope.
-
-
-### 6. Risk Analysis
-
-If joker shall awaken he will insert kryptonite in our porridge.
