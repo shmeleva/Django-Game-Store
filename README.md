@@ -60,7 +60,9 @@ The goal is to develop an online game store where *(1)* developers can publish a
 
 ### 4. Process and Time Schedule
 
-We will mostly communicate using [Telegram](https://telegram.org/) and, additionally, we will meet in person at least once week. We will also use [Trello](https://trello.com) for project management.
+We will mostly communicate using [Telegram](https://telegram.org/) and, additionally, we will meet in person for a discussion at least once week or more often, if required.
+
+We will first start working on mandatory features. At each stage, we will divide tasks among team members, so that everyone knows what they should work on next. [Trello](https://trello.com) will be used to create, define, assign, and track tasks.
 
 * Week 1: Set up a database and build a simple layout.
 * Week 2: Implement authentication.
