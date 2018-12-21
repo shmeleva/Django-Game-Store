@@ -56,7 +56,7 @@ The goal is to develop an online game store where *(1)* developers can publish a
 * We will build our application using [Bootstrap](https://getbootstrap.com/docs/3.3/) to support a variety of devices, including smartphones, tablets, and desktops.
 
 **Facebook Comments**
-* Using a 'Comments Plugin' feature provided by Facebook
+* We will use the [Facebook Comments Plugin](https://developers.facebook.com/docs/plugins/comments/) to let players comment on games.
 
 ### 4. Process and Time Schedule
 
