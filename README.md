@@ -107,8 +107,8 @@ We used [Marvel](https://marvelapp.com) to build a simple clickable prototype; i
 
 The thumbnail pictures are taken from [MINICLIP](https://www.miniclip.com/games/en/) and are only used for educational purposes.
 
-![alt text](Screenshot1.jpg)
+![alt text](screenshots/Screenshot1.jpg)
 
-![alt text](Screenshot2.jpg)
+![alt text](screenshots/Screenshot2.jpg)
 
-![alt text](Screenshot3.jpg)
+![alt text](screenshots/Screenshot3.jpg)
