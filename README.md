@@ -1,8 +1,5 @@
 # wsd2018-project
 
-Ten Points Project Plan
------------------------
-
 ### 1. Team
 
 * 728010 Sataponn Phutrakul
@@ -12,30 +9,35 @@ Ten Points Project Plan
 
 ### 2. Goal
 
-The goal is to develop a web application which allows developers to sell their games and allows players to buy them using online payment. Moreover, players are able to check the leaderboard for each game.
-
+The goal is to develop an online game store where *(1)* developers can publish and sell games and view statistics for games and *(2)* players can search for games, purchase games via an online payment system, launch and play games, leave public comments for developers and other players, and view leaderboards for individual games.
 
 ### 3. Plans
 
-#### 3.1 Features
+#### 3.1 Basic Features
 
 **Authentication**
-* Use Django auth
-* Email validation using Django's Console Backend
+* User registration and logging in and out will be implemented using the *Django authentication system*;
+* User registration with email verification will be implemented by configuring our Django web application to use the *console backend* for sending emails.
 
-**Basic Player Functionalities**
-* Buy games
-* Play games
-* Security restrictions
-* Search games
+**Player Functionalities**
+* Search games and filter games by genre, price, and ownership;
+* Purchase games via an online payment system;
+* Launch and play games;
+* View leaderboards for individual games;
+* Leave public Facebook comments and share games on social media (*see 3.2*).
 
-**Basic Developer Functionalities**
-* Manage list of games
-* Sales statistics
-* Security
+**Developer Functionalities**
+* Publish and manage games, including setting and making changes to its URL, description, and price;
+* View sales statistics.
 
 **Game Interactions**
-* Save high scores
+* Recording player high-scores.
+
+**Security**
+* Players should only be able to play games they have purchased;
+* Developers should only be able to modify and access statistics of their own games and should not be able to publish games for other developers;
+* Developers should not be able to play games, players should not be able to publish games;
+* Etc.
 
 #### 3.2 Extra Features
 
