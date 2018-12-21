@@ -103,9 +103,9 @@ First of all, we will [extend](https://docs.djangoproject.com/en/dev/topics/auth
 
 ### 6. Layout Sketch
 
-A very simple clickable prototype can be found at https://marvelapp.com/405c5bh
+We used [Marvel](https://marvelapp.com) to build a simple clickable prototype; it can be found [HERE](https://marvelapp.com/405c5bh) 👈
 
-The games' thumbnail pictures are from https://www.miniclip.com/games/en/ and are only used for educational purposes.
+The thumbnail pictures are taken from [MINICLIP](https://www.miniclip.com/games/en/) and are only used for educational purposes.
 
 ![alt text](Screenshot1.jpg)
 
