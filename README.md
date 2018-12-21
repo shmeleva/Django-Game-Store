@@ -2,9 +2,9 @@
 
 ### 1. Team
 
-* 728010 Sataponn Phutrakul
-* 721130 Ekaterina Shmeleva
-* 528621 Felipe Gonzalez Carceller
+* `728010` Sataponn Phutrakul
+* `721130` Ekaterina Shmeleva
+* `528621` Felipe Gonzalez Carceller
 
 
 ### 2. Goal
@@ -71,46 +71,35 @@ We will first start working on mandatory features. At each stage, we will divide
 * Week 6: Social media sharing and Facebook comments.
 
 ### 5. Models
-* User
-  * id
-  * role
-  * other parameters from Django
 
+First of all, we will [extend](https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model) the existing `User` model using a one-to-one link:
 
-* Games
-  * id
-  * name
-  * URL
-  * description
-  * imageURL
-  * developerId
-  * price
-  * UserGame
+`UserProfile`
+* `role`
+* `user = models.OneToOneField(User, on_delete=models.CASCADE)`
 
+`Game`
+* `title`
+* `image`
+* `description`
+* `price`
+* `url`
+* `developer = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
+* `categories = models.ManyToManyField(Category, on_delete=models.CASCADE)`
 
-* UserGame
-  * id
-  * userId
-  * gameId
-  * createdAt
+`Purchase`
+* `user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
+* `game = models.ForeignKey(Game, on_delete=models.CASCADE)`
+* `timestamp`
 
+`Result`
+* `user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
+* `game = models.ForeignKey(Game, on_delete=models.CASCADE)`
+* `score`
+* `timestamp`
 
-* Result
-  * id
-  * userId
-  * gameId
-  * score
-  * createdId
-
-
-* Category
-  * id
-  * name
-
-
-* GameCategory
-  * gameId
-  * categoryId
+`Category`
+* `title`
 
 ### 6. Layout Sketch
 
