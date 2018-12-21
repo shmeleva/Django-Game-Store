@@ -16,8 +16,8 @@ The goal is to develop an online game store where *(1)* developers can publish a
 #### 3.1 Basic Features
 
 **Authentication**
-* User registration and logging in and out will be implemented using the *Django authentication system*;
-* User registration with email verification will be implemented by configuring our Django web application to use the *console backend* for sending emails.
+* User registration and logging in and out will be implemented using the [Django authentication system](https://docs.djangoproject.com/en/2.1/topics/auth/);
+* User registration with email verification will be implemented by configuring our Django web application to use the [console backend](https://docs.djangoproject.com/en/2.1/topics/email/#console-backend) for sending emails.
 
 **Player Functionalities**
 * Search games and filter games by genre, price, and ownership;
@@ -35,24 +35,25 @@ The goal is to develop an online game store where *(1)* developers can publish a
 
 **Security**
 * Players should only be able to play games they have purchased;
-* Developers should only be able to modify and access statistics of their own games and should not be able to publish games for other developers;
+* Developers should only be able to modify and access statistics of their own games and should not be able to impersonate other developers;
 * Developers should not be able to play games, players should not be able to publish games;
 * Etc.
 
 #### 3.2 Extra Features
 
-**3rd Party Login**
-* Using Facebook
+**Social Login**
+* We will implement Facebook Login to provide an alternative to the standard email registration using either [`django-allauth`](https://github.com/pennersr/django-allauth) or [`django-facebook`](https://github.com/tschellenbach/Django-facebook) library.
 
 **RESTful API**
-* For searching games
-* High scores
+* We will implement an API for retrieving publicly available information:
+  * A `GET` method for searching games with pagination;
+  * A `GET` method for retrieving high scores for individual games.
 
 **Social Media Sharing**
-* Share high scores on Facebook and Twitter with a picture and a link to the service's webpage
+* We will add [Facebook](https://developers.facebook.com/docs/plugins/share-button/) and [Twitter](https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview.html) share buttons so that users can share a game (including its image, description, and URL) and their high scores.
 
 **Mobile Friendly**
-* Support use across many devices using bootstrap
+* We will build our application using [Bootstrap](https://getbootstrap.com/docs/3.3/) to support a variety of devices, including smartphones, tablets, and desktops.
 
 **Facebook Comments**
 * Using a 'Comments Plugin' feature provided by Facebook
