@@ -106,3 +106,13 @@ We communicate using Telegram and we meet a couple of times a week to see how th
 * GameCategory
   * gameId
   * categoryId
+
+### 6. Layout Sketch
+
+A very simple clickable prototype can be found in https://marvelapp.com/405c5bh
+
+![alt text](Screenshot1.jpg)
+
+![alt text](Screenshot2.jpg)
+
+![alt text](Screenshot3.jpg)
