@@ -109,7 +109,7 @@ We communicate using Telegram and we meet a couple of times a week to see how th
 
 ### 6. Layout Sketch
 
-A very simple clickable prototype can be found in https://marvelapp.com/405c5bh
+A very simple clickable prototype can be found at https://marvelapp.com/405c5bh
 
 ![alt text](Screenshot1.jpg)
 
