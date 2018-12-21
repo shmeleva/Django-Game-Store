@@ -31,7 +31,7 @@ The goal is to develop an online game store where *(1)* developers can publish a
 * View sales statistics.
 
 **Game Interactions**
-* Recording player high-scores.
+* Recording player high scores.
 
 **Security**
 * Players should only be able to play games they have purchased;
