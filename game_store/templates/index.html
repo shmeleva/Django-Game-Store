@@ -6,5 +6,8 @@
 
     <body>
         Hello
+        {% if user.is_authenticated %}
+            {{ user.username }}
+        {% endif %}
     </body>
 </html>

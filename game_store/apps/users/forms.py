@@ -13,7 +13,7 @@ class RegisterForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=True)
+        user = super(RegisterForm, self).save(commit=True)
         user_profile = UserProfile(user=user, role=self.cleaned_data['role'])
         user_profile.save()
-        return user, user_profile
+        return user_profile
