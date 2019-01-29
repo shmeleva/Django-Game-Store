@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, authenticate
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from game_store.apps.users.forms import RegisterForm
 
 def register(req):
@@ -22,4 +23,22 @@ def register(req):
     })
 
 def login(req):
-    return render(req, 'login.html')
+    if req.method == 'POST':
+        form = AuthenticationForm(req, req.POST)
+
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data.get('username'), password=form.cleaned_data.get('password'))
+
+            if user is not None:
+                auth_login(req, user)
+                return redirect('/')
+    else:
+        form = AuthenticationForm()
+
+    return render(req, 'login.html', {
+        'form': form,
+    })
+
+def logout(req):
+    auth_logout(req)
+    return redirect('/')
