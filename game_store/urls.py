@@ -16,9 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from game_store import views
-from game_store.apps.users.views import login
+from game_store.apps.users import views as users_views
+from game_store.apps.games import views as games_views
+from game_store.apps.purchases import views as purchases_views
 
 urlpatterns = [
-    path('', views.index),
-    path('login', login)
+    path('', games_views.games), # Unauthorized users can and players
+    # can search games, players can also see their games, developers
+    # can only search their own games and add new games.
+    path('login', users_views.login), # Only for unauthorized users.
+    path('game/<int:id>', games_views.game), # Unauthorized users can sign in,
+    # players can buy and play a game, developers can edit a game
+    path('game/<int:id>/purchase', purchases_views.purchase), # Only for players.
+    path('game/<int:id>/play', games_views.play), # Only for players.
+    path('publish', games_views.publish), # Only for developers.
+    path('stats', purchases_views.stats), # Only for developers.
 ]
