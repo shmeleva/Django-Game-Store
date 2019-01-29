@@ -8,15 +8,11 @@ def register(req):
 
         if form.is_valid():
             user = form.save()
-            print(user.user.password)
             password = form.cleaned_data.get('password1')
-            print(user.user.username, password)
             user = authenticate(username=user.user.username, password=password)
 
             if user is not None:
-                print('Logging in...')
                 auth_login(req, user)
-                print('Logged in!')
                 return redirect('/')
     else:
         form = RegisterForm()
