@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.categories',
-    'apps.users',
-    'apps.games',
-    'apps.purchases',
-    'apps.results',
+    'game_store.apps.categories',
+    'game_store.apps.users',
+    'game_store.apps.games',
+    'game_store.apps.purchases',
+    'game_store.apps.results',
 
     'game_store'
 ]

@@ -1,6 +1,6 @@
 from django.db import models
-from apps.users.models import UserProfile
-from apps.games.models import Game
+from game_store.apps.users.models import UserProfile
+from game_store.apps.games.models import Game
 
 class Purchase(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

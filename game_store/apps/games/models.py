@@ -1,6 +1,6 @@
 from django.db import models
-from apps.users.models import UserProfile
-from apps.categories.models import Category
+from game_store.apps.users.models import UserProfile
+from game_store.apps.categories.models import Category
 
 class Game(models.Model):
     title = models.CharField(max_length=128)
