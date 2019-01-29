@@ -4,6 +4,11 @@
     </head>
 
     <body>
-      One day games will be shown here. But not today ¯\_(ツ)_/¯
+      One day games will be shown here. But not today ¯\_(ツ)_/¯<br>
+      {% if user.is_authenticated %}
+        {{ user.username }}
+      {% else %}
+        no one
+      {% endif %}
     </body>
 </html>
