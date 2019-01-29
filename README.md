@@ -64,7 +64,7 @@ We will mostly communicate using [Telegram](https://telegram.org/) and, addition
 
 We will first start working on mandatory features. At each stage, we will divide tasks among team members, so that everyone knows what they should work on next. [Trello](https://trello.com) will be used to create, define, assign, and track tasks.
 
-* Week 1: Set up a database and build a simple layout.
+* Week 1: Set up a database and build a simple layout. DONE
 * Week 2: Implement authentication.
 * Weeks 3-4: Basic player and developer functionalities and CSS.
 * Week 5: RESTful API.
