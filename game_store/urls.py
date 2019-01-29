@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from game_store import views
+from game_store.apps.users.views import login
 
 urlpatterns = [
     path('', views.index),
+    path('login', login)
 ]
