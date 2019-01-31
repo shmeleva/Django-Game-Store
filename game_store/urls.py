@@ -21,6 +21,7 @@ from game_store.apps.games import views as games_views
 from game_store.apps.purchases import views as purchases_views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', games_views.games), # Unauthorized users can and players
     # can search games, players can also see their games, developers
     # can only search their own games and add new games.
