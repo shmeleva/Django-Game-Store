@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
     <head>
 
     </head>
@@ -12,3 +12,13 @@
       {% endif %}
     </body>
 </html>
+-->
+{% if all_games %}
+  <ul>
+    {% for game in all_games %}
+      <li><a href='game/{{ game.id }}'>{{ game.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h3>No games to display ¯\_(ツ)_/¯</h3>
+{% endif %}
