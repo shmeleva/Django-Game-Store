@@ -1,9 +1,7 @@
-<html>
-    <head>
+{% extends 'base.html' %}
 
-    </head>
+{% block title %}Play - {{ game.title }}{% endblock %}
 
-    <body>
-      One day users will play games here. But not today ¯\_(ツ)_/¯
-    </body>
-</html>
+{% block body %}
+  <span>One day users will play games here. But not today ¯\_(ツ)_/¯</span>
+{% endblock %}
