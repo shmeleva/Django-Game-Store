@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 from .models import Game
 
 def games(req):
@@ -7,10 +6,7 @@ def games(req):
     return render(req, 'games.html', { 'all_games': all_games })
 
 def game(req, id):
-    try:
-        game = Game.objects.get(pk = id)
-    except Game.DoesNotExist:
-        raise Http404('Game does not exist')
+    game = get_object_or_404(Game, pk=id)
     return render(req, 'game.html', { 'game': game })
 
 def play(req, id):
