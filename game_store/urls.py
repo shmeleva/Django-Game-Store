@@ -23,7 +23,7 @@ from game_store.apps.purchases import views as purchases_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', games_views.games, name='default_view'), # Unauthorized users can and players
+    path('', games_views.games, name='default_view'), # Unauthorized users and players
     # can search games, players can also see their games, developers
     # can only search their own games and add new games.
     path('login/', users_views.login, name='login'), # Only for unauthorized users.
