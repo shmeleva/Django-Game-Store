@@ -16,7 +16,7 @@
 {% if all_games %}
   <ul>
     {% for game in all_games %}
-      <li><a href='game/{{ game.id }}'>{{ game.title }}</a></li>
+      <li><a href='{% url 'game_page' game.id %}'>{{ game.title }}</a></li>
     {% endfor %}
   </ul>
 {% else %}

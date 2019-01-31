@@ -28,7 +28,7 @@ urlpatterns = [
     path('login/', users_views.login, name='login'), # Only for unauthorized users.
     path('logout/', users_views.logout, name='logout'),
     path('register/', users_views.register, name='register'),
-    path('game/<int:id>', games_views.game), # Unauthorized users can sign in,
+    path('game/<int:id>', games_views.game, name='game_page'), # Unauthorized users can sign in,
     # players can buy and play a game, developers can edit a game
     path('game/<int:id>/purchase', purchases_views.purchase), # Only for players.
     path('game/<int:id>/play', games_views.play), # Only for players.
