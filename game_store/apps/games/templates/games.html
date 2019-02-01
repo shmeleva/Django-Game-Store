@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  {% if all_games %}
+  {% if games %}
     <ul>
-      {% for game in all_games %}
+      {% for game in games %}
         <li><a href='{% url 'game_page' game.id %}'>{{ game.title }}</a></li>
       {% endfor %}
     </ul>
