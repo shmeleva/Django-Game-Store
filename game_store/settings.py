@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+
     'game_store.apps.categories',
     'game_store.apps.users',
     'game_store.apps.games',
@@ -47,6 +49,8 @@ INSTALLED_APPS = [
 
     'game_store'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
