@@ -6,7 +6,7 @@ from decimal import *
 
 class Game(models.Model):
     title = models.CharField(max_length=128)
-    image = models.ImageField(upload_to='images/games')
+    image = models.ImageField(upload_to='images/')
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
     url = models.URLField(max_length=128)

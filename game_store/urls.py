@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from game_store import views
 from game_store.apps.users import views as users_views
 from game_store.apps.games import views as games_views
@@ -37,4 +39,4 @@ urlpatterns = [
     path('game/<int:id>/play', games_views.play), # Only for players.
     path('publish', games_views.publish, name='publish'), # Only for developers.
     path('stats', purchases_views.stats), # Only for developers.
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
