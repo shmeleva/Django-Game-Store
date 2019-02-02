@@ -37,15 +37,18 @@ def publish(req):
     if int(user_profile.role) != UserRole.Developer.value:
         return redirect('/')
 
-    if req.method == 'POST':
-        form = PublishForm(req, req.POST)
+    logger.error(req.FILES)
 
-#        if form.is_valid():
-#            user = authenticate(username=form.cleaned_data.get('username'), password=form.cleaned_data.get('password'))
-#
-#            if user is not None:
-#                auth_login(req, user)
-#                return redirect('/')
+    if req.method == 'POST':
+        form = PublishForm(req.POST, req.FILES)
+        form.instance.developer = user_profile
+
+        if form.is_valid():
+            game = form.save()
+            return redirect('/')
+        else:
+            logger.error("invalid form")
+
     else:
         form = PublishForm()
 

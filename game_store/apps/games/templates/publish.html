@@ -6,12 +6,12 @@
 
 {% block body %}
 <div class="card mx-auto floating">
-    <div class="card-body px-lg-5">
-      <form method="POST" action="/publish">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-block btn-block bg-primary">PUBLISH</button>
-      </form>
-    </div>
+  <div class="card-body px-lg-5">
+    <form method="POST" action="/publish" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-block btn-block bg-primary">PUBLISH</button>
+    </form>
   </div>
+</div>
 {% endblock %}
