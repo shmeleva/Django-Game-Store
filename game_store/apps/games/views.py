@@ -28,16 +28,13 @@ def play(req, id):
     return render(req, 'play.html')
 
 def publish(req):
-    # Check if the user is authenticated as a developer.
     logger.error("Publishing...")
     if not req.user.is_authenticated:
         return redirect('/')
 
     user_profile = get_object_or_404(UserProfile, user=req.user)
-    if int(user_profile.role) != UserRole.Developer.value:
+    if not user_profile.is_developer:
         return redirect('/')
-
-    logger.error(req.FILES)
 
     if req.method == 'POST':
         form = PublishForm(req.POST, req.FILES)
@@ -47,7 +44,7 @@ def publish(req):
             game = form.save()
             return redirect('/')
         else:
-            logger.error("invalid form")
+            logger.error("Invalid form!")
 
     else:
         form = PublishForm()

@@ -17,3 +17,11 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username + " - " + self.role
+
+    @property
+    def is_player(self):
+        return int(self.role) == UserRole.Player.value
+
+    @property
+    def is_developer(self):
+        return int(self.role) == UserRole.Developer.value
