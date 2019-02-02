@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Publish{% endblock %}
 
 {% block body %}
-<!--  <html>
-      <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      </head>
--->
-  One day developers will publish games here. But not today ¯\_(ツ)_/¯
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Publish</button>
+<div class="card mx-auto floating">
+    <div class="card-body px-lg-5">
+      <form method="POST" action="/publish">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-block btn-block bg-primary">PUBLISH</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}

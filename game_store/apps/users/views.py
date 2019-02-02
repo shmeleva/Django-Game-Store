@@ -4,6 +4,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from game_store.apps.users.forms import RegisterForm
 
 def register(req):
+    if req.user.is_authenticated:
+        return redirect('/')
+
     if req.method == 'POST':
         form = RegisterForm(req.POST)
 
@@ -23,6 +26,9 @@ def register(req):
     })
 
 def login(req):
+    if req.user.is_authenticated:
+        return redirect('/')
+
     if req.method == 'POST':
         form = AuthenticationForm(req, req.POST)
 
