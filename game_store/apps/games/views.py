@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+import logging
+logger = logging.getLogger(__name__)
 from .models import Game
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
+from game_store.apps.users.models import UserRole
 from game_store.apps.games.forms import PublishForm
 
 def all_games(req):
@@ -25,7 +28,14 @@ def play(req, id):
     return render(req, 'play.html')
 
 def publish(req):
-    #TODO: Check is_authenticated and is_developer
+    # Check if the user is authenticated as a developer.
+    logger.error("Publishing...")
+    if not req.user.is_authenticated:
+        return redirect('/')
+
+    user_profile = get_object_or_404(UserProfile, user=req.user)
+    if int(user_profile.role) != UserRole.Developer.value:
+        return redirect('/')
 
     if req.method == 'POST':
         form = PublishForm(req, req.POST)
