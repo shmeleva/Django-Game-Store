@@ -1,9 +1,13 @@
-<html>
-    <head>
+{% extends 'base.html' %}
 
-    </head>
-
-    <body>
-      One day games will be shown here. But not today ¯\_(ツ)_/¯
-    </body>
-</html>
+{% block body %}
+  {% if games %}
+    <ul>
+      {% for game in games %}
+        <li><a href='{% url 'game_page' game.id %}'>{{ game.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h3>No games to display ¯\_(ツ)_/¯</h3>
+  {% endif %}
+{% endblock %}

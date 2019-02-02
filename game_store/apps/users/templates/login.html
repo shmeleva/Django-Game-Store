@@ -1,9 +1,11 @@
-<html>
-    <head>
+{% extends 'base.html' %}
 
-    </head>
+{% block title %}Login{% endblock %}
 
-    <body>
-      One day users will be able to sign up and sign in. But not today ¯\_(ツ)_/¯
-    </body>
-</html>
+{% block body %}
+  <form method="POST" action="/login/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Log In</button>
+  </form>
+{% endblock %}

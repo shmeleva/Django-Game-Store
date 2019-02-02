@@ -1,9 +1,15 @@
-<html>
-    <head>
+{% extends 'base.html' %}
 
-    </head>
+{% block title %}{{game.title}}{% endblock %}
 
-    <body>
-      One day a game will be shown here. But not today ¯\_(ツ)_/¯
-    </body>
-</html>
+{% block body %}
+  <h2>{{ game.title }}</h2>
+
+  <img src='{{ game.image }}'>
+
+  <h3>{{ game.price }}€</h3>
+
+  <h4>{{ game.description }}</h4>
+
+  <h5>a game by {{ game.developer.user }}</h5>
+{% endblock %}
