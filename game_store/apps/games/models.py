@@ -4,7 +4,7 @@ from game_store.apps.categories.models import Category
 
 class Game(models.Model):
     title = models.CharField(max_length=128)
-    image = models.ImageField(upload_to='games')
+    image = models.ImageField(upload_to='images/games')
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
     url = models.URLField(max_length=128)
