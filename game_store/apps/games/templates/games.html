@@ -14,19 +14,19 @@
             {% endfor %}
             <br>
             {% if user_profile is not None and user_profile.is_developer %}
-              <div class="btn-group" role="group" aria-label="Open">
+              <div class="btn-group" role="group" aria-label="More">
                 <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Download stats. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">OPEN</a>
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">More</a>
               </div>
             {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
-              <div class="btn-group" role="group" aria-label="Open">
+              <div class="btn-group" role="group" aria-label="Play">
                 <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Best score. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">PLAY</a>
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
               </div>
             {% else %}
-              <div class="btn-group" role="group" aria-label="Open">
+              <div class="btn-group" role="group" aria-label="Buy">
                 <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">BUY</a>
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
               </div>
             {% endif %}
           </div>
