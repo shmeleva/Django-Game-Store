@@ -1,5 +1,5 @@
 body {
-    background: #ffffff;
+  background: linear-gradient(to left top, #BA2C73, #1c1f4c) fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,6 +18,10 @@ a {
 
 .bg-primary {
   background: #1c1f4c !important;
+}
+
+.bg-primary.navbar {
+  background: transparent !important;
 }
 
 .btn {
