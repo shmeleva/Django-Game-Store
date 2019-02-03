@@ -21,16 +21,28 @@ body {
 
 /* https://getflywheel.com/layout/flexbox-create-modern-card-design-layout/ */
 
+.game-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+.game-preview {
+    flex: 1 0 500px;
+    box-sizing: border-box;
+    margin: 1rem .25em;
+}
+
 @media screen and (min-width: 991.98px) {
-    .game-preview-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
     .game-preview {
-        flex: 0 1 calc(25% - 1em);
+       max-width: calc(25% -  1em);
     }
 }
+
+
+
+
+
+
 .game-preview > .card-img-top {
 
 }
