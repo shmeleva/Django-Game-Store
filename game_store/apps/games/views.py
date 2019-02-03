@@ -7,12 +7,16 @@ from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
 from game_store.apps.categories.models import Category
 from game_store.apps.games.forms import PublishForm
+from game_store.apps.games.forms import SearchForm
 
 def all_games(req):
+    #if req.method == 'POST':
+    #else:
     games = Game.objects.all()
     return render(req, 'games.html', {
         'games': games,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
+        'search_form': SearchForm()
     })
 
 # TODO: clean this code
@@ -38,8 +42,6 @@ def play(req, id):
     return render(req, 'play.html')
 
 def publish(req):
-    logger.error("Publishing...")
-
     user_profile = UserProfile.get_user_profile_or_none(req.user)
     if user_profile is None or not user_profile.is_developer:
         return redirect('/')

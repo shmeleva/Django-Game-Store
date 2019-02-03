@@ -1,10 +1,14 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import Form
 from game_store.apps.games.models import Game
 from game_store.apps.categories.models import Category
 
 class PublishForm(ModelForm):
-    categories = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
+    categories = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        queryset=Category.objects.all()
+    )
 
     class Meta:
         model = Game
@@ -13,3 +17,21 @@ class PublishForm(ModelForm):
     def save(self, commit=True):
         game = super(PublishForm, self).save(commit=True)
         return game
+
+class SearchForm(Form):
+    query = forms.CharField(
+        label="",
+        max_length=128
+    )
+    is_purchased = forms.MultipleChoiceField( #forms.BooleanField(required=False)
+        label="",
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=(('is_purchased', 'My Games')),
+    )
+    categories = forms.ModelMultipleChoiceField(
+        label="",
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        queryset=Category.objects.all()
+    )

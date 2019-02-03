@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block body %}
+  <form method="POST" action="/games">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-block btn-block bg-primary">Search</button>
+  </form>
   {% if games %}
     <div class="game-preview-list">
       {% for game in games %}
