@@ -25,3 +25,10 @@ class UserProfile(models.Model):
     @property
     def is_developer(self):
         return int(self.role) == UserRole.Developer.value
+
+    @staticmethod
+    def get_user_profile_or_none(user):
+        try:
+            return UserProfile.objects.get(user=user)
+        except UserProfile.DoesNotExist:
+            return None

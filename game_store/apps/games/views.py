@@ -33,8 +33,8 @@ def publish(req):
     if not req.user.is_authenticated:
         return redirect('/')
 
-    user_profile = get_object_or_404(UserProfile, user=req.user)
-    if not user_profile.is_developer:
+    user_profile = UserProfile.get_user_profile_or_none(req.user)
+    if user_profile is None or not user_profile.is_developer:
         return redirect('/')
 
     if req.method == 'POST':
