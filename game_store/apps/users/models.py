@@ -28,6 +28,8 @@ class UserProfile(models.Model):
 
     @staticmethod
     def get_user_profile_or_none(user):
+        if not user.is_authenticated:
+            return None
         try:
             return UserProfile.objects.get(user=user)
         except UserProfile.DoesNotExist:

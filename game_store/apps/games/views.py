@@ -10,7 +10,10 @@ from game_store.apps.games.forms import PublishForm
 
 def all_games(req):
     games = Game.objects.all()
-    return render(req, 'games.html', { 'games': games })
+    return render(req, 'games.html', {
+        'games': games,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
+    })
 
 # TODO: clean this code
 def owned_games(req):
@@ -19,19 +22,23 @@ def owned_games(req):
     games = set()
     for purchase in purchases:
         games.add(purchase.game)
-    return render(req, 'games.html', { 'games': games })
+    return render(req, 'games.html', {
+        'games': games,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
+    })
 
 def game(req, id):
     game = get_object_or_404(Game, pk=id)
-    return render(req, 'game.html', { 'game': game })
+    return render(req, 'game.html', {
+        'game': game,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
+    })
 
 def play(req, id):
     return render(req, 'play.html')
 
 def publish(req):
     logger.error("Publishing...")
-    if not req.user.is_authenticated:
-        return redirect('/')
 
     user_profile = UserProfile.get_user_profile_or_none(req.user)
     if user_profile is None or not user_profile.is_developer:
@@ -55,4 +62,5 @@ def publish(req):
 
     return render(req, 'publish.html', {
         'form': form,
+        'user_profile': user_profile,
     })
