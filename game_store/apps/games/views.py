@@ -16,7 +16,7 @@ def all_games(req):
     return render(req, 'games.html', {
         'games': games,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
-        'search_form': SearchForm()
+        'search_form': SearchForm(),
     })
 
 # TODO: clean this code

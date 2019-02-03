@@ -5,7 +5,7 @@
 {% block body %}
   <form method="POST" action="/games">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ search_form|crispy }}
     <button type="submit" class="btn btn-block btn-block bg-primary">Search</button>
   </form>
   {% if games %}

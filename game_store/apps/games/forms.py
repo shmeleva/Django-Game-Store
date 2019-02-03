@@ -23,11 +23,9 @@ class SearchForm(Form):
         label="",
         max_length=128
     )
-    is_purchased = forms.MultipleChoiceField( #forms.BooleanField(required=False)
-        label="",
-        required=False,
-        widget=forms.CheckboxSelectMultiple,
-        choices=(('is_purchased', 'My Games')),
+    is_purchased = forms.BooleanField(
+        label="My Games",
+        required=False
     )
     categories = forms.ModelMultipleChoiceField(
         label="",
