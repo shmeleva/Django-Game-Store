@@ -53,7 +53,7 @@ def publish(req):
             game = form.save(commit=False)
             game.save()
             #form.save_m2m()
-            return redirect('/')
+            return redirect('/game/' + str(game.id))
         else:
             logger.error("Invalid form!")
 
