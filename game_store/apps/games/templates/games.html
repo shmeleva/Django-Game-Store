@@ -2,11 +2,17 @@
 
 {% block body %}
   {% if games %}
-    <ul>
+    <div class="game-preview-list">
       {% for game in games %}
-        <li><a href='{% url 'game_page' game.id %}'>{{ game.title }}</a></li>
+      <div class="card game-preview">
+          <img class="card-img-top" src="{{ game.image.url }}" alt="game.title">
+          <div class="card-body">
+            <h5 class="card-title">{{ game.title }}</h5>
+            <a href="{% url 'game_page' game.id %}" class="btn btn-primary">GO</a> <!-- TODO: Modify. -->
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <h3>No games to display ¯\_(ツ)_/¯</h3>
   {% endif %}

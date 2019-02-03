@@ -10,9 +10,39 @@ body {
   color: white;
 }
 
-@media (min-width: 991.98px) {
+@media screen and (min-width: 991.98px) {
   .card.floating {
     max-width: 991.98px;
     display: flex;
   }
+}
+
+/* GAMES */
+
+/* https://getflywheel.com/layout/flexbox-create-modern-card-design-layout/ */
+
+@media screen and (min-width: 991.98px) {
+    .game-preview-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .game-preview {
+        flex: 0 1 calc(25% - 1em);
+    }
+}
+.game-preview > .card-img-top {
+
+}
+
+.game-preview > .card-body {
+
+}
+
+.game-preview > .card-title {
+
+}
+
+.game-preview > .btn {
+
 }
