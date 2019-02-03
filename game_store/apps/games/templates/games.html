@@ -5,8 +5,22 @@
 {% block body %}
   <form method="POST" action="/games">
     {% csrf_token %}
-    {{ search_form|crispy }}
-    <button type="submit" class="btn btn-block btn-block bg-primary">Search</button>
+    <div class="search-bar">
+      <div class="form-row">
+        <div class="form-group" style="width: 80%;">
+          {{ search_form.query|as_crispy_field }}
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn bg-primary">Search</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form-row">
+        {{ search_form.is_purchased|as_crispy_field }}
+        {{ search_form.categories|as_crispy_field }}
+      </div>
+    </div>
   </form>
   {% if games %}
     <div class="game-preview-list">

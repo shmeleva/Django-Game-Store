@@ -109,3 +109,9 @@ a {
 .game-preview > .card-body > .btn-group {
   margin-top: 1em;
 }
+
+/* SEARCH BAR */
+
+.search-bar {
+  display: flex;
+}
