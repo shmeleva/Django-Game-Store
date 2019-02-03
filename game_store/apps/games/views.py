@@ -5,6 +5,7 @@ from .models import Game
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
+from game_store.apps.categories.models import Category
 from game_store.apps.games.forms import PublishForm
 
 def all_games(req):
@@ -39,9 +40,12 @@ def publish(req):
     if req.method == 'POST':
         form = PublishForm(req.POST, req.FILES)
         form.instance.developer = user_profile
+        #form.instance.categories.all()
 
         if form.is_valid():
-            game = form.save()
+            game = form.save(commit=False)
+            game.save()
+            #form.save_m2m()
             return redirect('/')
         else:
             logger.error("Invalid form!")

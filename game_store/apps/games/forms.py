@@ -1,10 +1,10 @@
+from django import forms
 from django.forms import ModelForm
 from game_store.apps.games.models import Game
+from game_store.apps.categories.models import Category
 
 class PublishForm(ModelForm):
-#    role = forms.ChoiceField(
-#        choices=[(role.value, role.name) for role in UserRole],
-#    )
+    categories = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=Category.objects.all())
 
     class Meta:
         model = Game
