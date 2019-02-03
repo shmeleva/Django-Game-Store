@@ -4,11 +4,31 @@
   {% if games %}
     <div class="game-preview-list">
       {% for game in games %}
-      <div class="card game-preview">
-          <img class="card-img-top" src="{{ game.image.url }}" alt="game.title">
+        <div class="card game-preview">
+          <!-- TODO: Fix image aspect ratio. -->
+          <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
           <div class="card-body">
             <h5 class="card-title">{{ game.title }}</h5>
-            <a href="{% url 'game_page' game.id %}" class="btn btn-primary">GO</a> <!-- TODO: Modify. -->
+            {% for category in game.categories.all %}
+              <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
+            {% endfor %}
+            <br>
+            {% if user_profile is not None and user_profile.is_developer %}
+              <div class="btn-group" role="group" aria-label="Open">
+                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Download stats. -->
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">OPEN</a>
+              </div>
+            {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
+              <div class="btn-group" role="group" aria-label="Open">
+                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Best score. -->
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">PLAY</a>
+              </div>
+            {% else %}
+              <div class="btn-group" role="group" aria-label="Open">
+                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
+                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">BUY</a>
+              </div>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
