@@ -15,7 +15,7 @@
         {{ form.password|as_crispy_field }}
       </div>
     </div>
-    <input type="hidden" name="next" value="{{ request.path }}">
+    <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
     <button type="submit" class="btn btn-block btn-gradient">LOG IN</button>
   </form>
 {% endblock %}

@@ -19,7 +19,7 @@ def register(req):
 
             if user is not None:
                 auth_login(req, user)
-                next = form.cleaned_data.get('next', '/')
+                next = req.POST.get('next', '/')
                 return redirect(next)
     else:
         form = RegisterForm()
@@ -42,7 +42,7 @@ def login(req):
 
             if user is not None:
                 auth_login(req, user)
-                next = form.cleaned_data.get('next', '/')
+                next = req.POST.get('next', '/')
                 return redirect(next)
     else:
         form = AuthenticationForm()
