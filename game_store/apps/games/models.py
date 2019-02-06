@@ -18,5 +18,7 @@ class Game(models.Model):
 
     @staticmethod
     def search(query, is_purchased, categories):
-        #TODO: is_purchased
-        return Game.objects.filter(title__contains=query)
+        games = Game.objects.filter(title__contains=query)
+        if categories.count() != 0:
+            games = games.filter(categories__in=categories).distinct()
+        return games
