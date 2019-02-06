@@ -41,6 +41,7 @@ def search(req):
         player_games_only = form.cleaned_data.get('player_games_only')
 
         if user is not None:
+
             if user.is_player and player_games_only:
                 purchases = Purchase.objects.values('game').filter(user__exact=user)
                 games = Game.objects.filter(id__in=purchases).filter(title__contains=query)
@@ -51,8 +52,17 @@ def search(req):
                     'user_profile': UserProfile.get_user_profile_or_none(req.user),
                 })
                 return JsonResponse({'rendered': rendered})
+
             if user.is_developer:
-                pass
+                logger.error("is_developer")
+                games = Game.objects.filter(developer__exact=user).filter(title__contains=query)
+                if categories.count() != 0:
+                    games = games.filter(categories__in=categories).distinct()
+                rendered = render_to_string('game_search_results.html', {
+                    'games': games,
+                    'user_profile': UserProfile.get_user_profile_or_none(req.user),
+                })
+                return JsonResponse({'rendered': rendered})
 
         games = Game.objects.filter(title__contains=query)
         if categories.count() != 0:
