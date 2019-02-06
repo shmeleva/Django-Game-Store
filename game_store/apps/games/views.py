@@ -6,10 +6,12 @@ from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
 from game_store.apps.categories.models import Category
+from game_store.apps.results.models import Result
 from game_store.apps.games.forms import PublishForm
 from game_store.apps.games.forms import SearchForm
 
 def all_games(req):
+<<<<<<< HEAD
     if req.method == 'POST':
         #TODO: Change to search
         games = Game.objects.all()
@@ -25,6 +27,21 @@ def all_games(req):
             'user_profile': UserProfile.get_user_profile_or_none(req.user),
             'search_form': SearchForm(),
         })
+=======
+    #if req.method == 'POST':
+    #else:
+    games = Game.objects.all()
+    for game in games:
+        if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
+            game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
+        else:
+            game.score = 0
+    return render(req, 'games.html', {
+        'games': games,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
+        'search_form': SearchForm(),
+    })
+>>>>>>> 0a34c7a271ddcf86c5e84dc33079ee657ee728b5
 
 # TODO: clean this code
 def owned_games(req):
@@ -40,9 +57,14 @@ def owned_games(req):
 
 def game(req, id):
     game = get_object_or_404(Game, pk=id)
+    result = Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game)
+    score = 0
+    if result:
+        score = result.first().score
     return render(req, 'game.html', {
         'game': game,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
+        'score': score,
     })
 
 def play(req, id):
@@ -56,12 +78,9 @@ def publish(req):
     if req.method == 'POST':
         form = PublishForm(req.POST, req.FILES)
         form.instance.developer = user_profile
-        #form.instance.categories.all()
 
         if form.is_valid():
-            game = form.save(commit=False)
-            game.save()
-            #form.save_m2m()
+            game = form.save()
             return redirect('/game/' + str(game.id))
         else:
             logger.error("Invalid form!")

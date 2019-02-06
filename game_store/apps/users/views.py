@@ -4,8 +4,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from game_store.apps.users.forms import RegisterForm
 
 def register(req):
+    next = req.META.get('HTTP_REFERER', '/')
+
     if req.user.is_authenticated:
-        return redirect('/')
+        return redirect(next)
 
     if req.method == 'POST':
         form = RegisterForm(req.POST)
@@ -17,7 +19,8 @@ def register(req):
 
             if user is not None:
                 auth_login(req, user)
-                return redirect('/')
+                next = form.cleaned_data.get('next', '/')
+                return redirect(next)
     else:
         form = RegisterForm()
 
@@ -26,8 +29,10 @@ def register(req):
     })
 
 def login(req):
+    next = req.META.get('HTTP_REFERER', '/')
+
     if req.user.is_authenticated:
-        return redirect('/')
+        return redirect(next)
 
     if req.method == 'POST':
         form = AuthenticationForm(req, req.POST)
@@ -37,7 +42,8 @@ def login(req):
 
             if user is not None:
                 auth_login(req, user)
-                return redirect('/')
+                next = form.cleaned_data.get('next', '/')
+                return redirect(next)
     else:
         form = AuthenticationForm()
 
@@ -46,5 +52,6 @@ def login(req):
     })
 
 def logout(req):
+    next = req.GET.get('next', '/')
     auth_logout(req)
-    return redirect('/')
+    return redirect(next)

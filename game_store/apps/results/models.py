@@ -7,3 +7,6 @@ class Result(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     score = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.user.user.username + " - " + self.game.title + " - " + str(self.score)

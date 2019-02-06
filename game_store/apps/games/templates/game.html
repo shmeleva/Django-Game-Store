@@ -19,12 +19,12 @@
     <p class="card-text">Created by {{ game.developer.user }}</p>
     {% if user_profile is not None and user_profile.is_developer %}
       <div class="btn-group" role="group" aria-label="Edit">
-        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Download stats. -->
+        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Download stats. -->
         <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Edit</a>
       </div>
     {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
       <div class="btn-group" role="group" aria-label="Play">
-        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">500</a> <!-- TODO: Best score. -->
+        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Best score. -->
         <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
       </div>
     {% else %}
