@@ -11,6 +11,23 @@ from game_store.apps.games.forms import PublishForm
 from game_store.apps.games.forms import SearchForm
 
 def all_games(req):
+<<<<<<< HEAD
+    if req.method == 'POST':
+        #TODO: Change to search
+        games = Game.objects.all()
+        return render(req, 'games.html', {
+            'games': games,
+            'user_profile': UserProfile.get_user_profile_or_none(req.user),
+            'search_form': SearchForm(),
+        })
+    else:
+        games = Game.objects.all()
+        return render(req, 'games.html', {
+            'games': games,
+            'user_profile': UserProfile.get_user_profile_or_none(req.user),
+            'search_form': SearchForm(),
+        })
+=======
     #if req.method == 'POST':
     #else:
     games = Game.objects.all()
@@ -24,6 +41,7 @@ def all_games(req):
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
         'search_form': SearchForm(),
     })
+>>>>>>> 0a34c7a271ddcf86c5e84dc33079ee657ee728b5
 
 # TODO: clean this code
 def owned_games(req):
