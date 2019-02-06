@@ -8,11 +8,9 @@ def register(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
     if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
         next = req.session['redirect-url']
-        print('register get existing next:', next)
     else:
         next = req.META.get('HTTP_REFERER', '/')
         req.session['redirect-url'] = next
-        print('register set new next:', next)
 
     if req.user.is_authenticated:
         del req.session['redirect-url']
@@ -41,11 +39,9 @@ def login(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
     if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
         next = req.session['redirect-url']
-        print('login get existing next:', next)
     else:
         next = req.GET.get('next', req.META.get('HTTP_REFERER', '/'))
         req.session['redirect-url'] = next
-        print('login set new next', next)
 
     if req.user.is_authenticated:
         del req.session['redirect-url']
