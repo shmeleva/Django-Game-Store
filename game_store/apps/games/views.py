@@ -60,12 +60,9 @@ def publish(req):
     if req.method == 'POST':
         form = PublishForm(req.POST, req.FILES)
         form.instance.developer = user_profile
-        #form.instance.categories.all()
 
         if form.is_valid():
-            game = form.save(commit=False)
-            game.save()
-            #form.save_m2m()
+            game = form.save()
             return redirect('/game/' + str(game.id))
         else:
             logger.error("Invalid form!")
