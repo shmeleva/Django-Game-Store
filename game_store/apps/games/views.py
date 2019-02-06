@@ -6,15 +6,21 @@ from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
 from game_store.apps.categories.models import Category
+from game_store.apps.results.models import Result
 from game_store.apps.games.forms import PublishForm
 from game_store.apps.games.forms import SearchForm
 
 def all_games(req):
     #if req.method == 'POST':
     #else:
-    games = Game.objects.all()
+    games_with_scores = set()
+    for game in Game.objects.all():
+        g = (game, 0)
+        if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
+            g = (game, Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score)
+        games_with_scores.add(g)
     return render(req, 'games.html', {
-        'games': games,
+        'games': games_with_scores,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
         'search_form': SearchForm(),
     })
@@ -33,9 +39,14 @@ def owned_games(req):
 
 def game(req, id):
     game = get_object_or_404(Game, pk=id)
+    result = Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game)
+    score = 0
+    if result:
+        score = result.first().score
     return render(req, 'game.html', {
         'game': game,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
+        'score': score,
     })
 
 def play(req, id):
