@@ -15,3 +15,8 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+    @staticmethod
+    def search(query, is_purchased, categories):
+        #TODO: is_purchased
+        return Game.objects.filter(title__contains=query)

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-  <form method="POST" action="/games">
+  <form id=”search” method="POST" action="{% url ‘search’ %}">
     {% csrf_token %}
     <div class="search-bar">
       <div class="form-row">
@@ -59,4 +59,5 @@
   {% else %}
     <h3>No games to display ¯\_(ツ)_/¯</h3>
   {% endif %}
+
 {% endblock %}
