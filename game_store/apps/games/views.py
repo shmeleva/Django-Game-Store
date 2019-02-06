@@ -43,6 +43,11 @@ def search(req):
             form.cleaned_data.get('query'),
             form.cleaned_data.get('is_purchased'),
             form.cleaned_data.get('categories'))
+        for game in games:
+            if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
+                game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
+            else:
+                game.score = 0
         rendered = render_to_string('game_search_results.html', {
             'games': games,
             'user_profile': UserProfile.get_user_profile_or_none(req.user),
