@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+HOST = 'https://srf-game-store.herokuapp.com'
+
+if DEBUG == True:
+    HOST = 'http://localhost:8000'
 
 # Application definition
 
