@@ -13,14 +13,14 @@ from game_store.apps.games.forms import SearchForm
 def all_games(req):
     #if req.method == 'POST':
     #else:
-    games_with_scores = set()
-    for game in Game.objects.all():
-        g = (game, 0)
+    games = Game.objects.all()
+    for game in games:
         if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
-            g = (game, Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score)
-        games_with_scores.add(g)
+            game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
+        else:
+            game.score = 0
     return render(req, 'games.html', {
-        'games': games_with_scores,
+        'games': games,
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
         'search_form': SearchForm(),
     })
