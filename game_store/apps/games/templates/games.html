@@ -1,62 +1,30 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
+{% load staticfiles%}
 
 {% block body %}
-  <form method="POST" action="/games">
+  <form id="game-search-form" method="POST" action="/search">
     {% csrf_token %}
     <div class="search-bar">
       <div class="form-row">
-        <div class="form-group" style="width: 80%;">
-          {{ search_form.query|as_crispy_field }}
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn bg-primary">Search</button>
-        </div>
+        {{ search_form.query|as_crispy_field }}
+        <button type="submit" class="btn bg-primary">Search</button>
       </div>
     </div>
     <div>
       <div class="form-row">
-        {{ search_form.is_purchased|as_crispy_field }}
-        {{ search_form.categories|as_crispy_field }}
+        <div class="game-ownership-filters">
+          {{ search_form.is_purchased|as_crispy_field }}
+        </div>
+        <div class="game-category-filters">
+          {{ search_form.categories|as_crispy_field }}
+        </div>
       </div>
     </div>
   </form>
-  {% if games %}
-    <div class="game-preview-list">
-      {% for game in games %}
-        <div class="card game-preview">
-          <!-- TODO: Fix image aspect ratio. -->
-          {% if game.image %}
-            <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ game.title }}</h5>
-            {% for category in game.categories.all %}
-              <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
-            {% endfor %}
-            <br>
-            {% if user_profile is not None and user_profile.is_developer %}
-              <div class="btn-group" role="group" aria-label="More">
-                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Download stats. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">More</a>
-              </div>
-            {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
-              <div class="btn-group" role="group" aria-label="Play">
-                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Best score. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
-              </div>
-            {% else %}
-              <div class="btn-group" role="group" aria-label="Buy">
-                <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
-                <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
-              </div>
-            {% endif %}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <h3>No games to display ¯\_(ツ)_/¯</h3>
-  {% endif %}
+  <script type='text/javascript' src='{% static "games/js/search.js" %}'></script>
+  <div id="game-search-results">
+    {% include 'game_search_results.html' %}
+  </div>
 {% endblock %}
