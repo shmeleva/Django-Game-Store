@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Purchase - {{game.title}}{% endblock %}
 
 {% block body %}
-  <span>One day users will be able to buy games here. But not today ¯\_(ツ)_/¯</span>
+  <form method="POST" action="/game/{{ game.id }}/purchase/">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-block bg-primary">Pay</button>
+  </form>
 {% endblock %}
