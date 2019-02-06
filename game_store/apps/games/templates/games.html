@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-  <form id=”search” method="POST" action="{% url ‘search’ %}">
+  <form id=”search” method="POST" action="/search">
     {% csrf_token %}
     <div class="search-bar">
       <div class="form-row">
