@@ -31,7 +31,14 @@ def all_games(req):
 
 def search(req):
     form = SearchForm(req.POST)
+    logger.error("...")
     if form.is_valid():
+        logger.error(form.cleaned_data.get('query'))
+        logger.error(form.cleaned_data.get('is_purchased')) # True or False
+        logger.error(form.cleaned_data.get('categories')) # <QuerySet []>
+        for c in form.cleaned_data.get('categories'):
+            print(c)
+            logger.error(c) # ...
         games = Game.search(
             form.cleaned_data.get('query'),
             form.cleaned_data.get('is_purchased'),
