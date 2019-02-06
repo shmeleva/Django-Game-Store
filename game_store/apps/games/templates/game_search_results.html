@@ -1,0 +1,37 @@
+{% if games %}
+  <div class="game-preview-list">
+    {% for game in games %}
+      <div class="card game-preview">
+        <!-- TODO: Fix image aspect ratio. -->
+        {% if game.image %}
+          <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ game.title }}</h5>
+          {% for category in game.categories.all %}
+            <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
+          {% endfor %}
+          <br>
+          {% if user_profile is not None and user_profile.is_developer %}
+            <div class="btn-group" role="group" aria-label="More">
+              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Download stats. -->
+              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">More</a>
+            </div>
+          {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
+            <div class="btn-group" role="group" aria-label="Play">
+              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Best score. -->
+              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
+            </div>
+          {% else %}
+            <div class="btn-group" role="group" aria-label="Buy">
+              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
+              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <h3>No games to display ¯\_(ツ)_/¯</h3>
+{% endif %}

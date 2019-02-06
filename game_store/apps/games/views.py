@@ -1,4 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
+from django.template import RequestContext
+
+from django.http import JsonResponse
 import logging
 logger = logging.getLogger(__name__)
 from .models import Game
@@ -26,24 +30,19 @@ def all_games(req):
     })
 
 def search(req):
-    form = PublishForm(req.POST, req.FILES)
+    form = SearchForm(req.POST)
     if form.is_valid():
         games = Game.search(
-            form.instance.query,
-            form.instance.is_purchased,
-            form.instance.categories)
-        return render(req, 'games.html', {
+            form.cleaned_data.get('query'),
+            form.cleaned_data.get('is_purchased'),
+            form.cleaned_data.get('categories'))
+        rendered = render_to_string('game_search_results.html', {
             'games': games,
             'user_profile': UserProfile.get_user_profile_or_none(req.user),
-            'search_form': SearchForm(),
         })
+        return JsonResponse({'rendered': rendered})
     else:
-        logger.error(form)
-        games = Game.objects.all()
-        return render(req, 'games.html', {
-            'games': games,
-            'search_form': SearchForm(),
-        })
+        return JsonResponse({ })
 
 # TODO: clean this code
 def owned_games(req):

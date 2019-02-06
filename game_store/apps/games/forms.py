@@ -15,7 +15,8 @@ class PublishForm(ModelForm):
 class SearchForm(Form):
     query = forms.CharField(
         label="",
-        max_length=128
+        max_length=128,
+        required=False
     )
     is_purchased = forms.BooleanField(
         label="My Games",
