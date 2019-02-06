@@ -5,10 +5,12 @@
 {% block body %}
 
 <div class="card" style="width: 80%;">
-  <!-- TODO: Fix image aspect ratio. -->
-  {% if game.image %}
-    <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
-  {% endif %}
+  {% block game %}
+    {% if game.image %}
+      <!-- TODO: Fix image aspect ratio. --> 
+      <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
+    {% endif %}
+  {% endblock %}
   <div class="card-body">
     <h5 class="card-title">{{ game.title }}</h5>
     {% for category in game.categories.all %}
@@ -25,7 +27,7 @@
     {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
       <div class="btn-group" role="group" aria-label="Play">
         <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Best score. -->
-        <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
+        <a href="{% url 'play' game.id %}" class="btn btn-primary">Play</a>
       </div>
     {% else %}
       <div class="btn-group" role="group" aria-label="Buy">
