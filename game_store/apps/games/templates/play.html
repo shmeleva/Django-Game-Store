@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'game.html' %}
 
 {% block title %}Play - {{ game.title }}{% endblock %}
 
-{% block body %}
-  <span>One day users will play games here. But not today ¯\_(ツ)_/¯</span>
+{% block game %}
+<div class="embed-responsive embed-responsive-21by9">
+  <iframe src="{{ game.url }}">
+  </iframe>
+</div>
 {% endblock %}

@@ -50,7 +50,7 @@ def game(req, id):
     })
 
 def play(req, id):
-    return render(req, 'play.html')
+    return render(req, 'play.html', { 'game': get_object_or_404(Game, pk=id) })
 
 def publish(req):
     user_profile = UserProfile.get_user_profile_or_none(req.user)
