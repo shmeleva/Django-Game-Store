@@ -30,24 +30,40 @@ def all_games(req):
     })
 
 def search(req):
+
     form = SearchForm(req.POST)
-    logger.error("...")
+
     if form.is_valid():
-        logger.error(form.cleaned_data.get('query'))
-        logger.error(form.cleaned_data.get('is_purchased')) # True or False
-        logger.error(form.cleaned_data.get('categories')) # <QuerySet []>
-        for c in form.cleaned_data.get('categories'):
-            print(c)
-            logger.error(c) # ...
-        games = Game.search(
-            form.cleaned_data.get('query'),
-            form.cleaned_data.get('is_purchased'),
-            form.cleaned_data.get('categories'))
+
+        user = UserProfile.get_user_profile_or_none(req.user)
+        query = form.cleaned_data.get('query')
+        categories = form.cleaned_data.get('categories')
+        player_games_only = form.cleaned_data.get('player_games_only')
+
+        if user is not None:
+            if user.is_player and player_games_only:
+                purchases = Purchase.objects.values('game').filter(user__exact=user)
+                games = Game.objects.filter(id__in=purchases).filter(title__contains=query)
+                if categories.count() != 0:
+                    games = games.filter(categories__in=categories).distinct()
+                rendered = render_to_string('game_search_results.html', {
+                    'games': games,
+                    'user_profile': UserProfile.get_user_profile_or_none(req.user),
+                })
+                return JsonResponse({'rendered': rendered})
+            if user.is_developer:
+                pass
+
+        games = Game.objects.filter(title__contains=query)
+        if categories.count() != 0:
+            games = games.filter(categories__in=categories).distinct()
+
         for game in games:
             if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
                 game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
             else:
                 game.score = 0
+
         rendered = render_to_string('game_search_results.html', {
             'games': games,
             'user_profile': UserProfile.get_user_profile_or_none(req.user),

@@ -18,13 +18,13 @@ class SearchForm(Form):
         max_length=128,
         required=False
     )
-    is_purchased = forms.BooleanField(
-        label="My Games",
-        required=False
-    )
     categories = forms.ModelMultipleChoiceField(
         label="",
         required=False,
         widget=forms.CheckboxSelectMultiple,
         queryset=Category.objects.all()
+    )
+    player_games_only = forms.BooleanField(
+        label="My Games",
+        required=False
     )

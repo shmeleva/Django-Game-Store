@@ -15,7 +15,7 @@
     <div>
       <div class="form-row">
         <div class="game-ownership-filters">
-          {{ search_form.is_purchased|as_crispy_field }}
+          {{ search_form.player_games_only|as_crispy_field }}
         </div>
         <div class="game-category-filters">
           {{ search_form.categories|as_crispy_field }}
