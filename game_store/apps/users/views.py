@@ -1,12 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from urllib.parse import urlparse
 from game_store.apps.users.forms import RegisterForm
 
 def register(req):
-    next = req.META.get('HTTP_REFERER', '/')
+    prev_path = urlparse(req.META.get('HTTP_REFERER')).path
+    if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
+        next = req.session['redirect-url']
+        print('register get existing next:', next)
+    else:
+        next = req.META.get('HTTP_REFERER', '/')
+        req.session['redirect-url'] = next
+        print('register set new next:', next)
 
     if req.user.is_authenticated:
+        del req.session['redirect-url']
         return redirect(next)
 
     if req.method == 'POST':
@@ -19,7 +28,7 @@ def register(req):
 
             if user is not None:
                 auth_login(req, user)
-                next = req.POST.get('next', '/')
+                del req.session['redirect-url']
                 return redirect(next)
     else:
         form = RegisterForm()
@@ -29,9 +38,17 @@ def register(req):
     })
 
 def login(req):
-    next = req.META.get('HTTP_REFERER', '/')
+    prev_path = urlparse(req.META.get('HTTP_REFERER')).path
+    if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
+        next = req.session['redirect-url']
+        print('login get existing next:', next)
+    else:
+        next = req.GET.get('next', req.META.get('HTTP_REFERER', '/'))
+        req.session['redirect-url'] = next
+        print('login set new next', next)
 
     if req.user.is_authenticated:
+        del req.session['redirect-url']
         return redirect(next)
 
     if req.method == 'POST':
@@ -42,7 +59,7 @@ def login(req):
 
             if user is not None:
                 auth_login(req, user)
-                next = req.POST.get('next', '/')
+                del req.session['redirect-url']
                 return redirect(next)
     else:
         form = AuthenticationForm()
