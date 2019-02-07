@@ -64,7 +64,7 @@ def purchase(req, id):
 def stats(req):
     return render(req, 'stats.html')
 
-# TODO: Render user-friendly UI
+# TODO: Render user-friendly UI and improve other error responses
 def payment_result(req):
     formatted_pid = req.GET.get('pid')
     ref = req.GET.get('ref')
