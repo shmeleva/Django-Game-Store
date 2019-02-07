@@ -14,7 +14,7 @@
           <br>
           {% if user_profile is not None and user_profile.is_developer %}
             <div class="btn-group" role="group" aria-label="More">
-              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Download stats. -->
+              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Download stats. -->
               <a href="{% url 'game_page' game.id %}" class="btn btn-primary">More</a>
             </div>
           {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
