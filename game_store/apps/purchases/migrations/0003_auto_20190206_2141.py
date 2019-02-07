@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='purchase',
             name='status',
-            field=models.CharField(choices=[('S', 'Succeeded'), ('F', 'Failed')], default=game_store.apps.purchases.models.TransactionStatus('F'), max_length=1),
+            field=models.CharField(choices=[('S', 'Succeeded'), ('F', 'Failed')], default=game_store.apps.purchases.models.TransactionStatus.Failed.value, max_length=1),
         ),
         migrations.AlterField(
             model_name='purchase',

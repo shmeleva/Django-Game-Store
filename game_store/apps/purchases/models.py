@@ -19,7 +19,7 @@ class Purchase(models.Model):
     status = models.CharField(
         max_length=1,
         choices=[(status.value, status.name) for status in TransactionStatus],
-        default=TransactionStatus.Failed,
+        default=TransactionStatus.Failed.value,
     )
 
     def __str__(self):

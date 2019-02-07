@@ -21,7 +21,7 @@ def purchase(req, id):
         logger.error('The user is not allowed to purchase a game: {}'.format(req.user.username))
         return HttpResponseForbidden() # FIXME: Handle it the other way
 
-    if Purchase.objects.filter(user=user_profile, game=id, status=TransactionStatus.Succeeded).exists():
+    if Purchase.objects.filter(user=user_profile, game=id, status=TransactionStatus.Succeeded.value).exists():
         return redirect('/game/{}'.format(id))
 
     game = get_object_or_404(Game, pk=id)
@@ -99,10 +99,18 @@ def payment_result(req):
     else:
         logger.error('Invalid payment result: {} {}'.format(formatted_pid, result))
         return HttpResponse(status=400)
+    
+    purchase = Purchase(
+        id=pid,
+        user_id=purchase_info.get('user_id'),
+        game_id=purchase_info.get('game_id'),
+        price=purchase_info.get('price'),
+        status=TransactionStatus.Succeeded.value if result == 'success' else TransactionStatus.Failed.value,
+    )
+    purchase.save()
 
-    # TODO: Record the purchase on the database (success/error)
-
-    # TODO: Clear related cache data
+    cache.delete(pid)
+    cache.delete(purchase_info.get('user_id'))
     
     return render(req, 'result.html', {
         'text': text,
