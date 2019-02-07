@@ -88,6 +88,8 @@ def payment_result(req):
         return HttpResponse(status=404)
 
     if result == 'cancel':
+        cache.delete(pid)
+        cache.delete(purchase_info.get('user_id'))
         return redirect('/game/{}'.format(purchase_info.get('game_id')))
     
     if result == 'success':
