@@ -7,7 +7,7 @@
 <div class="card" style="width: 80%;">
   {% block game %}
     {% if game.image %}
-      <!-- TODO: Fix image aspect ratio. --> 
+      <!-- TODO: Fix image aspect ratio. -->
       <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
     {% endif %}
   {% endblock %}
@@ -19,6 +19,7 @@
     <br>
     <p class="card-text">{{ game.description }}</p>
     <p class="card-text">Created by {{ game.developer.user }}</p>
+    <!-- TODO: Fix buttons to match the main page! -->
     {% if user_profile is not None and user_profile.is_developer %}
       <div class="btn-group" role="group" aria-label="Edit">
         <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Download stats. -->
@@ -35,6 +36,22 @@
         <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
       </div>
     {% endif %}
+  </div>
+  <div class="game-scores">
+    {% if user_profile is not None and user_profile.is_player %}
+    <div class="game__player-highscore">
+      <div>Highscore</div>
+      <div></div>
+    </div>
+    <div class="game__player-last-score">
+      <div>Last score</div>
+      <div></div>
+    <div>
+    {% endif %}
+    <div class="game__global-highscores">
+      <div>TOP 10</div>
+      <!-- TOP 10 -->
+    </div>
   </div>
 </div>
 {% endblock %}
