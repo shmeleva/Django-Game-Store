@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.template import RequestContext
-
 from django.http import JsonResponse
+
 import logging
 logger = logging.getLogger(__name__)
+
 from .models import Game
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
@@ -13,18 +14,11 @@ from game_store.apps.categories.models import Category
 from game_store.apps.results.models import Result
 from game_store.apps.games.forms import PublishForm
 from game_store.apps.games.forms import SearchForm
+from game_store.apps.games.utils import SearchBuilder
 
 def all_games(req):
-    #if req.method == 'POST':
-    #else:
-    games = Game.objects.all()
-    for game in games:
-        if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
-            game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
-        else:
-            game.score = 0
     return render(req, 'games.html', {
-        'games': games,
+        'games': Game.objects.all(),
         'user_profile': UserProfile.get_user_profile_or_none(req.user),
         'search_form': SearchForm(),
     })
@@ -42,43 +36,29 @@ def search(req):
 
         if user is not None:
 
-            if user.is_player and player_games_only:
-                purchases = Purchase.objects.values('game').filter(user__exact=user)
-                games = Game.objects.filter(id__in=purchases).filter(title__contains=query)
-                if categories.count() != 0:
-                    games = games.filter(categories__in=categories).distinct()
-                rendered = render_to_string('game_search_results.html', {
-                    'games': games,
-                    'user_profile': UserProfile.get_user_profile_or_none(req.user),
-                })
-                return JsonResponse({'rendered': rendered})
+            if user.is_player:
+                if player_games_only:
+                    purchases = Purchase.objects.values('game').filter(user__exact=user)
+                    return SearchBuilder(
+                        Game.objects.filter(id__in=purchases), user
+                    ).apply_rules(
+                        query,categories
+                    ).set_ownership_flags(False).set_highscores().build()
+                else:
+                    return SearchBuilder(
+                        Game.objects, user
+                    ).apply_rules(
+                        query, categories
+                    ).set_ownership_flags().set_highscores().build()
 
             if user.is_developer:
-                logger.error("is_developer")
-                games = Game.objects.filter(developer__exact=user).filter(title__contains=query)
-                if categories.count() != 0:
-                    games = games.filter(categories__in=categories).distinct()
-                rendered = render_to_string('game_search_results.html', {
-                    'games': games,
-                    'user_profile': UserProfile.get_user_profile_or_none(req.user),
-                })
-                return JsonResponse({'rendered': rendered})
+                return SearchBuilder(
+                    Game.objects.filter(developer__exact=user),user
+                ).apply_rules(
+                    query,categories
+                ).build()
 
-        games = Game.objects.filter(title__contains=query)
-        if categories.count() != 0:
-            games = games.filter(categories__in=categories).distinct()
-
-        for game in games:
-            if Result.objects.filter(user=UserProfile.get_user_profile_or_none(req.user), game=game):
-                game.score = Result.objects.get(user=UserProfile.get_user_profile_or_none(req.user), game=game).score
-            else:
-                game.score = 0
-
-        rendered = render_to_string('game_search_results.html', {
-            'games': games,
-            'user_profile': UserProfile.get_user_profile_or_none(req.user),
-        })
-        return JsonResponse({'rendered': rendered})
+        return SearchBuilder(Game.objects, user).apply_rules(query, categories).build()
     else:
         return JsonResponse({ })
 

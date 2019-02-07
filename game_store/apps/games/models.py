@@ -1,4 +1,5 @@
 from django.db import models
+from django.apps import apps
 from django.core.validators import MinValueValidator
 from game_store.apps.users.models import UserProfile
 from game_store.apps.categories.models import Category
@@ -15,10 +16,3 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
-
-#    @staticmethods
-#    def search(query, categories, user, user_games_only):
-#        games = Game.objects.filter(title__contains=query)
-#        if categories.count() != 0:
-#            games = games.filter(categories__in=categories).distinct()
-#        return games
