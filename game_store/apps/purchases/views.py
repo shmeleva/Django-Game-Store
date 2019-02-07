@@ -87,20 +87,11 @@ def payment_result(req):
         logger.error('Transaction expired: {}'.format(formatted_pid))
         return HttpResponse(status=404)
 
+    cache.delete(pid)
+    cache.delete(purchase_info.get('user_id'))
+
     if result == 'cancel':
-        cache.delete(pid)
-        cache.delete(purchase_info.get('user_id'))
         return redirect('/game/{}'.format(purchase_info.get('game_id')))
-    
-    if result == 'success':
-        text = 'Your payment was successful.<br>Thank you!<br><br>You will be directed back to the game in 3 seconds...'
-        next = '/game/{}'.format(purchase_info.get('game_id'))
-    elif result == 'error':
-        text = 'Unfortunately, there was something wrong with the payment.<br><br>You will be directed back to the purchase in 3 seconds...'
-        next = '/game/{}/purchase'.format(purchase_info.get('game_id'))
-    else:
-        logger.error('Invalid payment result: {} {}'.format(formatted_pid, result))
-        return HttpResponse(status=400)
     
     purchase = Purchase(
         id=pid,
@@ -110,11 +101,8 @@ def payment_result(req):
         status=TransactionStatus.Succeeded.value if result == 'success' else TransactionStatus.Failed.value,
     )
     purchase.save()
-
-    cache.delete(pid)
-    cache.delete(purchase_info.get('user_id'))
     
     return render(req, 'result.html', {
-        'text': text,
-        'url': next,
+        'succeeded': result == 'success',
+        'game_id': purchase_info.get('game_id'),
     })
