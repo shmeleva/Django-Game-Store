@@ -63,3 +63,48 @@ def purchase(req, id):
 
 def stats(req):
     return render(req, 'stats.html')
+
+# TODO: Render user-friendly UI
+def payment_result(req):
+    formatted_pid = req.GET.get('pid')
+    ref = req.GET.get('ref')
+    result = req.GET.get('result')
+    checksum = req.GET.get('checksum')
+    secret_key = os.environ.get('PAYMENT_SECRET_KEY', '')
+
+    checksum_input = 'pid={}&ref={}&result={}&token={}'.format(formatted_pid, ref, result, secret_key)
+    m = md5(checksum_input.encode("ascii"))
+    calculated_checksum = m.hexdigest()
+
+    if checksum != calculated_checksum:
+        logger.error('Checksum mismatch: {}'.format(formatted_pid))
+        return HttpResponse(status=400)
+
+    pid = uuid.UUID(formatted_pid)
+    purchase_info = cache.get(pid)
+
+    if purchase_info is None:
+        logger.error('Transaction expired: {}'.format(formatted_pid))
+        return HttpResponse(status=404)
+
+    if result == 'cancel':
+        return redirect('/game/{}'.format(purchase_info.get('game_id')))
+    
+    if result == 'success':
+        text = 'Your payment was successful.<br>Thank you!<br><br>You will be directed back to the game in 3 seconds...'
+        next = '/game/{}'.format(purchase_info.get('game_id'))
+    elif result == 'error':
+        text = 'Unfortunately, there was something wrong with the payment.<br><br>You will be directed back to the purchase in 3 seconds...'
+        next = '/game/{}/purchase'.format(purchase_info.get('game_id'))
+    else:
+        logger.error('Invalid payment result: {} {}'.format(formatted_pid, result))
+        return HttpResponse(status=400)
+
+    # TODO: Record the purchase on the database (success/error)
+
+    # TODO: Clear related cache data
+    
+    return render(req, 'result.html', {
+        'text': text,
+        'url': next,
+    })

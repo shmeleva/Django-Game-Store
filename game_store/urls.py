@@ -38,4 +38,5 @@ urlpatterns = [
     path('game/<int:id>/play', games_views.play, name='play'), # Only for players.
     path('publish', games_views.publish, name='publish'), # Only for developers.
     path('stats', purchases_views.stats), # Only for developers.
+    path('payment/result', purchases_views.payment_result),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
