@@ -71,7 +71,7 @@ def search(req):
 
         return SearchBuilder(Game.objects, user).apply_rules(query, categories).build()
     else:
-        return JsonResponse({ })
+        return JsonResponse({ }) #TODO
 
 # TODO: clean this code
 def owned_games(req):
