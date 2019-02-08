@@ -92,7 +92,7 @@ def payment_result(req):
 
     if result == 'cancel':
         return redirect('/game/{}'.format(purchase_info.get('game_id')))
-    
+
     purchase = Purchase(
         id=pid,
         user_id=purchase_info.get('user_id'),
@@ -101,8 +101,11 @@ def payment_result(req):
         status=TransactionStatus.Succeeded.value if result == 'success' else TransactionStatus.Failed.value,
     )
     purchase.save()
-    
+
     return render(req, 'result.html', {
         'succeeded': result == 'success',
         'game_id': purchase_info.get('game_id'),
     })
+
+def stats(req):
+    pass
