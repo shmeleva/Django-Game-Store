@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse
 from urllib.parse import urlparse
 from game_store.apps.users.forms import RegisterForm
 from game_store.apps.users.models import UserProfile
+from game_store.apps.users.utils import send_email, decode_base64, validate_token
 
 def register(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
@@ -22,9 +24,7 @@ def register(req):
 
         if form.is_valid():
             user = form.save()
-            
-            # TODO: Send a email
-
+            send_email(user)
             return render(req, 'verify_email.html', { 'new_user': True })
     else:
         form = RegisterForm()
@@ -32,6 +32,20 @@ def register(req):
     return render(req, 'register.html', {
         'form': form,
     })
+
+def verify(req, encoded_uid, token):
+    uid = decode_base64(encoded_uid)
+    user_profile = UserProfile.objects.get(id=uid)
+    
+    if user_profile is None:
+        return HttpResponse(status=404)
+
+    if not validate_token(user_profile.user, token):
+        return HttpResponse(status=400)
+
+    user_profile.verified = True
+    user_profile.save()
+    return redirect('/')
 
 def login(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
