@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from game_store.apps.users.models import UserRole, UserProfile
 
 class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
     role = forms.ChoiceField(
         choices=[(role.value, role.name) for role in UserRole],
     )

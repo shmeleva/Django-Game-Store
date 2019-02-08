@@ -5,3 +5,4 @@ pytz==2018.9
 Pillow
 django-crispy-forms
 django-sass-processor
+sendgrid

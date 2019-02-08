@@ -14,6 +14,7 @@ class UserProfile(models.Model):
         max_length=1,
         choices=[(role.value, role.name) for role in UserRole],
     )
+    verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username + " - " + self.role
