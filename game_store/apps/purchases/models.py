@@ -7,6 +7,7 @@ from game_store.apps.users.models import UserProfile
 from game_store.apps.games.models import Game
 
 class TransactionStatus(Enum):
+    Pending = 'P'
     Succeeded = 'S'
     Failed = 'F'
 
@@ -19,7 +20,7 @@ class Purchase(models.Model):
     status = models.CharField(
         max_length=1,
         choices=[(status.value, status.name) for status in TransactionStatus],
-        default=TransactionStatus.Failed.value,
+        default=TransactionStatus.Pending.value,
     )
 
     def __str__(self):
