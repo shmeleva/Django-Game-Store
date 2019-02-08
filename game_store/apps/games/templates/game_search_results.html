@@ -1,5 +1,10 @@
-{% if games %}
-  <div class="game-preview-list">
+<div class="game-preview-list">
+  {% if user_profile and user_profile.is_developer %}
+  <div class="card game-preview">
+    <a href="{% url 'publish' %}">Publish +</a>
+  </div>
+  {% endif %}
+  {% if games %}
     {% for game in games %}
       <div class="card game-preview">
         <!-- TODO: Fix image aspect ratio. -->
@@ -34,7 +39,7 @@
         </div>
       </div>
     {% endfor %}
-  </div>
-{% else %}
-  <h3>No games to display ¯\_(ツ)_/¯</h3>
-{% endif %}
+  {% else %}
+    <h3>No games to display ¯\_(ツ)_/¯</h3>
+  {% endif %}
+</div>
