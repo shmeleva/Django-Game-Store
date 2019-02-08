@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.forms import Form
+
 from game_store.apps.games.models import Game
 from game_store.apps.categories.models import Category
 
@@ -18,7 +19,7 @@ class EditForm(ModelForm):
         model = Game
         fields = ('image', 'description', 'price' , 'url', 'categories')
         widgets = {
-            'categories': forms.CheckboxSelectMultiple(),
+            'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-inline'}),
         }
 
 class SearchForm(Form):

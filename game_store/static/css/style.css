@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(to left top, #BA2C73, #1c1f4c) fixed;
+  background: #292F36; /*#17BEBB;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #1c1f4c;
+  color: #56E39F;
   text-decoration: none;
   background-color: transparent;
 }
@@ -17,7 +17,7 @@ a {
 /* TODO: Use SASS to set the primary colour and other settings! */
 
 .bg-primary {
-  background: #1c1f4c !important;
+  background: #56E39F !important;
 }
 
 .bg-primary.navbar {
@@ -32,37 +32,37 @@ a {
 
 .btn-primary {
   color: #fff;
-  background: #1c1f4c;
-  border-color: #1c1f4c;
+  background: #56E39F;
+  border-color: #56E39F;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #1c1f4c;
-  border-color: #1c1f4c;
+  background-color: #56E39F;
+  border-color: #56E39F;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #1c1f4c;
-  border-color: #1c1f4c;
+  background-color: #56E39F;
+  border-color: #56E39F;
 }
 
 .btn-outline-primary {
-  color: #1c1f4c;
-  border-color: #1c1f4c;
+  color: #56E39F;
+  border-color: #56E39F;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #1c1f4c;
-  border-color: #1c1f4c;
+  background-color: #56E39F;
+  border-color: #56E39F;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show>.btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #1c1f4c;
-  border-color: #1c1f4c;
+  background-color: #56E39F;
+  border-color: #56E39F;
 }
 
 @media screen and (min-width: 991.98px) {
@@ -72,46 +72,6 @@ a {
   }
 }
 
-/* GAMES */
-
-/* https://getflywheel.com/layout/flexbox-create-modern-card-design-layout/ */
-
-.game-preview-list {
-    display: flex;
-    flex-wrap: wrap;
- }
-
-.game-preview {
-    flex: 1 0 500px;
-    box-sizing: border-box;
-    margin: 1rem .25em;
-    max-width: calc(50% -  1em);
-}
-
-@media screen and (min-width: 991.98px) {
-    .game-preview {
-       max-width: calc(25% -  1em);
-    }
-}
-
-.game-preview > img.card-img-top {
-  height: 18rem;
-}
-
-.game-preview > .card-body {
-
-}
-
-.game-preview > .card-title {
-
-}
-
-.game-preview > .card-body > .btn-group {
-  margin-top: 1em;
-}
-
-/* SEARCH BAR */
-
-.search-bar {
-  display: flex;
+img {
+    object-fit: cover;
 }

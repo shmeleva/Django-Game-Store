@@ -4,13 +4,11 @@
 {% load staticfiles%}
 
 {% block body %}
-  <form id="game-search-form" method="POST" action="/search">
+  <form id="game-search-form" method="POST" action="/search" class="container-fluid px-md-3 px-lg-5">
     {% csrf_token %}
-    <div class="search-bar">
-      <div class="form-row">
-        {{ search_form.query|as_crispy_field }}
-        <button type="submit" class="btn bg-primary">Search</button>
-      </div>
+    <div class="row">
+      <div class="col col-10 p-0">{{ search_form.query|as_crispy_field }}</div>
+      <button type="submit" class="btn bg-primary col col-2 mb-3 text-light text-uppercase">Search</button>
     </div>
     <div>
       <div class="form-row game-filters">
@@ -19,7 +17,7 @@
             {{ search_form.player_games_only|as_crispy_field }}
           </div>
         {% endif %}
-        <div class="game-category-filters">
+        <div class="game-category-filters form-check-inline">
           {{ search_form.categories|as_crispy_field }}
         </div>
       </div>
