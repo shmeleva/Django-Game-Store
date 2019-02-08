@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+HOST = 'https://srf-game-store.herokuapp.com'
+
+if DEBUG == True:
+    HOST = 'http://localhost:8000'
 
 # Application definition
 
@@ -95,6 +99,16 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'purchasecache',
+        'TIMEOUT': 900, # 15 minutes
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
