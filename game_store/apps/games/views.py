@@ -122,7 +122,11 @@ def game(req, id):
     context = {
         'game': game,
         'user_profile': user,
-        'global_highscores': global_highscores
+        'global_highscores': global_highscores,
+        #
+        'og_title': game.title,
+        'og_description': game.description,
+        'og_image': game.image.url,
     }
     #
     # Getting a personal highscore and last score for players, if available:
