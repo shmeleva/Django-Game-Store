@@ -95,3 +95,4 @@ db.sqlite3
 .vscode
 
 media
+secrets.sh
