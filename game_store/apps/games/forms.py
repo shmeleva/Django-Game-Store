@@ -12,6 +12,14 @@ class PublishForm(ModelForm):
             'categories': forms.CheckboxSelectMultiple(),
         }
 
+class EditForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = ('image', 'description', 'price' , 'url', 'categories')
+        widgets = {
+            'categories': forms.CheckboxSelectMultiple(),
+        }
+
 class SearchForm(Form):
     query = forms.CharField(
         label="",
