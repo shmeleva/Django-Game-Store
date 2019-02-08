@@ -5,7 +5,6 @@ from urllib.parse import urlparse
 from game_store.apps.users.forms import RegisterForm
 from game_store.apps.users.models import UserProfile
 
-# TODO: Do not log in automatically, Fix redirecting
 def register(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
     if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
@@ -23,13 +22,10 @@ def register(req):
 
         if form.is_valid():
             user = form.save()
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.user.username, password=password)
+            
+            # TODO: Send a email
 
-            if user is not None:
-                auth_login(req, user)
-                del req.session['redirect-url']
-                return redirect(next)
+            return render(req, 'verify_email.html', { 'new_user': True })
     else:
         form = RegisterForm()
 
