@@ -24,6 +24,7 @@ from game_store.apps.games.utils import SearchBuilder
 def games(req):
 
     user = UserProfile.get_user_profile_or_none(req.user)
+    games = None
 
     if user is not None:
         if user.is_player:
@@ -53,13 +54,12 @@ def search(req):
     form = SearchForm(req.POST)
 
     if form.is_valid():
-
         user = UserProfile.get_user_profile_or_none(req.user)
         query = form.cleaned_data.get('query')
         categories = form.cleaned_data.get('categories')
         player_games_only = form.cleaned_data.get('player_games_only')
 
-        if user is not None:
+        if user:
 
             if user.is_player:
                 if player_games_only:
@@ -112,7 +112,7 @@ def game(req, id):
     .order_by('-highscore')[:10]
 
     # Getting a personal highscore and last score for players, if available:
-    if user is not None and user.is_player:
+    if user and user.is_player:
         results = Result.objects.filter(user=user, game=game)
         if results.exists():
             player_highscore = results.order_by('-score').first()
@@ -164,13 +164,4 @@ def publish(req):
 # - Redirects non-developers to /. TODO: return 401 instead
 # - 401, if the developer does not own the game.
 def edit(req):
-    pass
-
-# A game editing form.
-# Accepts: GET /game/{id}/stats.
-# Returns: HttpResponse with an HTML page.
-# Errors:
-# - Redirects non-developers to /. TODO: return 401 instead
-# - 401, if the developer does not own the game.
-def stats(req):
     pass
