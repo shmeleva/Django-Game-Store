@@ -3,7 +3,9 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, auth
 from django.contrib.auth.forms import AuthenticationForm
 from urllib.parse import urlparse
 from game_store.apps.users.forms import RegisterForm
+from game_store.apps.users.models import UserProfile
 
+# TODO: Do not log in automatically, Fix redirecting
 def register(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
     if req.session.has_key('redirect-url') and prev_path in ['/login/', '/register/']:
@@ -54,6 +56,14 @@ def login(req):
             user = authenticate(username=form.cleaned_data.get('username'), password=form.cleaned_data.get('password'))
 
             if user is not None:
+                user_profile = UserProfile.get_user_profile_or_none(user)
+                
+                if user_profile is None:
+                    return redirect('/login/')
+
+                if not user_profile.verified:
+                    return render(req, 'verify_email.html', { 'new_user': False })
+
                 auth_login(req, user)
                 del req.session['redirect-url']
                 return redirect(next)

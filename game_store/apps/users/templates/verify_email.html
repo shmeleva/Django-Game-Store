@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+  {% if new_user %}We have sent you a confirmation email.<br>{% endif %}
+  Please check your mailbox and verify your email address before logging in.
+
+  <!-- TODO: Add an option to resend a confirmation email -->
+{% endblock %}
