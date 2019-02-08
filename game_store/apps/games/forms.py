@@ -10,6 +10,7 @@ class PublishForm(ModelForm):
         fields = ('title', 'image', 'description', 'price' , 'url', 'categories')
         widgets = {
             'categories': forms.CheckboxSelectMultiple(),
+            #'developer': forms.HiddenInput(),
         }
 
 class EditForm(ModelForm):
