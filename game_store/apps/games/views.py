@@ -112,6 +112,9 @@ def game(req, id):
     .order_by('-highscore')[:10]
 
     # Getting a personal highscore and last score for players, if available:
+    player_highscore = None
+    player_last_score = None
+
     if user and user.is_player:
         results = Result.objects.filter(user=user, game=game)
         if results.exists():
