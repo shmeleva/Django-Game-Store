@@ -105,19 +105,25 @@ def game(req, id):
     user = UserProfile.get_user_profile_or_none(req.user)
     game = get_object_or_404(Game, pk=id)
 
-    highscores = Result.objects.values('user') \
+    # Getting global highscores:
+    global_highscores = Result.objects.filter(game=game) \
+    .values('user__user__username') \
     .annotate(highscore=Max('score')) \
     .order_by('-highscore')[:10]
-    logger.error(highscores)
 
-    if Purchase.objects.filter(user=user, game=game).count() > 0:
-        result = Result.objects.filter(user=user, game=game).aggregate(Max('score'))
-        highscore = result['score__max'] if result is not None else 0
+    # Getting a personal highscore and last score for players, if available:
+    if user is not None and user.is_player:
+        results = Result.objects.filter(user=user, game=game)
+        if results.exists():
+            player_highscore = results.order_by('-score').first()
+            player_last_score = results.order_by('-timestamp').first()
+
     return render(req, 'game.html', {
         'game': game,
         'user_profile': user,
-        'score': 0,
-
+        'global_highscores': global_highscores,
+        'player_highscore': player_highscore,
+        'player_last_score': player_last_score
     })
 
 def play(req, id):

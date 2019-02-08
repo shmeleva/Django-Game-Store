@@ -25,7 +25,7 @@ class SearchBuilder:
         if not self.user.is_player:
             raise ValueError('Ownership can only be set for players.')
         for game in self.games:
-            game.is_owned = Purchase.objects.filter(user=self.user, game=game).count() > 0 if validate_ownership else True
+            game.is_owned = Purchase.objects.filter(user=self.user, game=game).exists() if validate_ownership else True
         return self
 
     # For players only:
