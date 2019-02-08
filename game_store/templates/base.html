@@ -13,8 +13,11 @@
     <meta property="og:title" content="{{ og_title }}">
     <meta property="og:description" content="{{ og_description }}">
     <meta property="og:image" content="{{ og_image }}">
-    <meta property="og:url" content="{{ og_url }}">
-    <meta name="twitter:card" content="{{ request.build_absolute_uri }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:title" content="{{ og_title }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+    <meta name="twitter:image" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
   <body>
     <nav class='navbar navbar-expand-lg navbar-dark bg-primary mb-3'>
 
