@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
-# from django.core.mail import send_mail
+from django.core.mail import send_mail
 from sendgrid.helpers.mail import Email, Content, Mail
 
 class TokenGenerator(PasswordResetTokenGenerator):
@@ -37,8 +37,8 @@ def send_email(user_profile):
     response = email_client.client.mail.send.post(request_body=mail.get())
     print('Response from Sendgrid:', response.status_code)
 
-    # In case we need to change back to the email console backend
-    # send_mail(subject, html_content, sender, [recipient])
+    if settings.DEBUG == True:
+        send_mail(subject, html_content, sender, [recipient])
 
 def decode_base64(decoded):
     return force_text(urlsafe_base64_decode(decoded))
