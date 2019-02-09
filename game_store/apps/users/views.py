@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
 from game_store.apps.users.forms import RegisterForm
@@ -88,3 +89,7 @@ def logout(req):
     next = req.GET.get('next', '/')
     auth_logout(req)
     return redirect(next)
+
+@login_required(login_url='/login/')
+def edit_profile(req):
+    return HttpResponse(status=200)
