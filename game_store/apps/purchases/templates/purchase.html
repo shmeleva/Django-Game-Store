@@ -16,8 +16,8 @@
     <input type="hidden" name="error_url" value="{{ redirect_url }}">
     <input type="hidden" name="checksum" value="{{ checksum }}">
     <button type="submit" class="btn btn-block bg-primary mb-3 text-uppercase">Pay</button>
-    <a href="{% url 'game_page' game.id %}">
-      <button class="btn btn-block bg-secondary text-uppercase">Cancel</button>
-    </a>
   </form>
+  <a href="{% url 'game_page' game.id %}">
+    <button class="btn btn-block bg-secondary text-uppercase">Cancel</button>
+  </a>
 {% endblock %}
