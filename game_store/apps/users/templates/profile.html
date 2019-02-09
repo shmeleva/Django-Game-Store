@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+  <div class="card mx-auto floating">
+    <div class="card-body px-lg-5">
+      <hr>
+      <form method="POST" action="/profile/password/">
+        {% csrf_token %}
+        {{ password_form|crispy }}
+        <button type="submit" class="btn btn-block bg-primary">Change Password</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
@@ -92,4 +92,18 @@ def logout(req):
 
 @login_required(login_url='/login/')
 def edit_profile(req):
-    return HttpResponse(status=200)
+    password_form = PasswordChangeForm(user=req.user)
+
+    # if req.method == 'POST':
+        # TODO
+
+    return render(req, 'profile.html', {
+        'password_form': password_form,
+    })
+
+@login_required(login_url='/login/')
+def change_password(req):
+    if req.method != 'POST':
+        return HttpResponse(status=404)
+
+    # TODO
