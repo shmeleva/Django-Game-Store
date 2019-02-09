@@ -131,3 +131,16 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   font-size: 12em;
   color: #C33149;
 }
+
+.badge.badge-pill > .form-group {
+  margin-bottom: 0;
+}
+
+.badge.badge-pill > .form-group > .form-check > .form-check-label > .checkboxinput.form-check-input {
+  margin-top: 0 !important;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #C33149 !important;
+}

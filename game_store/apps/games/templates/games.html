@@ -6,19 +6,25 @@
 {% block body %}
   <form id="game-search-form" method="POST" action="/search" class="container-fluid px-md-3 px-lg-5">
     {% csrf_token %}
-    <div class="row">
+    <div class="row px-1">
       <div class="col col-10 p-0">{{ search_form.query|as_crispy_field }}</div>
       <button type="submit" class="btn bg-primary col col-2 mb-3 text-light text-uppercase">Search</button>
     </div>
     <div>
-      <div class="form-row game-filters">
+      <div class="form-row game-filters mb-1">
         {% if user_profile is not None and user_profile.is_player %}
           <div class="game-ownership-filters">
-            {{ search_form.player_games_only|as_crispy_field }}
+            <label class="badge badge-pill badge-primary mr-2">
+                {{ search_form.player_games_only|as_crispy_field }}
+            </label>
           </div>
         {% endif %}
-        <div class="game-category-filters form-check-inline">
-          {{ search_form.categories|as_crispy_field }}
+        <div class="game-category-filters mb-1">
+          {% for category in search_form.categories %}
+              <label class="badge badge-pill badge-secondary mr-1">
+                {{ category.tag }} {{ category.choice_label }}
+              </label>
+          {% endfor %}
         </div>
       </div>
     </div>
