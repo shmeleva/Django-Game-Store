@@ -98,5 +98,23 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .games__card-publish {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 8em;
+  color: #C33149;
+}
 
+.games__card-publish:focus, .games__card-publish:hover {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 12em;
+  color: #C33149;
 }
