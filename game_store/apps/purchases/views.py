@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponseForbidden, HttpResponse
+from django.db.models import Count, Sum
 from game_store.apps.games.models import Game
 from game_store.apps.purchases.models import Purchase, TransactionStatus
 from game_store.apps.purchases.forms import PurchaseForm
@@ -112,6 +113,12 @@ def stats(req):
         return HttpResponseForbidden()
 
     sales = Purchase.objects.filter(game__developer=user_profile).order_by('-timestamp')
+    sales_per_game = Purchase.objects.filter(game__developer=user_profile, status=TransactionStatus.Succeeded.value) \
+        .values('game__id', 'game__title') \
+        .annotate(total_sales=Count('game'), total_revenue=Sum('price')) \
+        .order_by('-total_sales')
+
     return render(req, 'stats.html', {
         'sales': sales,
+        'sales_per_game': sales_per_game,
     })

@@ -16,35 +16,52 @@
       </ul>
       <div class="tab-content" id="sales-tab-content">
         <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <table class="table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Game</th>
+                <th>Price (EUR)</th>
+                <th>Customer</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in sales %}
+                <tr>
+                  <td>{{ entry.timestamp }}</td>
+                  <td>{{ entry.game.title }}</td>
+                  <td>{{ entry.price }}</td>
+                  <td>{{ entry.user.user.username }}</td>
+                  {% if entry.status == 'S' %}
+                    <td class="green-text">Succeeded</td>
+                  {% else %}
+                    <td class="red-text">Failed</td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+          <table class="table">
               <thead>
                 <tr>
-                  <th>Timestamp</th>
                   <th>Game</th>
-                  <th>Price (EUR)</th>
-                  <th>Customer</th>
-                  <th>Status</th>
+                  <th>Sales Amount</th>
+                  <th>Revenue</th>
                 </tr>
               </thead>
               <tbody>
-                {% for entry in sales %}
+                {% for game in sales_per_game %}
                   <tr>
-                    <td>{{ entry.timestamp }}</td>
-                    <td>{{ entry.game.title }}</td>
-                    <td>{{ entry.price }}</td>
-                    <td>{{ entry.user.user.username }}</td>
-                    {% if entry.status == 'S' %}
-                      <td class="green-text">Succeeded</td>
-                    {% else %}
-                      <td class="red-text">Failed</td>
-                    {% endif %}
+                    <td>{{ game.game__title }}</td>
+                    <td>{{ game.total_sales }}</td>
+                    <td>{{ game.total_revenue|floatformat:2 }}</td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
-        </div>
-        <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
-          222
         </div>
       </div>
     </div>
