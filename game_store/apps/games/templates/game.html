@@ -32,6 +32,7 @@
             {% endfor %}
           </div>
           <p class="card-text">{{ game.description }}</p>
+          <!--TODO: Refactor -->
           <div class="btn-group" role="group">
             {% if user_profile is not None %}
               {% if user_profile.is_player %}

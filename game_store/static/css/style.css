@@ -83,6 +83,8 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   border-color: #C33149;
 }
 
+/* TODO: Move to game-specific CSS */
+
 .games__card-image {
 
 }
