@@ -45,9 +45,9 @@ img {
 }
 
 .btn-primary {
-  color: #fff;
-  background: #C33149;
-  border-color: #C33149;
+  color: #fff !important;
+  background: #C33149 !important;
+  border-color: #C33149 !important;
 }
 
 .btn-primary:hover {
@@ -81,6 +81,10 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   color: #fff;
   background-color: #C33149;
   border-color: #C33149;
+}
+
+.btn.btn-block.bg-primary {
+  color: #fff;
 }
 
 /* TODO: Move to game-specific CSS */
