@@ -4,15 +4,48 @@
 
 {% block game_window %}
 <div class='embed-responsive embed-responsive-21by9'>
-  <iframe src='{{ game.url }}' id='receiver'>
+  <iframe src='{{ game.url }}' id='game_frame'>
   </iframe>
 
   <script>
 
-    window.onload = function() {
-      var receiverWindow = document.getElementById('receiver').contentWindow;
-      receiverWindow.postMessage('This is the message', {{ game.url }});
-    };
+    window.addEventListener("message", function(evt) {
+      if(evt.data.messageType === "SCORE") {
+        // Contains attribute 'score'
+        // TODO save received score
+      } else if(evt.data.messageType === "SAVE"){
+        // Contains attribute 'gameState'
+        // Should save received game state
+      } else if(evt.data.messageType === "LOAD_REQUEST"){
+        // Should load a game state if such exists and send it back to the game
+        // Respond with either LOAD or ERROR (comments below)
+
+        /*
+
+        for loading previous game state:
+        var game_frame = document.getElementById('game_frame');
+        var msg = {
+          'messageType': 'LOAD',
+          'gameState': <here saved game state in JSON format for example>,
+        };
+        game_frame.contentWindow.postMessage(msg, '*');
+
+
+        if something goes wrong when trying to recover previous game state in response to received LOAD_REQUEST:
+        var game_frame = document.getElementById('game_frame');
+        var msg = {
+          'messageType': 'ERROR',
+          'info': <here contextual information to the user on what went wrong>,
+        };
+        game_frame.contentWindow.postMessage(msg, '*');
+
+        */
+        
+      } else if(evt.data.messageType === "SETTING"){
+        // Contains attribute 'options'
+        // 'options' contains game specific configurations for adjusting the layout if needed
+      }
+    });
 
   </script>
 </div>
