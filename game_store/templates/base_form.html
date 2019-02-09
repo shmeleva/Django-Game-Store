@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="container-fluid px-md-3 px-lg-5">
+  <div class="row justify-content-center">
+    <div class="col col-sm-12 col-md-10 col-lg-8">
+      <div class="card border-0">
+        <div class="card-body">
+          {% block form %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

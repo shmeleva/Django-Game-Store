@@ -1,26 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base_form.html' %}
 
 {% load crispy_forms_tags %}
 
 {% block title %}Edit{% endblock %}
 
-{% block body %}
-<div class="container-fluid px-md-3 px-lg-5">
-  <div class="row justify-content-center">
-    <div class="col col-sm-12 col-md-10 col-lg-8">
-      <div class="card border-0">
-        <div class="card-body">
-          <form method="POST" action="edit" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-block bg-primary text-uppercase mb-3">Save</button>
-            <a href="{% url 'game_page' game.id %}">
-              <button class="btn btn-block bg-secondary text-uppercase">Cancel</button>
-            </a>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% block form %}
+  <form method="POST" action="edit" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-block bg-primary text-uppercase mb-3">Save</button>
+    <a href="{% url 'game_page' game.id %}">
+      <button class="btn btn-block bg-secondary text-uppercase">Cancel</button>
+    </a>
+  </form>
 {% endblock %}
