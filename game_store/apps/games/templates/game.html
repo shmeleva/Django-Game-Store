@@ -4,65 +4,111 @@
 
 {% block body %}
 
-<div class="card" style="width: 80%;">
-  {% block game_window %}
-    {% if game.image %}
-      <!-- TODO: Fix image aspect ratio. -->
-      <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
-    {% endif %}
-  {% endblock %}
-  <div class="card-body">
-    <h5 class="card-title">{{ game.title }}</h5>
-    {% for category in game.categories.all %}
-      <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
-    {% endfor %}
-    <br>
-    <p class="card-text">{{ game.description }}</p>
-    <p class="card-text">Created by {{ game.developer.user }}</p>
-    <!-- TODO: Fix buttons to match the main page! -->
-    {% if user_profile is not None and user_profile.is_developer %}
-      <div class="btn-group" role="group" aria-label="Edit">
-        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Download stats. -->
-        <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Edit</a>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="container-fluid px-md-3 px-lg-5">
+  <div class="row px-1">
+    <div class="col col-sm-12 col-md-12 col-lg-9 mb-3">
+      <div class="card border-0">
+        {% block game %}
+          {% if game.image %}
+            <div class="embed-responsive embed-responsive-16by9">
+              <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
+            </div>
+          {% endif %}
+        {% endblock %}
+        <div class="card-body">
+          <h3 class="card-title text-capitalize text-truncate game__header">{{ game.title }}</h3>
+          <div class="mb-3">
+            {% for category in game.categories.all %}
+              <span class="badge badge-pill badge-secondary">{{ category }}</span>
+            {% endfor %}
+          </div>
+          <p class="card-text">{{ game.description }}</p>
+          <!--TODO: Refactor -->
+          <div class="btn-group" role="group">
+            {% if user_profile is not None %}
+              {% if user_profile.is_player %}
+                {% if game.is_owned %}
+                  <a href="{% url 'play' game.id %}">
+                    <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
+                  </a>
+                  <a href="{% url 'play' game.id %}">
+                    <button type="button" class="btn btn-primary text-uppercase">Play</button>
+                  </a>
+                {% else %}
+                  <a href="{% url 'purchase' game.id %}">
+                    <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                  </a>
+                  <a href="{% url 'purchase' game.id %}">
+                    <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+                  </a>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'edit' game.id %}">
+                  <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                </a>
+                <a href="{% url 'edit' game.id %}">
+                  <button type="button" class="btn btn-primary text-uppercase">Edit</button>
+                </a>
+              {% endif %}
+            {% else %}
+              <a href="{% url 'purchase' game.id %}">
+                <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+              </a>
+              <a href="{% url 'purchase' game.id %}">
+                <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="sharethis-inline-share-buttons m-3"></div>
+        <hr/>
+        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
       </div>
-    {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
-      <div class="btn-group" role="group" aria-label="Play">
-        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Best score. -->
-        <a href="{% url 'play' game.id %}" class="btn btn-primary">Play</a>
-      </div>
-    {% else %}
-      <div class="btn-group" role="group" aria-label="Buy">
-        <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
-        <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
-      </div>
-    {% endif %}
-  </div>
-  <div class="sharethis-inline-share-buttons"></div>
-  <div class="game-scores">
-    {% if player_highscore %}
-      <div class="game__player-highscore">
-        <div>Highscore</div>
-        <div>{{ player_highscore.score }}</div>
-      </div>
-    {% endif %}
-    {% if player_last_score %}
-      <div class="game__player-last-score">
-        <div>Last score</div>
-        <div>{{ player_last_score.score }}</div>
-      <div>
-    {% endif %}
-    {% if global_highscores %}
-      <div class="game__global-highscores">
-        <div>TOP 10</div>
-        <div>
-          <!-- TODO: Highlight player highscore -->
-          {% for highscore in global_highscores %}
-            <div>{{ highscore.user__user__username }}</div>
-            <div>{{ highscore.highscore }}</div>
-          {% endfor %}
+    </div>
+    <div class="col col-sm-12 col-md-12 col-lg-3 mb-3">
+      <div class="card border-0">
+        <div class="game-scores">
+          <div class="container">
+            {% if player_last_score %}
+              <div class="row m-3">
+                <div class="col col-12 col-xl-6 text-center">
+                  <h3 class="text-uppercase game__header">Last</h3>
+                  <h6>{{ player_last_score.score }}</h6>
+                </div>
+                <div class="col col-12 col-xl-6 text-center">
+                  <h3 class="text-uppercase game__header">Best</h3>
+                  <h6>{{ player_highscore.score }}</h6>
+                </div>
+              </div>
+              <hr/>
+            {% endif %}
+            {% if global_highscores %}
+              <div class="row m-3 game__global-highscores">
+                <div class="col col-12 text-center">
+                  <h3 class="text-uppercase game__header">TOP 10</h3>
+                  {% for highscore in global_highscores %}
+                    <div class="row mb-1">
+                      <h6 class="col col-6">{{ highscore.user__user__username }}</h6>
+                      <h6 class="col col-6">{{ highscore.highscore }}</h6>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
         </div>
       </div>
-    {% endif %}
+    </div>
   </div>
 </div>
+
 {% endblock %}

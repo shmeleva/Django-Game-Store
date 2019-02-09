@@ -1,5 +1,5 @@
 body {
-  background: #292F36; /*#17BEBB;*/
+  background: #1C1F4C; /*#FFBF00;*/ /*#17BEBB;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -7,21 +7,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #56E39F;
-  text-decoration: none;
+  color: #C33149;
+  text-decoration: none !important;
   background-color: transparent;
+}
+
+img {
+    object-fit: cover;
 }
 
 .card, .btn, .form-control, .card-img-top { border-radius: 0; }
 
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #C33149;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem #CCC33149;
+    box-shadow: 0 0 0 0.2rem #CCC33149;
+}
+
 /* TODO: Use SASS to set the primary colour and other settings! */
 
+
 .bg-primary {
-  background: #56E39F !important;
+  background: #C33149 !important;
 }
 
 .bg-primary.navbar {
-  background: transparent !important;
+  background: /*#CC8C00*/ #000019 !important;
 }
 
 .btn {
@@ -31,47 +45,112 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background: #56E39F;
-  border-color: #56E39F;
+  color: #fff !important;
+  background: #C33149 !important;
+  border-color: #C33149 !important;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #C33149;
+  border-color: #C33149;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #C33149;
+  border-color: #C33149;
+}
+
+a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
+    background-color: #C33149 !important;
 }
 
 .btn-outline-primary {
-  color: #56E39F;
-  border-color: #56E39F;
+  color: #C33149;
+  border-color: #C33149;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #C33149;
+  border-color: #C33149;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show>.btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #C33149;
+  border-color: #C33149;
 }
 
-@media screen and (min-width: 991.98px) {
-  .card.floating {
-    max-width: 991.98px;
-    display: flex;
-  }
+.btn.btn-block.bg-primary {
+  color: #fff;
 }
 
-img {
-    object-fit: cover;
+/* TODO: Move to game-specific CSS */
+
+.games__card-image {
+
+}
+
+.games__card-image:focus, .games__card-image:hover {
+
+}
+
+.games__card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-height: 24px;
+  max-height: 24px;
+}
+
+.games__card-categories {
+  height: 24px;
+  overflow: hidden;
+}
+
+.games__card-publish {
+  min-height: 21em;
+}
+
+.games__card-publish_plus {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 8em;
+  color: #C33149;
+}
+
+.games__card-publish_plus:focus, .games__card-publish_plus:hover {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 12em;
+  color: #C33149;
+}
+
+.badge.badge-pill > .form-group {
+  margin-bottom: 0;
+}
+
+.badge.badge-pill > .form-group > .form-check > .form-check-label > .checkboxinput.form-check-input {
+  margin-top: 0 !important;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #C33149 !important;
+}
+
+.game__header {
+  color: #C33149 !important;
 }
