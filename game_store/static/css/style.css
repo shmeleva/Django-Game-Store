@@ -1,5 +1,5 @@
 body {
-  background: #FFBF00; /*#17BEBB;*/
+  background: #1C1F4C; /*#FFBF00;*/ /*#17BEBB;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -35,7 +35,7 @@ img {
 }
 
 .bg-primary.navbar {
-  background: #CC8C00 !important;
+  background: /*#CC8C00*/ #000019 !important;
 }
 
 .btn {
