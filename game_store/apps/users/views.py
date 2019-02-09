@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -113,4 +113,14 @@ def change_password(req):
     if req.method != 'POST':
         return HttpResponse(status=404)
 
-    # TODO
+    form = PasswordChangeForm(req.user, req.POST)
+
+    if form.is_valid():
+        user = form.save()
+        update_session_auth_hash(req, user)
+        return redirect('/profile/edit/')
+
+    return render(req, 'profile.html', {
+        'profile_form': ProfileForm(instance=req.user),
+        'password_form': form,
+    })
