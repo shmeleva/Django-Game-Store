@@ -27,19 +27,35 @@
             {% if user_profile is not None %}
               {% if user_profile.is_player %}
                 {% if game.is_owned %}
-                  <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
-                  <button type="button" class="btn btn-primary text-uppercase">Play</button>
+                  <a href="{% url 'play' game.id %}">
+                    <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
+                  </a>
+                  <a href="{% url 'play' game.id %}">
+                    <button type="button" class="btn btn-primary text-uppercase">Play</button>
+                  </a>
                 {% else %}
-                  <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                  <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+                  <a href="{% url 'purchase' game.id %}">
+                    <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                  </a>
+                  <a href="{% url 'purchase' game.id %}">
+                    <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+                  </a>
                 {% endif %}
               {% else %}
-                <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                <button type="button" class="btn btn-primary text-uppercase">Edit</button>
+                <a href="{% url 'edit' game.id %}">
+                  <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                </a>
+                <a href="{% url 'edit' game.id %}">
+                  <button type="button" class="btn btn-primary text-uppercase">Edit</button>
+                </a>
               {% endif %}
             {% else %}
-              <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-              <button type="button" class="btn btn-primary">Buy</button>
+              <a href="{% url 'purchase' game.id %}">
+                <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+              </a>
+              <a href="{% url 'purchase' game.id %}">
+                <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+              </a>
             {% endif %}
           </div>
         </div>
