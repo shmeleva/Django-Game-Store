@@ -1,5 +1,5 @@
 body {
-  background: #292F36; /*#17BEBB;*/
+  /*background: #292F36; /*#17BEBB;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -7,21 +7,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #56E39F;
-  text-decoration: none;
+  color: #5E2BFF;
+  text-decoration: none !important;
   background-color: transparent;
+}
+
+img {
+    object-fit: cover;
 }
 
 .card, .btn, .form-control, .card-img-top { border-radius: 0; }
 
 /* TODO: Use SASS to set the primary colour and other settings! */
 
+
 .bg-primary {
-  background: #56E39F !important;
+  background: #5E2BFF !important;
 }
 
 .bg-primary.navbar {
-  background: transparent !important;
+  background: #5E2BFF !important;
 }
 
 .btn {
@@ -32,46 +37,58 @@ a {
 
 .btn-primary {
   color: #fff;
-  background: #56E39F;
-  border-color: #56E39F;
+  background: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
 .btn-outline-primary {
-  color: #56E39F;
-  border-color: #56E39F;
+  color: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show>.btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #56E39F;
-  border-color: #56E39F;
+  background-color: #5E2BFF;
+  border-color: #5E2BFF;
 }
 
-@media screen and (min-width: 991.98px) {
-  .card.floating {
-    max-width: 991.98px;
-    display: flex;
-  }
+.games__card-image {
+
 }
 
-img {
-    object-fit: cover;
+.games__card-image:focus, .games__card-image:hover {
+
+}
+
+.games__card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-height: 24px;
+  max-height: 24px;
+}
+
+.games__card-categories {
+  height: 24px;
+  overflow: hidden;
 }
