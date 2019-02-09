@@ -18,6 +18,15 @@ img {
 
 .card, .btn, .form-control, .card-img-top { border-radius: 0; }
 
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #C33149;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem #CCC33149;
+    box-shadow: 0 0 0 0.2rem #CCC33149;
+}
+
 /* TODO: Use SASS to set the primary colour and other settings! */
 
 
