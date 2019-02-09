@@ -14,99 +14,25 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="container-fluid px-md-3 px-lg-5">
-  <div class="row px-1">
-    <div class="col col-sm-12 col-md-12 col-lg-9 mb-3">
-      <div class="card border-0">
-        {% block game_window %}
-          {% if game.image %}
-            <div class="embed-responsive embed-responsive-16by9">
-              <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
-            </div>
-          {% endif %}
-        {% endblock %}
-        <div class="card-body">
-          <h3 class="card-title text-capitalize text-truncate game__header">{{ game.title }}</h3>
-          <div class="mb-3">
-            {% for category in game.categories.all %}
-              <span class="badge badge-pill badge-secondary">{{ category }}</span>
-            {% endfor %}
+  <div class="row p-0" style="background: white;">
+    <div class="col col-12 p-0">
+      {% block game_window %}
+        {% if game.image %}
+          <div class="embed-responsive embed-responsive-16by9">
+            <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
           </div>
-          <p class="card-text">{{ game.description }}</p>
-          <!--TODO: Refactor -->
-          <div class="btn-group" role="group">
-            {% if user_profile is not None %}
-              {% if user_profile.is_player %}
-                {% if is_owned %}
-                  <a href="{% url 'play' game.id %}">
-                    <button type="button" class="btn btn-outline-primary">{{ player_highscore.score }}</button>
-                  </a>
-                  <a href="{% url 'play' game.id %}">
-                    <button type="button" class="btn btn-primary text-uppercase">Play</button>
-                  </a>
-                {% else %}
-                  <a href="{% url 'purchase' game.id %}">
-                    <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                  </a>
-                  <a href="{% url 'purchase' game.id %}">
-                    <button type="button" class="btn btn-primary text-uppercase">Buy</button>
-                  </a>
-                {% endif %}
-              {% else %}
-                <a href="{% url 'edit' game.id %}">
-                  <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                </a>
-                <a href="{% url 'edit' game.id %}">
-                  <button type="button" class="btn btn-primary text-uppercase">Edit</button>
-                </a>
-              {% endif %}
-            {% else %}
-              <a href="{% url 'purchase' game.id %}">
-                <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-              </a>
-              <a href="{% url 'purchase' game.id %}">
-                <button type="button" class="btn btn-primary text-uppercase">Buy</button>
-              </a>
-            {% endif %}
-          </div>
-        </div>
-        <div class="sharethis-inline-share-buttons m-3"></div>
-        <hr/>
-        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
-      </div>
+        {% endif %}
+      {% endblock %}
     </div>
-    <div class="col col-sm-12 col-md-12 col-lg-3 mb-3">
-      <div class="card border-0">
-        <div class="game-scores">
-          <div class="container">
-            {% if player_last_score %}
-              <div class="row m-3">
-                <div class="col col-12 col-xl-6 text-center">
-                  <h3 class="text-uppercase game__header">Last</h3>
-                  <h6>{{ player_last_score.score }}</h6>
-                </div>
-                <div class="col col-12 col-xl-6 text-center">
-                  <h3 class="text-uppercase game__header">Best</h3>
-                  <h6>{{ player_highscore.score }}</h6>
-                </div>
-              </div>
-              <hr/>
-            {% endif %}
-            {% if global_highscores %}
-              <div class="row m-3 game__global-highscores">
-                <div class="col col-12 text-center">
-                  <h3 class="text-uppercase game__header">TOP 10</h3>
-                  {% for highscore in global_highscores %}
-                    <div class="row mb-1">
-                      <h6 class="col col-6">{{ highscore.user__user__username }}</h6>
-                      <h6 class="col col-6">{{ highscore.highscore }}</h6>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+    <div class="col col-12 col-sm-12	col-md-12	.col-lg-8	col-xl-8">
+      {% include 'game_description.html' %}
+    </div>
+    <div class="col col-12 col-sm-12	col-md-12	.col-lg-4	col-xl-4">
+      {% include 'game_highscores.html' %}
+    </div>
+    <div class="col col-12 col-sm-12	col-md-12	.col-lg-8	col-xl-8">
+      <hr/>
+      <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
     </div>
   </div>
 </div>

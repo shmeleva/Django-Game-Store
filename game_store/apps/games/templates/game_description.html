@@ -1,0 +1,48 @@
+<div class="card border-0">
+  <div class="card-body">
+    <h3 class="card-title text-capitalize text-truncate game__header">{{ game.title }}</h3>
+    <div class="mb-3">
+      {% for category in game.categories.all %}
+        <span class="badge badge-pill badge-secondary">{{ category }}</span>
+      {% endfor %}
+    </div>
+    <p class="card-text">{{ game.description }}</p>
+    <!--TODO: Refactor -->
+    <div class="btn-group" role="group">
+      {% if user_profile is not None %}
+        {% if user_profile.is_player %}
+          {% if is_owned %}
+            <a href="{% url 'play' game.id %}">
+              <button type="button" class="btn btn-outline-primary">{{ player_highscore.score }}</button>
+            </a>
+            <a href="{% url 'play' game.id %}">
+              <button type="button" class="btn btn-primary text-uppercase">Play</button>
+            </a>
+          {% else %}
+            <a href="{% url 'purchase' game.id %}">
+              <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+            </a>
+            <a href="{% url 'purchase' game.id %}">
+              <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+            </a>
+          {% endif %}
+        {% else %}
+          <a href="{% url 'edit' game.id %}">
+            <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+          </a>
+          <a href="{% url 'edit' game.id %}">
+            <button type="button" class="btn btn-primary text-uppercase">Edit</button>
+          </a>
+        {% endif %}
+      {% else %}
+        <a href="{% url 'purchase' game.id %}">
+          <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+        </a>
+        <a href="{% url 'purchase' game.id %}">
+          <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+        </a>
+      {% endif %}
+    </div>
+    <div class="sharethis-inline-share-buttons mt-3"></div>
+  </div>
+</div>
