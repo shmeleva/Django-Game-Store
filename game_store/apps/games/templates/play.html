@@ -2,9 +2,18 @@
 
 {% block title %}Play - {{ game.title }}{% endblock %}
 
-{% block game %}
-<div class="embed-responsive embed-responsive-21by9">
-  <iframe src="{{ game.url }}">
+{% block game_window %}
+<div class='embed-responsive embed-responsive-21by9'>
+  <iframe src='{{ game.url }}' id='receiver'>
   </iframe>
+
+  <script>
+
+    window.onload = function() {
+      var receiverWindow = document.getElementById('receiver').contentWindow;
+      receiverWindow.postMessage('This is the message', {{ game.url }});
+    };
+
+  </script>
 </div>
 {% endblock %}
