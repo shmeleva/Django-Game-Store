@@ -1,10 +1,9 @@
-{% extends 'base.html' %}
-
-{% load crispy_forms_tags %}
+{% extends 'base_form.html' %}
 
 {% block title %}{% if new_user %}Register{% else %}Login{% endif %}{% endblock %}
 
-{% block body %}
+{% block form %}
+
   {% if new_user %}You will receive a confirmation email soon.<br>{% endif %}
   Please check your mailbox and verify your email address before logging in.<br>
   If you cannot find the email, please check your spam folder as well.
