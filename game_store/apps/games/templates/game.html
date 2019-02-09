@@ -36,9 +36,9 @@
           <div class="btn-group" role="group">
             {% if user_profile is not None %}
               {% if user_profile.is_player %}
-                {% if game.is_owned %}
+                {% if is_owned %}
                   <a href="{% url 'play' game.id %}">
-                    <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
+                    <button type="button" class="btn btn-outline-primary">{{ player_highscore.score }}</button>
                   </a>
                   <a href="{% url 'play' game.id %}">
                     <button type="button" class="btn btn-primary text-uppercase">Play</button>

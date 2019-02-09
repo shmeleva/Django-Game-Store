@@ -131,10 +131,15 @@ def game(req, id):
     #
     # Getting a personal highscore and last score for players, if available:
     if user and user.is_player:
-        results = Result.objects.filter(user=user, game=game)
-        if results.exists():
-            context['player_highscore'] = results.order_by('-score').first()
-            context['player_last_score'] = results.order_by('-timestamp').first()
+        #
+        purchase = Purchase.objects.filter(user=user, game=game)
+        if purchase.exists():
+            context["is_owned"] = True
+            #
+            results = Result.objects.filter(user=user, game=game)
+            if results.exists():
+                context['player_highscore'] = results.order_by('-score').first()
+                context['player_last_score'] = results.order_by('-timestamp').first()
     #
     return render(req, 'game.html', context)
 
