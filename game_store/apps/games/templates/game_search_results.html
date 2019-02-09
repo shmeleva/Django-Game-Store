@@ -2,8 +2,8 @@
   <div class="row">
     {% if user_profile and user_profile.is_developer %}
     <div class="col col-sm-12 col-md-6 col-lg-3 p-1 border-0">
-      <div class="card h-100 w-100 border-1">
-        <a href="{% url 'publish' %}">Publish +</a>
+      <div class="card h-100 w-100 border-0">
+        <a href="{% url 'publish' %}" class="h-100 w-100 text-center align-middle">+</a>
       </div>
     </div>
     {% endif %}
@@ -11,7 +11,7 @@
       {% for game in games %}
         <div class="col col-sm-12 col-md-6 col-lg-3 p-1 border-0">
           <a href="{% url 'game_page' game.id %}">
-            <div class="card h-100 w-100 border-1">
+            <div class="card h-100 w-100 border-0">
               {% if game.image %}
                 <div class="embed-responsive embed-responsive-16by9">
                   <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
@@ -19,7 +19,7 @@
               {% endif %}
               <div class="card-body container">
                 <div class="row">
-                  <h5 class="card-title text-capitalize col col-12 games__card-title">{{ game.title }}</h5>
+                  <h5 class="card-title text-capitalize col col-12 text-truncate">{{ game.title }}</h5>
                 </div>
                 <div class="row mb-3 games__card-categories">
                   <div class="col col-12">
@@ -29,7 +29,7 @@
                   </div>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                  <div class="btn-group" role="group" aria-label="Play">
+                  <div class="btn-group" role="group">
                     {% if user_profile is not None %}
                       {% if user_profile.is_player %}
                         {% if game.is_owned %}
