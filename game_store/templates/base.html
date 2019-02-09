@@ -35,6 +35,11 @@
         </ul>
         <ul class='navbar-nav navbar-right px-md-3'>
           {% if user.is_authenticated %}
+            {% if user.userprofile.is_developer %}
+            <li class='nav-item'>
+              <a class='nav-link' href='{% url "stats" %}'>Sales Statistics</a>
+            </li>
+            {% endif %}
             <li class='nav-item'>
               <a class='nav-link' href='{% url "edit_profile" %}'>Profile</a>
             </li>

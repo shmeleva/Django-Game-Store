@@ -3,5 +3,34 @@
 {% block title %}Stats{% endblock %}
 
 {% block body %}
-  <span>One day developers will be able to see stats here. But not today ¯\_(ツ)_/¯</span>
+  <div class="card mx-auto floating">
+    <div class="card-body px-lg-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Game</th>
+            <th>Price (EUR)</th>
+            <th>Customer</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in sales %}
+            <tr>
+              <td>{{ entry.timestamp }}</td>
+              <td>{{ entry.game.title }}</td>
+              <td>{{ entry.price }}</td>
+              <td>{{ entry.user.user.username }}</td>
+              {% if entry.status == 'S' %}
+                <td class="green-text">Succeeded</td>
+              {% else %}
+                <td class="red-text">Failed</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock%}

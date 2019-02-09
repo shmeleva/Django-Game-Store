@@ -160,3 +160,11 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .game__header {
   color: #C33149 !important;
 }
+
+.red-text {
+  color: #f00 !important;
+}
+
+.green-text {
+  color: #008000 !important;
+}

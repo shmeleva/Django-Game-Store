@@ -61,9 +61,6 @@ def purchase(req, id):
         'checksum': checksum,
     })
 
-def stats(req):
-    return render(req, 'stats.html')
-
 # TODO: Render user-friendly UI and improve other error responses
 def payment_result(req):
     formatted_pid = req.GET.get('pid')
@@ -107,5 +104,13 @@ def payment_result(req):
         'game_id': purchase_info.get('game_id'),
     })
 
+@login_required(login_url='/login/')
 def stats(req):
-    pass
+    user_profile = UserProfile.get_user_profile_or_none(req.user)
+    if user_profile is None or not user_profile.is_developer:
+        return HttpResponseForbidden()
+
+    sales = Purchase.objects.filter(game__developer=user_profile).order_by('-timestamp')
+    return render(req, 'stats.html', {
+        'sales': sales,
+    })
