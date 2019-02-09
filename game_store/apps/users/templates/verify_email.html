@@ -2,11 +2,12 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% if new_user %}Register{% else %}Login{% endif %}{% endblock %}
 
 {% block body %}
-  {% if new_user %}We have sent you a confirmation email.<br>{% endif %}
-  Please check your mailbox and verify your email address before logging in.
+  {% if new_user %}You will receive a confirmation email soon.<br>{% endif %}
+  Please check your mailbox and verify your email address before logging in.<br>
+  If you cannot find the email, please check your spam folder as well.
 
   <!-- TODO: Add an option to resend a confirmation email -->
 {% endblock %}

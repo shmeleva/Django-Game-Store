@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
-from game_store.apps.users.forms import RegisterForm
+from game_store.apps.users.forms import RegisterForm, ProfileForm
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.utils import send_email, decode_base64, validate_token
 
@@ -88,3 +89,38 @@ def logout(req):
     next = req.GET.get('next', '/')
     auth_logout(req)
     return redirect(next)
+
+@login_required(login_url='/login/')
+def edit_profile(req):
+    password_form = PasswordChangeForm(user=req.user)
+
+    if req.method == 'POST':
+        profile_form = ProfileForm(req.POST, instance=req.user)
+        
+        if profile_form.is_valid():
+            user = profile_form.save()
+            profile_form = ProfileForm(instance=user)
+    else:
+        profile_form = ProfileForm(instance=req.user)
+
+    return render(req, 'profile.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    })
+
+@login_required(login_url='/login/')
+def change_password(req):
+    if req.method != 'POST':
+        return HttpResponse(status=404)
+
+    form = PasswordChangeForm(req.user, req.POST)
+
+    if form.is_valid():
+        user = form.save()
+        update_session_auth_hash(req, user)
+        return redirect('/profile/edit/')
+
+    return render(req, 'profile.html', {
+        'profile_form': ProfileForm(instance=req.user),
+        'password_form': form,
+    })
