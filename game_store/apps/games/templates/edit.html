@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Edit{% endblock %}
+
+{% block body %}
+<div class="card mx-auto floating">
+  <div class="card-body px-lg-5">
+    <form method="POST" action="edit" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-block btn-block bg-primary">Save</button>
+      <!-- Add min="0.0" -->
+    </form>
+  </div>
+</div>
+{% endblock %}

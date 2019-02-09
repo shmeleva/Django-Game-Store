@@ -19,6 +19,7 @@
     <br>
     <p class="card-text">{{ game.description }}</p>
     <p class="card-text">Created by {{ game.developer.user }}</p>
+    <!-- TODO: Fix buttons to match the main page! -->
     {% if user_profile is not None and user_profile.is_developer %}
       <div class="btn-group" role="group" aria-label="Edit">
         <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ score }}</a> <!-- TODO: Download stats. -->
@@ -33,6 +34,33 @@
       <div class="btn-group" role="group" aria-label="Buy">
         <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
         <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
+      </div>
+    {% endif %}
+  </div>
+  <div class="sharethis-inline-share-buttons"></div>
+  <div class="game-scores">
+    {% if player_highscore %}
+      <div class="game__player-highscore">
+        <div>Highscore</div>
+        <div>{{ player_highscore.score }}</div>
+      </div>
+    {% endif %}
+    {% if player_last_score %}
+      <div class="game__player-last-score">
+        <div>Last score</div>
+        <div>{{ player_last_score.score }}</div>
+      <div>
+    {% endif %}
+    {% if global_highscores %}
+      <div class="game__global-highscores">
+        <div>TOP 10</div>
+        <div>
+          <!-- TODO: Highlight player highscore -->
+          {% for highscore in global_highscores %}
+            <div>{{ highscore.user__user__username }}</div>
+            <div>{{ highscore.highscore }}</div>
+          {% endfor %}
+        </div>
       </div>
     {% endif %}
   </div>

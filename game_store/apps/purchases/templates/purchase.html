@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Purchase - {{game.title}}{% endblock %}
 
 {% block body %}
-  <span>One day users will be able to buy games here. But not today ¯\_(ツ)_/¯</span>
+  <form method="POST" action="http://payments.webcourse.niksula.hut.fi/pay/">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="hidden" name="pid" value="{{ pid }}">
+    <input type="hidden" name="sid" value="{{ sid }}">
+    <input type="hidden" name="amount" value="{{ amount }}">
+    <input type="hidden" name="success_url" value="{{ redirect_url }}">
+    <input type="hidden" name="cancel_url" value="{{ redirect_url }}">
+    <input type="hidden" name="error_url" value="{{ redirect_url }}">
+    <input type="hidden" name="checksum" value="{{ checksum }}">
+    <button type="submit" class="btn btn-block bg-primary">Pay</button>
+  </form>
 {% endblock %}

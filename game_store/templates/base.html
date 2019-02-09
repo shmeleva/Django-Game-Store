@@ -8,6 +8,16 @@
     <link rel='stylesheet' type='text/css' href='{% static "css/style.css" %}' />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <!-- Social sharing: -->
+    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c5dae2d83748d0011315322&product=inline-share-buttons' async='async'></script>
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:description" content="{{ og_description }}">
+    <meta property="og:image" content="{{ og_image }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:title" content="{{ og_title }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+    <meta name="twitter:image:src" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
   <body>
     <nav class='navbar navbar-expand-lg navbar-dark bg-primary mb-3'>
 
@@ -22,11 +32,6 @@
         </ul>
         <ul class='navbar-nav navbar-right'>
           {% if user.is_authenticated %}
-            {% if user_profile is not None and user_profile.is_developer %}
-              <li class='nav-item'>
-                <a class='nav-link' href='{% url "publish" %}'>Publish</a>
-              </li>
-            {% endif %}
             <li class='nav-item'>
               <a class='nav-link' href='{% url "logout" %}?next={{ request.path }}'>Logout</a>
             </li>

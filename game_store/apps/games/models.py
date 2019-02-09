@@ -1,8 +1,9 @@
 from django.db import models
+from django.apps import apps
 from django.core.validators import MinValueValidator
 from game_store.apps.users.models import UserProfile
 from game_store.apps.categories.models import Category
-from decimal import *
+from decimal import Decimal
 
 class Game(models.Model):
     title = models.CharField(max_length=128)
@@ -15,8 +16,3 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
-
-    @staticmethod
-    def search(query, is_purchased, categories):
-        #TODO: is_purchased
-        return Game.objects.filter(title__contains=query)

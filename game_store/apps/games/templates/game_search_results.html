@@ -1,37 +1,54 @@
-{% if games %}
-  <div class="game-preview-list">
-    {% for game in games %}
-      <div class="card game-preview">
-        <!-- TODO: Fix image aspect ratio. -->
-        {% if game.image %}
-          <a href="{% url 'game_page' game.id %}"><img class="card-img-top" src="{{ game.image.url }}" alt="game.title"></a>
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ game.title }}</h5>
-          {% for category in game.categories.all %}
-            <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
-          {% endfor %}
-          <br>
-          {% if user_profile is not None and user_profile.is_developer %}
-            <div class="btn-group" role="group" aria-label="More">
-              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Download stats. -->
-              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">More</a>
-            </div>
-          {% elif user_profile is not None and user_profile.is_player %} <!-- TODO: And game is owned by the user. -->
-            <div class="btn-group" role="group" aria-label="Play">
-              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.score }}</a> <!-- TODO: Best score. -->
-              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Play</a>
-            </div>
-          {% else %}
-            <div class="btn-group" role="group" aria-label="Buy">
-              <a href="{% url 'game_page' game.id %}" class="btn btn-outline-primary">{{ game.price }}</a> <!-- TODO: Best score. -->
-              <a href="{% url 'game_page' game.id %}" class="btn btn-primary">Buy</a>
-            </div>
-          {% endif %}
-        </div>
+<div class="container-fluid px-md-3 px-lg-5 d-flex flex-column h-100">
+  <div class="row">
+    {% if user_profile and user_profile.is_developer %}
+    <div class="col col-md-12 col-lg-3 p-1 border-0">
+      <div class="card h-100 w-100 border-0">
+        <a href="{% url 'publish' %}">Publish +</a>
       </div>
-    {% endfor %}
+    </div>
+    {% endif %}
+    {% if games %}
+      {% for game in games %}
+        <div class="col col-md-12 col-lg-3 p-1 border-0">
+          <div class="card h-100 w-100 border-0">
+            {% if game.image %}
+              <a href="{% url 'game_page' game.id %}">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <img class="embed-responsive-item" src="{{ game.image.url }}" alt="game.title"></img>
+                </div>
+              </a>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ game.title }}</h5>
+              {% for category in game.categories.all %}
+                <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
+              {% endfor %}
+              <br>
+              <div class="btn-group" role="group" aria-label="Play">
+                {% if user_profile is not None %}
+                  {% if user_profile.is_player %}
+                    {% if game.is_owned %}
+                      <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
+                      <button type="button" class="btn btn-primary">PLAY</button> <!-- TODO: CAPS with CSS -->
+                    {% else %}
+                      <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                      <button type="button" class="btn btn-primary">BUY</button>
+                    {% endif %}
+                  {% else %}
+                    <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                    <button type="button" class="btn btn-primary">MANAGE</button>
+                  {% endif %}
+                {% else %}
+                  <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+                  <button type="button" class="btn btn-primary">BUY</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% elif user_profile is None or not user_profile.is_developer %}
+      <h3>No games to display ¯\_(ツ)_/¯</h3>
+    {% endif %}
   </div>
-{% else %}
-  <h3>No games to display ¯\_(ツ)_/¯</h3>
-{% endif %}
+</div>
