@@ -98,6 +98,10 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 }
 
 .games__card-publish {
+  min-height: 21em;
+}
+
+.games__card-publish_plus {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -108,7 +112,7 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
   color: #C33149;
 }
 
-.games__card-publish:focus, .games__card-publish:hover {
+.games__card-publish_plus:focus, .games__card-publish_plus:hover {
   margin: 0;
   position: absolute;
   top: 50%;
