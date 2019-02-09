@@ -20,3 +20,26 @@ class RegisterForm(UserCreationForm):
         user_profile = UserProfile(user=user, role=self.cleaned_data['role'])
         user_profile.save()
         return user_profile
+
+class ProfileForm(forms.ModelForm):
+    username = forms.CharField(required=False, widget=forms.TextInput(attrs={'disabled':'disabled'}))
+    email = forms.CharField(required=False, widget=forms.TextInput(attrs={'disabled':'disabled'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_username(self):
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            return instance.username
+        else:
+            return self.cleaned_data['username']
+
+    def clean_email(self):
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            return instance.email
+        else:
+            return self.cleaned_data['email']
+        

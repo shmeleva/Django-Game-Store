@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
-from game_store.apps.users.forms import RegisterForm
+from game_store.apps.users.forms import RegisterForm, ProfileForm
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.utils import send_email, decode_base64, validate_token
 
@@ -94,10 +94,17 @@ def logout(req):
 def edit_profile(req):
     password_form = PasswordChangeForm(user=req.user)
 
-    # if req.method == 'POST':
-        # TODO
+    if req.method == 'POST':
+        profile_form = ProfileForm(req.POST, instance=req.user)
+        
+        if profile_form.is_valid():
+            user = profile_form.save()
+            profile_form = ProfileForm(instance=user)
+    else:
+        profile_form = ProfileForm(instance=req.user)
 
     return render(req, 'profile.html', {
+        'profile_form': profile_form,
         'password_form': password_form,
     })
 
