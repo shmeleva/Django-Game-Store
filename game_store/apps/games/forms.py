@@ -22,6 +22,12 @@ class EditForm(ModelForm):
             'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-inline'}),
         }
 
+class DeleteForm(Form):
+    player_games_only = forms.BooleanField(
+        label="I want to permanently delete the game.",
+        required=True
+    )
+
 class SearchForm(Form):
     query = forms.CharField(
         label="",

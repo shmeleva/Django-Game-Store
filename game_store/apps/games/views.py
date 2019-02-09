@@ -15,7 +15,7 @@ from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
 from game_store.apps.categories.models import Category
 from game_store.apps.results.models import Result
-from game_store.apps.games.forms import SearchForm, PublishForm, EditForm
+from game_store.apps.games.forms import SearchForm, PublishForm, EditForm, DeleteForm
 from game_store.apps.games.utils import SearchBuilder
 
 
@@ -206,6 +206,45 @@ def edit(req, id):
             return redirect("/game/{}".format(game.id))
         else:
             return render(req, 'edit.html', {
+                'user_profile': user,
+                'game': game,
+                'form': form
+            })
+    else:
+        return HttpResponseNotFound()
+
+
+# A game removal form.
+# Accepts: GET and POST requests.
+# Returns: an HttpResponse with a rendered HTML page for GET requests,
+# a redirect to / for successful POST requests.
+# Errors:
+# - 403, if the user is not a developer of the developer does not own the game.
+# - 404, if the game does not exist.
+@login_required(login_url='/login/')
+def delete(req, id):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=id)
+    #
+    # Validating that the user is the one who published the game:
+    if user is None or game.developer.id != user.id:
+        return HttpResponseForbidden()
+    #
+    # Returning a removal form:
+    if req.method == 'GET':
+        return render(req, 'delete.html', {
+            'user_profile': user,
+            'game': game,
+            'form': DeleteForm()
+        })
+    # Validating and deleting the game:
+    elif req.method == 'POST':
+        form = DeleteForm(req.POST)
+        if form.is_valid():
+            game.delete()
+            return redirect("/")
+        else:
+            return render(req, 'delete.html', {
                 'user_profile': user,
                 'game': game,
                 'form': form
