@@ -38,7 +38,7 @@ class SearchBuilder:
         return self
 
     def build(self):
-        rendered = render_to_string('game_search_results.html', {
+        rendered = render_to_string('games__search-results.html', {
             'user_profile': self.user,
             'games': self.games,
         })
