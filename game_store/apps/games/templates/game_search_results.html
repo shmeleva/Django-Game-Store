@@ -1,7 +1,7 @@
 <div class="container-fluid px-md-3 px-lg-5 d-flex flex-column h-100">
   <div class="row">
     {% if user_profile and user_profile.is_developer %}
-    <div class="col col-sm-12 col-md-6 col-lg-3 p-1 border-0">
+    <div class="col col-sm-12 col-md-12 col-lg-3 p-1 border-0">
       <div class="card h-100 w-100 border-0 games__card-publish">
         <a href="{% url 'publish' %}" class="card h-100 w-100"><h1 class="text-center games__card-publish_plus">+</h1></a>
       </div>
@@ -9,7 +9,7 @@
     {% endif %}
     {% if games %}
       {% for game in games %}
-        <div class="col col-sm-12 col-md-6 col-lg-3 p-1 border-0">
+        <div class="col col-sm-12 col-md-12 col-lg-3 p-1 border-0">
           <a href="{% url 'game_page' game.id %}">
             <div class="card h-100 w-100 border-0">
               {% if game.image %}
