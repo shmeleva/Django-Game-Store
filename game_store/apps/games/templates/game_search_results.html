@@ -19,7 +19,7 @@
               </a>
             {% endif %}
             <div class="card-body">
-              <h5 class="card-title">{{ game.title }}</h5>
+              <h5 class="card-title text-capitalize">{{ game.title }}</h5>
               {% for category in game.categories.all %}
                 <a href="#"><span class="badge badge-pill badge-secondary">{{ category }}</span></a> <!-- TODO: Go to all games in a selected category. -->
               {% endfor %}
@@ -29,14 +29,14 @@
                   {% if user_profile.is_player %}
                     {% if game.is_owned %}
                       <button type="button" class="btn btn-outline-primary">{{ game.highscore }}</button>
-                      <button type="button" class="btn btn-primary">PLAY</button> <!-- TODO: CAPS with CSS -->
+                      <button type="button" class="btn btn-primary text-uppercase">Play</button>
                     {% else %}
                       <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                      <button type="button" class="btn btn-primary">BUY</button>
+                      <button type="button" class="btn btn-primary text-uppercase">Buy</button>
                     {% endif %}
                   {% else %}
                     <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                    <button type="button" class="btn btn-primary">MANAGE</button>
+                    <button type="button" class="btn btn-primary text-uppercase">Manage</button>
                   {% endif %}
                 {% else %}
                   <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
