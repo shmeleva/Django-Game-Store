@@ -8,12 +8,12 @@
   <form method="POST" action="/profile/edit/">
     {% csrf_token %}
     {{ profile_form|crispy }}
-    <button type="submit" class="btn btn-block bg-primary">Update Profile</button>
+    <button type="submit" class="btn btn-block bg-primary text-uppercase">Update Profile</button>
   </form>
   <hr>
   <form method="POST" action="/profile/password/">
     {% csrf_token %}
     {{ password_form|crispy }}
-    <button type="submit" class="btn btn-block bg-primary">Change Password</button>
+    <button type="submit" class="btn btn-block bg-primary text-uppercase">Change Password</button>
   </form>
 {% endblock %}
