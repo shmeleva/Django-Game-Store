@@ -1,5 +1,6 @@
 body {
-  background: #1C1F4C; /*#FFBF00;*/ /*#17BEBB;*/
+  background: #0B0C10; /*#FFBF00;*/ /*#17BEBB;*/
+  font-family: 'Anonymous Pro', monospace;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -15,6 +16,7 @@ a {
 img {
     object-fit: cover;
 }
+
 
 .card, .btn, .form-control, .card-img-top { border-radius: 0; }
 
@@ -35,7 +37,7 @@ img {
 }
 
 .bg-primary.navbar {
-  background: /*#CC8C00*/ #000019 !important;
+  background: /*#CC8C00*/ #0B0C10 !important;
 }
 
 .btn {

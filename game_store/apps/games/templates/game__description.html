@@ -1,6 +1,6 @@
 <div class="card border-0">
   <div class="card-body">
-    <h3 class="card-title text-capitalize text-truncate game__header">{{ game.title }}</h3>
+    <h3 class="card-title text-capitalize game__header">{{ game.title }}</h3>
     <div class="mb-3">
       {% for category in game.categories.all %}
         <span class="badge badge-pill badge-secondary">{{ category }}</span>
