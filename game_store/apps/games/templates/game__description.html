@@ -13,14 +13,14 @@
         {% if user_profile.is_player %}
           {% if is_owned %}
             <a href="{% url 'play' game.id %}">
-              <button type="button" class="btn btn-outline-primary">{{ player_highscore.score }}</button>
+              <button type="button" class="btn btn-outline-primary"><i class="fas fa-trophy"></i> {{ player_highscore.score }}</button>
             </a>
             <a href="{% url 'play' game.id %}">
               <button type="button" class="btn btn-primary text-uppercase">Play</button>
             </a>
           {% else %}
             <a href="{% url 'purchase' game.id %}">
-              <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+              <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
             </a>
             <a href="{% url 'purchase' game.id %}">
               <button type="button" class="btn btn-primary text-uppercase">Buy</button>
@@ -28,7 +28,7 @@
           {% endif %}
         {% else %}
           <a href="{% url 'edit' game.id %}">
-            <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+            <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
           </a>
           <a href="{% url 'edit' game.id %}">
             <button type="button" class="btn btn-primary text-uppercase">Edit</button>
@@ -36,7 +36,7 @@
         {% endif %}
       {% else %}
         <a href="{% url 'purchase' game.id %}">
-          <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+          <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
         </a>
         <a href="{% url 'purchase' game.id %}">
           <button type="button" class="btn btn-primary text-uppercase">Buy</button>
