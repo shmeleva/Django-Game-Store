@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {% block title %}Stats{% endblock %}
 
 {% block body %}
@@ -33,4 +34,6 @@
       </table>
     </div>
   </div>
+  <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'fusioncharts/fusioncharts.theme.fusion.js' %}"></script>
 {% endblock%}

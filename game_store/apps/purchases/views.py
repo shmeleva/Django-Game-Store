@@ -11,6 +11,7 @@ from game_store.apps.purchases.models import Purchase, TransactionStatus
 from game_store.apps.purchases.forms import PurchaseForm
 from game_store.apps.users.models import UserProfile
 from django.core.cache import cache
+from game_store.apps.purchases.fusioncharts import FusionCharts
 
 logger = logging.getLogger(__name__)
 
