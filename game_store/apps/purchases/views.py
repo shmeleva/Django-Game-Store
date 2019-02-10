@@ -2,11 +2,15 @@ import logging
 import os
 import uuid
 from hashlib import md5
+from collections import OrderedDict
+from datetime import timedelta
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponseForbidden, HttpResponse
 from django.db.models import Count, Sum
+from django.db.models.functions import TruncDate
 from game_store.apps.games.models import Game
 from game_store.apps.purchases.models import Purchase, TransactionStatus
 from game_store.apps.purchases.forms import PurchaseForm
@@ -35,7 +39,7 @@ def purchase(req, id):
     redirect_url = '{}/payment/result'.format(settings.HOST)
 
     checksum_input = 'pid={}&sid={}&amount={}&token={}'.format(formatted_pid, sid, game.price, secret_key)
-    m = md5(checksum_input.encode("ascii"))
+    m = md5(checksum_input.encode('ascii'))
     checksum = m.hexdigest()
 
     # A user can have one pending purchase at a time.
@@ -72,7 +76,7 @@ def payment_result(req):
     secret_key = os.environ.get('PAYMENT_SECRET_KEY', '')
 
     checksum_input = 'pid={}&ref={}&result={}&token={}'.format(formatted_pid, ref, result, secret_key)
-    m = md5(checksum_input.encode("ascii"))
+    m = md5(checksum_input.encode('ascii'))
     calculated_checksum = m.hexdigest()
 
     if checksum != calculated_checksum:
@@ -118,7 +122,42 @@ def stats(req):
         .annotate(total_sales=Count('game'), total_revenue=Sum('price')) \
         .order_by('-total_sales')
 
+    today = timezone.now()
+    start_date = today - timedelta(days=365)
+    revenue_per_date = Purchase.objects.filter(
+        game__developer=user_profile,
+        status=TransactionStatus.Succeeded.value,
+        timestamp__range=[start_date, today],
+    ) \
+        .annotate(date=TruncDate('timestamp')) \
+        .values('date') \
+        .annotate(revenue=Sum('price')) \
+        .order_by('date')
+
+    dataSource = OrderedDict()
+    chartConfig = OrderedDict()
+    chartConfig['caption'] = 'Revenue'
+    chartConfig['xAxisName'] = 'Date'
+    chartConfig['yAxisName'] = 'Revenue (EUR)'
+    chartConfig['decimals'] = '2'
+    chartConfig['forceDecimals'] = '1'
+    chartConfig['yAxisValueDecimals'] = '2'
+    chartConfig['forceYAxisValueDecimals'] = '1'
+    chartConfig['lineThickness'] = '2'
+    chartConfig['theme'] = 'fusion'
+    dataSource['chart'] = chartConfig
+    dataSource['data'] = []
+
+    for entry in revenue_per_date:
+        data = {}
+        data['label'] = str(entry.get('date'))
+        data['value'] = float(entry.get('revenue'))
+        dataSource['data'].append(data)
+
+    chart = FusionCharts('line', 'revenue-chart', '100%', '400', 'revenue-chart-container', 'json', dataSource)
+
     return render(req, 'stats.html', {
         'sales': sales,
         'sales_per_game': sales_per_game,
+        'chart': chart.render(),
     })

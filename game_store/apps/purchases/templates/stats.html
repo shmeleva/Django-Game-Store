@@ -3,14 +3,17 @@
 {% block title %}Stats{% endblock %}
 
 {% block body %}
+  <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+  <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
   <div class="card mx-auto floating">
     <div class="card-body px-lg-5">
+      <div id="revenue-chart-container">{{ chart|safe }}</div>
       <ul class="nav nav-tabs" id="sales-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All Sales</a>
+          <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All Sales</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Grouped by Games</a>
+          <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Grouped by Games</a>
         </li>
       </ul>
       <div class="tab-content" id="sales-tab-content">
@@ -65,6 +68,4 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-  <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 {% endblock%}

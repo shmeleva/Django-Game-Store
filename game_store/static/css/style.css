@@ -168,3 +168,8 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 .green-text {
   color: #008000 !important;
 }
+
+#revenue-chart-container {
+  width: 80%;
+  margin: 0px auto 20px;
+}
