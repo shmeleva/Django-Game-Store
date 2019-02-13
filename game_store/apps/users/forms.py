@@ -17,9 +17,9 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=True)
-        user_profile = UserProfile(user=user, role=self.cleaned_data['role'])
-        user_profile.save()
-        return user_profile
+        user.userprofile.role = self.cleaned_data['role']
+        user.save()
+        return user.userprofile
 
 class ProfileForm(forms.ModelForm):
     username = forms.CharField(required=False, widget=forms.TextInput(attrs={'disabled':'disabled'}))
