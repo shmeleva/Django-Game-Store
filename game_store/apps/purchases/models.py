@@ -10,6 +10,7 @@ class TransactionStatus(Enum):
     Pending = 'P'
     Succeeded = 'S'
     Failed = 'F'
+    Canceled = 'C'
 
 class Purchase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
