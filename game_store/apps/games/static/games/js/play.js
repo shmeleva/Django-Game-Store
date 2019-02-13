@@ -24,7 +24,7 @@ window.addEventListener('message', function(evt) {
       });
     });
   } else if(evt.data.messageType === 'LOAD_REQUEST'){
-    
+
     $.getScript('/static/js/token_verification.js', function() {
       $.post(
         '/game/load_game',
@@ -51,7 +51,9 @@ window.addEventListener('message', function(evt) {
     });
 
   } else if(evt.data.messageType === 'SETTING'){
-    // Contains attribute 'options'
-    // 'options' contains game specific configurations for adjusting the layout if needed
+    // Contains attribute 'options' which contains game specific configurations for adjusting the layout if needed
+    $(document).ready(function() {
+      $('iframe').css(evt.data.options);
+    });
   }
 });
