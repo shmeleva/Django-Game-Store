@@ -15,7 +15,6 @@ from game_store.apps.games.models import Game
 from game_store.apps.purchases.models import Purchase, TransactionStatus
 from game_store.apps.purchases.forms import PurchaseForm
 from game_store.apps.users.models import UserProfile
-from django.core.cache import cache
 from game_store.apps.purchases.fusioncharts import FusionCharts
 
 logger = logging.getLogger(__name__)
@@ -32,8 +31,15 @@ def purchase(req, id):
 
     game = get_object_or_404(Game, pk=id)
 
-    pid = uuid.uuid4()
-    formatted_pid = pid.hex
+    try:
+        purchase = Purchase.objects.filter(user=user_profile, game=game, status=TransactionStatus.Pending.value)[0:1].get()
+        purchase.price = game.price
+    except Purchase.DoesNotExist:
+        purchase = Purchase(user=user_profile, game=game, price=game.price)
+
+    purchase.save()
+
+    formatted_pid = purchase.id.hex
     sid = os.environ.get('PAYMENT_SID', '')
     secret_key = os.environ.get('PAYMENT_SECRET_KEY', '')
     redirect_url = '{}/payment/result'.format(settings.HOST)
@@ -41,19 +47,6 @@ def purchase(req, id):
     checksum_input = 'pid={}&sid={}&amount={}&token={}'.format(formatted_pid, sid, game.price, secret_key)
     m = md5(checksum_input.encode('ascii'))
     checksum = m.hexdigest()
-
-    # A user can have one pending purchase at a time.
-    prev_purchase = cache.get(user_profile.id)
-    if prev_purchase is not None:
-        cache.delete(prev_purchase)
-
-    # Used for recording the payment result in payment_result
-    cache.set(user_profile.id, pid)
-    cache.set(pid, {
-        'user_id': user_profile.id,
-        'game_id': game.id,
-        'price': game.price,
-    })
 
     form = PurchaseForm()
 
@@ -79,35 +72,37 @@ def payment_result(req):
     m = md5(checksum_input.encode('ascii'))
     calculated_checksum = m.hexdigest()
 
+    pid = uuid.UUID(formatted_pid)
+
     if checksum != calculated_checksum:
-        logger.error('Checksum mismatch: {}'.format(formatted_pid))
+        logger.error('Checksum mismatch: {}'.format(pid))
         return HttpResponse(status=400)
 
-    pid = uuid.UUID(formatted_pid)
-    purchase_info = cache.get(pid)
-
-    if purchase_info is None:
-        logger.error('Transaction expired: {}'.format(formatted_pid))
+    try:
+        purchase = Purchase.objects.get(id=pid)
+    except Purchase.DoesNotExist:
         return HttpResponse(status=404)
-
-    cache.delete(pid)
-    cache.delete(purchase_info.get('user_id'))
+    
+    if purchase.status != TransactionStatus.Pending.value:
+        logger.error('Duplicated payment result: {}'.format(pid))
+        return HttpResponseForbidden()
 
     if result == 'cancel':
-        return redirect('/game/{}'.format(purchase_info.get('game_id')))
+        status = TransactionStatus.Canceled.value
+    elif result == 'success':
+        status = TransactionStatus.Succeeded.value
+    else:
+        status = TransactionStatus.Failed.value
 
-    purchase = Purchase(
-        id=pid,
-        user_id=purchase_info.get('user_id'),
-        game_id=purchase_info.get('game_id'),
-        price=purchase_info.get('price'),
-        status=TransactionStatus.Succeeded.value if result == 'success' else TransactionStatus.Failed.value,
-    )
+    purchase.status = status
     purchase.save()
+
+    if result == 'cancel':
+        return redirect('/game/{}'.format(purchase.game.id))
 
     return render(req, 'result.html', {
         'succeeded': result == 'success',
-        'game_id': purchase_info.get('game_id'),
+        'game_id': purchase.game.id,
     })
 
 @login_required(login_url='/login/')
