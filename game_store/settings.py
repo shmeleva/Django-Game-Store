@@ -99,17 +99,6 @@ DATABASES = {
     }
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'purchasecache',
-        'TIMEOUT': 900, # 15 minutes
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    },
-}
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Password validation
