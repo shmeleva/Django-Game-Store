@@ -5,7 +5,9 @@
 {% block title %}Log in{% endblock %}
 
 {% block form %}
-  <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+  <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google">
+    <span class="fab fa-google"></span> Login with Google
+  </a>
   <hr>
   <form method="POST" action="/login/">
     {% csrf_token %}
