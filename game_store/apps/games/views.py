@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.template import RequestContext
-from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidden, HttpResponse
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
@@ -145,6 +145,14 @@ def game(req, id):
 
 def play(req, id):
     return render(req, 'play.html', { 'game': get_object_or_404(Game, pk=id) })
+
+def update_score(req):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=req.POST['id'])
+    if user and user.is_player:
+        result = Result(user=user, game=game, score=req.POST['score'])
+        result.save()
+    return HttpResponse()
 
 # A game publication form.
 # Accepts: GET and POST requests.
