@@ -82,7 +82,7 @@ def payment_result(req):
         purchase = Purchase.objects.get(id=pid)
     except Purchase.DoesNotExist:
         return HttpResponse(status=404)
-    
+
     if purchase.status != TransactionStatus.Pending.value:
         logger.error('Duplicated payment result: {}'.format(pid))
         return HttpResponseForbidden()
@@ -111,23 +111,10 @@ def stats(req):
     if user_profile is None or not user_profile.is_developer:
         return HttpResponseForbidden()
 
-    sales = Purchase.objects.filter(game__developer=user_profile).order_by('-timestamp')
-    sales_per_game = Purchase.objects.filter(game__developer=user_profile, status=TransactionStatus.Succeeded.value) \
-        .values('game__id', 'game__title') \
-        .annotate(total_sales=Count('game'), total_revenue=Sum('price')) \
-        .order_by('-total_sales')
+    sales = Purchase.objects.get_sales(user_profile)
+    sales_per_game = Purchase.objects.get_sales_per_game(user_profile)
 
-    today = timezone.now()
-    start_date = today - timedelta(days=365)
-    revenue_per_date = Purchase.objects.filter(
-        game__developer=user_profile,
-        status=TransactionStatus.Succeeded.value,
-        timestamp__range=[start_date, today],
-    ) \
-        .annotate(date=TruncDate('timestamp')) \
-        .values('date') \
-        .annotate(revenue=Sum('price')) \
-        .order_by('date')
+    revenue_per_date = Purchase.objects.get_revenue_per_date(user_profile)
 
     dataSource = OrderedDict()
     chartConfig = OrderedDict()
