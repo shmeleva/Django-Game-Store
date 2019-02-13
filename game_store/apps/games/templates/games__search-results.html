@@ -1,3 +1,5 @@
+{% load game__button %}
+
 <div class="container-fluid px-md-3 px-lg-5 d-flex flex-column h-100">
   <div class="row">
     {% if user_profile and user_profile.is_developer %}
@@ -28,27 +30,7 @@
                     {% endfor %}
                   </div>
                 </div>
-                <div class="d-flex flex-row-reverse">
-                  <div class="btn-group" role="group">
-                    {% if user_profile is not None %}
-                      {% if user_profile.is_player %}
-                        {% if game.is_owned %}
-                          <button type="button" class="btn btn-outline-primary"><i class="fas fa-trophy"></i> {{ game.highscore }}</button>
-                          <button type="button" class="btn btn-primary text-uppercase">Play</button>
-                        {% else %}
-                          <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
-                          <button type="button" class="btn btn-primary text-uppercase">Buy</button>
-                        {% endif %}
-                      {% else %}
-                        <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                        <button type="button" class="btn btn-primary text-uppercase">Manage</button>
-                      {% endif %}
-                    {% else %}
-                      <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
-                      <button type="button" class="btn btn-primary">Buy</button>
-                    {% endif %}
-                  </div>
-                </div>
+                {% get_button user_profile game  %}
               </div>
             </div>
           </a>

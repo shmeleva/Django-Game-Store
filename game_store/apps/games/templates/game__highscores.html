@@ -2,33 +2,33 @@
   <div class="card-body game-scores">
     <div class="container-fluid">
         <div class="row justify-content-center">
-          {% if player_last_score %}
+          {% if player_latest_score %}
             <div class="col col-4 col-sm-4 col-md-4 col-lg-12 col-xl-6 text-center">
               <h3 class="text-uppercase game__header">Last</h3>
-              <h5>{{ player_last_score.score }}</h5>
+              <h5>{{ player_latest_score }}</h5>
             </div>
             <div class="col col-4 col-sm-4 col-md-4 col-lg-12 col-xl-6 text-center">
               <h3 class="text-uppercase game__header">Best</h3>
-              <h5>{{ player_highscore.score }}</h5>
+              <h5>{{ player_high_score }}</h5>
             </div>
             <hr class="col col-10 d-none d-lg-block" />
           {% endif %}
-          {% if global_highscores %}
+          {% if global_high_scores %}
             <div class="col col-4 col-sm-4 col-md-4 col-lg-12 col-xl-12 text-center">
               <!-- Showing top 10 on larger screens: -->
               <div class="d-none d-lg-block">
                 <h3 class="text-uppercase game__header">TOP 10</h3>
-                {% for highscore in global_highscores %}
+                {% for high_score in global_high_scores %}
                   <div class="row mb-1">
-                    <h5 class="col col-6">{{ highscore.user__user__username }}</h5>
-                    <h5 class="col col-6">{{ highscore.highscore }}</h5>
+                    <h5 class="col col-6">{{ high_score.user__user__username }}</h5>
+                    <h5 class="col col-6">{{ high_score.highscore }}</h5>
                   </div>
                 {% endfor %}
               </div>
               <!-- Only showing the leader on smaller screens: -->
               <div class="d-lg-none">
                 <h3 class="text-uppercase game__header">Leader</h3>
-                <h5 class="mb-1">{{ global_highscores.first.user__user__username }} — {{ global_highscores.first.highscore }}</h5>
+                <h5 class="mb-1">{{ global_high_scores.first.user__user__username }} — {{ global_high_scores.first.highscore }}</h5>
               </div>
             </div>
           {% endif %}

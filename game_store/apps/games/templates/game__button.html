@@ -1,0 +1,21 @@
+<div class="d-flex flex-row-reverse">
+  <div class="btn-group" role="group">
+  {% if user_profile is not None %}
+      {% if user_profile.is_player %}
+        {% if is_paid %}
+          <button type="button" class="btn btn-outline-primary"><i class="fas fa-trophy"></i> {{ high_score }}</button>
+          <button type="button" class="btn btn-primary text-uppercase">Play</button>
+        {% else %}
+          <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
+          <button type="button" class="btn btn-primary text-uppercase">Buy</button>
+        {% endif %}
+      {% else %}
+        <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+        <button type="button" class="btn btn-primary text-uppercase">Manage</button>
+      {% endif %}
+    {% else %}
+      <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+      <button type="button" class="btn btn-primary">Buy</button>
+    {% endif %}
+  </div>
+</div>

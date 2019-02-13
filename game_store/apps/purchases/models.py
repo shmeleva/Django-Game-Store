@@ -13,11 +13,13 @@ class TransactionStatus(Enum):
     Canceled = 'C'
 
 class PurchaseQuerySet(models.QuerySet):
-    def get_paid_purchases(self, user, game):
-        return self.filter(user=self.user, game=game, status=TransactionStatus.Succeeded.value)
+    # Get all player successful (paid) purchases:
+    def get_paid_purchases(self, user):
+        return self.values('game').filter(user__exact=user)
 
-    def contains_paid(self, user, game):
-        return self.get_paid_purchases(user, game).exists()
+    # Get a successful (paid) purchase for the specific game or None:
+    def get_paid_purchase(self, user, game):
+        return self.filter(user=user, game=game, status=TransactionStatus.Succeeded.value).first()
 
 class Purchase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

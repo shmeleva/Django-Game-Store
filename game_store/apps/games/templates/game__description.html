@@ -11,9 +11,9 @@
     <div class="btn-group" role="group">
       {% if user_profile is not None %}
         {% if user_profile.is_player %}
-          {% if is_owned %}
+          {% if is_paid %}
             <a href="{% url 'play' game.id %}">
-              <button type="button" class="btn btn-outline-primary"><i class="fas fa-trophy"></i> {{ player_highscore.score }}</button>
+              <button type="button" class="btn btn-outline-primary"><i class="fas fa-trophy"></i> {{ player_high_score }}</button>
             </a>
             <a href="{% url 'play' game.id %}">
               <button type="button" class="btn btn-primary text-uppercase">Play</button>
