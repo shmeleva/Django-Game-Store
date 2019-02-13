@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     role = models.CharField(
         max_length=1,
         choices=[(role.value, role.name) for role in UserRole],
+        default='',
     )
     verified = models.BooleanField(default=False)
 
