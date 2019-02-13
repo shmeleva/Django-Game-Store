@@ -5,19 +5,24 @@ from game_store.apps.users.models import UserProfile
 from game_store.apps.categories.models import Category
 from decimal import Decimal
 
+
 class GameQuerySet(models.QuerySet):
+    # Filter games by query and categories:
     def search(self, query, categories):
         result = self.filter(title__contains=query)
         if categories.count() != 0:
             result = result.filter(categories__in=categories).distinct()
         return result
 
-    def annotate_paid_games(self, player, validate_payment=True):
-        if not player.is_player:
-            raise ValueError('annotate_paid_games() can only be called for players.')
-        return self.annotate(is_owned=Purchase.objects.is_paid(user, game) if validate_payment else True) \
-        .annotate(is_owned=Purchase.objects.filter(user=self.user, game=game).exists() if validate_payment else True)
-# .annotate(below_5=below_5).annotate(above_5=above_5)
+    # Filter games publised by the developer:
+    def get_published_games(self, user):
+        return self.filter(developer__exact=user)
+
+    # Filter games that the user paid for:
+    def get_paid_games(self, user):
+        paid_purchases = apps.get_model('purchases.Purchase').objects.get_paid_purchases(user)
+        return self.filter(id__in=paid_purchases)
+
 
 class Game(models.Model):
     title = models.CharField(max_length=128)
