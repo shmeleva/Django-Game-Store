@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
-from game_store.apps.users.forms import RegisterForm, ProfileForm
+from game_store.apps.users.forms import RegisterForm, ProfileForm, UserTypeForm
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.utils import send_email, decode_base64, validate_token
 
@@ -17,7 +17,7 @@ def register(req):
         req.session['redirect-url'] = next
 
     if req.user.is_authenticated:
-        del req.session['redirect-url']
+        req.session.pop('redirect-url', None)
         return redirect(next)
 
     if req.method == 'POST':
@@ -57,7 +57,7 @@ def login(req):
         req.session['redirect-url'] = next
 
     if req.user.is_authenticated:
-        del req.session['redirect-url']
+        req.session.pop('redirect-url', None)
         return redirect(next)
 
     if req.method == 'POST':
@@ -76,7 +76,7 @@ def login(req):
                     return render(req, 'verify_email.html', { 'new_user': False })
 
                 auth_login(req, user)
-                del req.session['redirect-url']
+                req.session.pop('redirect-url', None)
                 return redirect(next)
     else:
         form = AuthenticationForm()
@@ -84,6 +84,26 @@ def login(req):
     return render(req, 'login.html', {
         'form': form,
     })
+
+@login_required(login_url='/login/')
+def social_auth_redirect(req):
+    next = req.session.get('redirect-url', '/')
+
+    if req.method == 'GET':
+        if req.user.userprofile.role != '':
+            req.session.pop('redirect-url', None)
+            return redirect(next)
+
+        form = UserTypeForm()
+        return render(req, 'social_auth_redirect.html', {
+            'form': form,
+        })
+    
+    req.user.userprofile.role = req.POST.get('role')
+    req.user.save()
+
+    req.session.pop('redirect-url', None)
+    return redirect(next)
 
 def logout(req):
     next = req.GET.get('next', '/')

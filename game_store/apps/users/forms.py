@@ -42,4 +42,9 @@ class ProfileForm(forms.ModelForm):
             return instance.email
         else:
             return self.cleaned_data['email']
+
+class UserTypeForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('role',)
         

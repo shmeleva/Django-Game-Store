@@ -37,7 +37,7 @@
         <ul class='navbar-nav mr-auto'>
         </ul>
         <ul class='navbar-nav navbar-right px-md-3'>
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated and user.userprofile.role != '' %}
             {% if user.userprofile.is_developer %}
             <li class='nav-item'>
               <a class='nav-link' href='{% url "stats" %}'>Sales Statistics</a>
@@ -54,7 +54,7 @@
             <li class='nav-item'>
               <a class='nav-link' href='{% url "logout" %}?next={{ request.path }}'>Logout</a>
             </li>
-          {% else %}
+          {% elif not user.is_authenticated %}
             <li class='nav-item dropdown'>
               <a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>Register / Login</a>
               <div class='dropdown-menu'>

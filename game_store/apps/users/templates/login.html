@@ -5,6 +5,8 @@
 {% block title %}Log in{% endblock %}
 
 {% block form %}
+  <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+  <hr>
   <form method="POST" action="/login/">
     {% csrf_token %}
     {{ form|crispy }}
