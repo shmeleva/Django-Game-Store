@@ -65,7 +65,11 @@ def search(req):
     query = form.cleaned_data.get('query')
     categories = form.cleaned_data.get('categories')
     #
+    test_games=Game.objects.search(query,categories)
+    logger.error(test_games);
+    #
     if user and user.is_player:
+
         if form.cleaned_data.get('player_games_only'):
             # Only showing player-owned games.
             purchases = Purchase.objects.values('game').filter(user__exact=user)
