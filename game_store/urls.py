@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from game_store import views
@@ -29,6 +29,8 @@ urlpatterns = [
     # can search games, players can also see their games, developers
     # can only search their own games and add new games.
     path('search', games_views.search, name = 'search'),
+    re_path(r'^auth/', include('social_django.urls', namespace='social')),
+    path('auth/redirect/', users_views.social_auth_redirect),
     path('login/', users_views.login, name='login'), # Only for unauthorized users.
     path('logout/', users_views.logout, name='logout'),
     path('register/', users_views.register, name='register'),

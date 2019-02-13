@@ -6,3 +6,4 @@ Pillow
 django-crispy-forms
 django-sass-processor
 sendgrid
+social-auth-app-django
