@@ -37,6 +37,10 @@
                   <td>{{ entry.user.user.username }}</td>
                   {% if entry.status == 'S' %}
                     <td class="green-text">Succeeded</td>
+                  {% elif entry.status == 'P' %}
+                    <td class="yellow-text">Pending</td>
+                  {% elif entry.status == 'C' %}
+                    <td class="red-text">Canceled</td>
                   {% else %}
                     <td class="red-text">Failed</td>
                   {% endif %}
