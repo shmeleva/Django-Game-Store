@@ -5,8 +5,12 @@ from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidde
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
+import json
 
-from .models import Game
+import logging
+logger = logging.getLogger(__name__)
+
+from .models import Game, GameState
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
@@ -24,8 +28,17 @@ def games(req):
     user = UserProfile.get_user_profile_or_none(req.user)
     #
     if req.method == 'GET':
-        if user and user.is_developer:
-            games = Game.objects.get_published_games(user)
+        if user:
+            if user.is_player:
+                # Setting ownership and highscore fields for player-owned games.
+                games = SearchBuilder(Game.objects.all(), user) \
+                .set_ownership_flags() \
+                .set_highscores().games
+            elif user.is_developer:
+                # Only showing developers their own games.
+                games = Game.objects.filter(developer__exact=user)
+            else:
+                games = Game.objects.all()
         else:
             games = Game.objects.all()
         #
@@ -53,26 +66,39 @@ def search(req):
     query = form.cleaned_data.get('query')
     categories = form.cleaned_data.get('categories')
     #
-    if user and user.is_player:
-        if form.cleaned_data.get('player_games_only'):
-            # Only showing player-owned games:
-            games = Game.objects.get_paid_games(user).search(query, categories)
-        else:
-            # Searching through all games:
-            games = Game.objects.search(query, categories)
-    elif user and user.is_developer:
-        # Only searching through games publised by the developer.
-        games = Game.objects.get_published_games(user).search(query, categories)
-    else:
-        # For all other users, including unauthorized users,
-        # searching through all games.
-        games = Game.objects.search(query, categories)
+    test_games=Game.objects.search(query,categories)
+    logger.error(test_games);
     #
-    rendered = render_to_string('games__search-results.html', {
-        'user_profile': user,
-        'games': games,
-    })
-    return JsonResponse({ 'rendered': rendered })
+    if user and user.is_player:
+
+        if form.cleaned_data.get('player_games_only'):
+            # Only showing player-owned games.
+            purchases = Purchase.objects.values('game').filter(user__exact=user)
+            return SearchBuilder(Game.objects.filter(id__in=purchases), user) \
+            .apply_rules(query,categories) \
+            .set_ownership_flags(False) \
+            .set_highscores() \
+            .build()
+        else:
+            # Searching through all games, while setting correct ownership
+            # and highscore fields for player-owned games.
+            return SearchBuilder(Game.objects, user) \
+            .apply_rules(query, categories) \
+            .set_ownership_flags() \
+            .set_highscores() \
+            .build()
+    #
+    if user and user.is_developer:
+        # Only searching through games publised by the developer.
+        return SearchBuilder(Game.objects.filter(developer__exact=user), user) \
+        .apply_rules(query,categories) \
+        .build()
+    #
+    # For all other users, including unauthorized users,
+    # searching through all games.
+    return SearchBuilder(Game.objects, user) \
+    .apply_rules(query, categories) \
+    .build()
 
 # A game.
 # Accepts: GET requests.
@@ -92,25 +118,33 @@ def game(req, id):
     if user and user.is_developer and game.developer.id != user.id:
         return HttpResponseForbidden()
     #
+    # Getting global highscores:
+    global_highscores = Result.objects.filter(game=game) \
+    .values('user__user__username') \
+    .annotate(highscore=Max('score')) \
+    .order_by('-highscore')[:10]
+    #
     context = {
         'game': game,
         'user_profile': user,
+        'global_highscores': global_highscores,
+        #
         'og_title': game.title,
         'og_description': game.description,
         'og_image': game.image.url,
     }
     #
-    # Getting global high scores:
-    context["global_high_scores"] = Result.objects.get_global_high_scores(game)
-    #
     # Getting a personal highscore and last score for players, if available:
     if user and user.is_player:
-        purchase = Purchase.objects.get_paid_purchase(user, game)
-        if purchase:
-            context["is_paid"] = True
-            if Result.objects.get_scores(user, game).exists():
-                context['player_high_score'] = Result.objects.get_high_score_as_int(user, game)
-                context['player_latest_score'] = Result.objects.get_latest_score_as_int(user, game)
+        #
+        purchase = Purchase.objects.filter(user=user, game=game)
+        if purchase.exists():
+            context["is_owned"] = True
+            #
+            results = Result.objects.filter(user=user, game=game)
+            if results.exists():
+                context['player_highscore'] = results.order_by('-score').first()
+                context['player_last_score'] = results.order_by('-timestamp').first()
     #
     return render(req, 'game.html', context)
 
@@ -121,8 +155,31 @@ def update_score(req):
     user = UserProfile.get_user_profile_or_none(req.user)
     game = get_object_or_404(Game, pk=req.POST['id'])
     if user and user.is_player:
-        Result(user=user, game=game, score=req.POST['score']).save()
+        result = Result(user=user, game=game, score=req.POST['score'])
+        result.save()
     return HttpResponse()
+
+def save_game(req):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=req.POST['id'])
+    if user and user.is_player:
+        if GameState.objects.filter(user=user, game=game):
+            GameState.objects.get(user=user, game=game).delete()
+        game_state = GameState(user=user, game=game, game_state=req.POST['game_state'])
+        game_state.save()
+    return HttpResponse()
+
+def load_game(req):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=req.POST['id'])
+    data = {}
+    data['head'] = 'ERROR'
+    data['body'] = 'Previous save not found'
+    if user and user.is_player:
+        if GameState.objects.filter(user=user, game=game):
+            data['head'] = 'LOAD'
+            data['body'] = GameState.objects.get(user=user, game=game).game_state
+    return HttpResponse(json.dumps(data))
 
 # A game publication form.
 # Accepts: GET and POST requests.

@@ -37,3 +37,8 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+class GameState(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    game_state = models.TextField()
