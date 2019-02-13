@@ -10,6 +10,13 @@ class TransactionStatus(Enum):
     Succeeded = 'S'
     Failed = 'F'
 
+class PurchaseQuerySet(models.QuerySet):
+    def get_paid_purchases(self, user, game):
+        return self.filter(user=self.user, game=game, status=TransactionStatus.Succeeded.value)
+
+    def contains_paid(self, user, game):
+        return self.get_paid_purchases(user, game).exists()
+
 class Purchase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -21,6 +28,8 @@ class Purchase(models.Model):
         choices=[(status.value, status.name) for status in TransactionStatus],
         default=TransactionStatus.Failed.value,
     )
+
+    objects = PurchaseQuerySet.as_manager()
 
     def __str__(self):
         return self.user.user.username + " - " + self.game.title
