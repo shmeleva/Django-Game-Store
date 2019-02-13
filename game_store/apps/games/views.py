@@ -5,11 +5,12 @@ from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidde
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
+import json
 
 import logging
 logger = logging.getLogger(__name__)
 
-from .models import Game
+from .models import Game, GameState
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
@@ -157,6 +158,28 @@ def update_score(req):
         result = Result(user=user, game=game, score=req.POST['score'])
         result.save()
     return HttpResponse()
+
+def save_game(req):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=req.POST['id'])
+    if user and user.is_player:
+        if GameState.objects.filter(user=user, game=game):
+            GameState.objects.get(user=user, game=game).delete()
+        game_state = GameState(user=user, game=game, game_state=req.POST['game_state'])
+        game_state.save()
+    return HttpResponse()
+
+def load_game(req):
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=req.POST['id'])
+    data = {}
+    data['head'] = 'ERROR'
+    data['body'] = 'Previous save not found'
+    if user and user.is_player:
+        if GameState.objects.filter(user=user, game=game):
+            data['head'] = 'LOAD'
+            data['body'] = GameState.objects.get(user=user, game=game).game_state
+    return HttpResponse(json.dumps(data))
 
 # A game publication form.
 # Accepts: GET and POST requests.

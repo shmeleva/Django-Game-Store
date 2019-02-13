@@ -1,45 +1,54 @@
-
-console.log(data.id);
-console.log(data.url);
-
 window.addEventListener('message', function(evt) {
   if(evt.data.messageType === 'SCORE') {
     // Contains attribute 'score'
-    // TODO save received score
     $.getScript('/static/js/token_verification.js', function() {
       $.ajax({
-        url: data.url,
-        data: { 'score': evt.data.score, 'id': data.id },
+        url: '/game/update_score',
+        data: {
+          'id': data.id,
+          'score': evt.data.score
+        },
         type: 'POST'
       });
     });
   } else if(evt.data.messageType === 'SAVE'){
     // Contains attribute 'gameState'
-    // Should save received game state
+    $.getScript('/static/js/token_verification.js', function() {
+      $.ajax({
+        url: '/game/save_game',
+        data: {
+          'id': data.id,
+          'game_state': JSON.stringify(evt.data.gameState)
+        },
+        type: 'POST'
+      });
+    });
   } else if(evt.data.messageType === 'LOAD_REQUEST'){
-    // Should load a game state if such exists and send it back to the game
-    // Respond with either LOAD or ERROR (comments below)
-
-    /*
-
-    for loading previous game state:
-    var game_frame = document.getElementById('game_frame');
-    var msg = {
-      'messageType': 'LOAD',
-      'gameState': <here saved game state in JSON format for example>,
-    };
-    game_frame.contentWindow.postMessage(msg, '*');
-
-
-    if something goes wrong when trying to recover previous game state in response to received LOAD_REQUEST:
-    var game_frame = document.getElementById('game_frame');
-    var msg = {
-      'messageType': 'ERROR',
-      'info': <here contextual information to the user on what went wrong>,
-    };
-    game_frame.contentWindow.postMessage(msg, '*');
-
-    */
+    
+    $.getScript('/static/js/token_verification.js', function() {
+      $.post(
+        '/game/load_game',
+        {
+          'id': data.id,
+          'game_state': JSON.stringify(evt.data.gameState)
+        }, function(response) {
+          var game_frame = document.getElementById('game_frame');
+          var res = JSON.parse(response);
+          if(res['head']==='LOAD') {
+            var msg = {
+              'messageType': res['head'],
+              'gameState': JSON.parse(res['body']),
+            };
+            game_frame.contentWindow.postMessage(msg, '*');
+          } else {
+            var msg = {
+              'messageType': res['head'],
+              'info': res['body'],
+            };
+            game_frame.contentWindow.postMessage(msg, '*');
+          }
+        });
+    });
 
   } else if(evt.data.messageType === 'SETTING'){
     // Contains attribute 'options'

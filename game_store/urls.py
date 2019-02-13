@@ -42,6 +42,8 @@ urlpatterns = [
     path('game/<int:id>/purchase', purchases_views.purchase, name='purchase'), # Only for players.
     path('game/<int:id>/play', games_views.play, name='play'), # Only for players.
     path('game/update_score', games_views.update_score, name='update_score'),
+    path('game/save_game', games_views.save_game, name='save_game'),
+    path('game/load_game', games_views.load_game, name='load_game'),
     path('publish', games_views.publish, name='publish'), # Only for developers.
     path('stats', purchases_views.stats, name='stats'), # Only for developers.
     path('payment/result', purchases_views.payment_result),
