@@ -4,9 +4,11 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from urllib.parse import urlparse
-from game_store.apps.users.forms import RegisterForm, ProfileForm
+from game_store.apps.users.forms import RegisterForm, ProfileForm, AccessTokenForm
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.utils import send_email, decode_base64, validate_token
+from rest_framework.authtoken.models import Token
+
 
 def register(req):
     prev_path = urlparse(req.META.get('HTTP_REFERER')).path
@@ -37,7 +39,7 @@ def register(req):
 def verify(req, encoded_uid, token):
     uid = decode_base64(encoded_uid)
     user_profile = UserProfile.objects.get(id=uid)
-    
+
     if user_profile is None:
         return HttpResponse(status=404)
 
@@ -68,7 +70,7 @@ def login(req):
 
             if user is not None:
                 user_profile = UserProfile.get_user_profile_or_none(user)
-                
+
                 if user_profile is None:
                     return redirect('/login/')
 
@@ -93,10 +95,11 @@ def logout(req):
 @login_required(login_url='/login/')
 def edit_profile(req):
     password_form = PasswordChangeForm(user=req.user)
+    access_token_form = AccessTokenForm()
 
     if req.method == 'POST':
         profile_form = ProfileForm(req.POST, instance=req.user)
-        
+
         if profile_form.is_valid():
             user = profile_form.save()
             profile_form = ProfileForm(instance=user)
@@ -106,6 +109,8 @@ def edit_profile(req):
     return render(req, 'profile.html', {
         'profile_form': profile_form,
         'password_form': password_form,
+        'access_token_form': access_token_form,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
     })
 
 @login_required(login_url='/login/')
@@ -114,6 +119,7 @@ def change_password(req):
         return HttpResponse(status=404)
 
     form = PasswordChangeForm(req.user, req.POST)
+    access_token_form = AccessTokenForm()
 
     if form.is_valid():
         user = form.save()
@@ -123,4 +129,28 @@ def change_password(req):
     return render(req, 'profile.html', {
         'profile_form': ProfileForm(instance=req.user),
         'password_form': form,
+        'access_token_form': access_token_form,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
+    })
+
+@login_required(login_url='/login/')
+def generate_access_token(req):
+    if req.method != 'POST':
+        return HttpResponse(status=404)
+
+    profile_form = ProfileForm(instance=req.user)
+    password_form = PasswordChangeForm(user=req.user)
+
+    user = UserProfile.get_user_profile_or_none(req.user)
+    if user and user.is_developer:
+        token, _ = Token.objects.get_or_create(user=req.user)
+        access_token_form = AccessTokenForm(initial={'access_token': token.key})
+    else:
+        return HttpResponse(status=403)
+
+    return render(req, 'profile.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+        'access_token_form': access_token_form,
+        'user_profile': UserProfile.get_user_profile_or_none(req.user),
     })

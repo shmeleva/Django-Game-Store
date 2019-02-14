@@ -50,3 +50,5 @@ class ListResultsView(generics.ListAPIView):
         game_id = self.kwargs['id']
         queryset = Result.objects.filter(game__id__exact=game_id).order_by("-score")
         return queryset
+
+#permission_classes = (IsAuthenticated,)
