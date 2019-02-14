@@ -51,6 +51,7 @@ urlpatterns = [
     path('test/test', purchases_views.payment_result),
     path('api/games/', api_views.ListGamesView.as_view()),
     path('api/game/<int:id>', api_views.RetrieveGameView.as_view()),
+    path('api/game/<int:id>/scores', api_views.ListResultsView.as_view()),
     #path('api/games/', include('games.urls')),
     #re_path('api/(?P<version>(v1|v2))/', include('api.urls', namespace='game_store')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

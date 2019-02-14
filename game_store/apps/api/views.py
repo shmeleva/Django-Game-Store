@@ -8,8 +8,10 @@ from rest_framework import generics
 
 from game_store.apps.games.models import Game
 from game_store.apps.categories.models import Category
+from game_store.apps.results.models import Result
 
-from .serializers import GamesSerializer
+from .serializers import GamesSerializer, ResultsSerializer
+
 
 class ListGamesView(generics.ListAPIView):
     serializer_class = GamesSerializer
@@ -34,13 +36,17 @@ class ListGamesView(generics.ListAPIView):
 
         return queryset
 
+
 class RetrieveGameView(generics.RetrieveAPIView):
     lookup_field = 'id'
     serializer_class = GamesSerializer
     queryset = Game.objects.all()
 
 
-#class HelloView(APIView):
-#    def get(self, request):
-#        content = {'message': 'Hello, World!'}
-#        return Response(content)
+class ListResultsView(generics.ListAPIView):
+    serializer_class = ResultsSerializer
+
+    def get_queryset(self):
+        game_id = self.kwargs['id']
+        queryset = Result.objects.filter(game__id__exact=game_id).order_by("-score")
+        return queryset

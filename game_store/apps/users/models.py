@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from enum import IntEnum
 
+
 class UserRole(IntEnum):
     Player = 0
     Developer = 1
@@ -26,6 +27,10 @@ class UserProfile(models.Model):
     @property
     def is_developer(self):
         return int(self.role) == UserRole.Developer.value
+
+    @property
+    def username(self):
+        return self.user.username
 
     @staticmethod
     def get_user_profile_or_none(user):
