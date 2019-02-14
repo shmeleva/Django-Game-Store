@@ -44,5 +44,9 @@ class Result(models.Model):
 
     objects = ResultQuerySet.as_manager()
 
+    @property
+    def username(self):
+        return self.user.username
+
     def __str__(self):
         return self.user.user.username + " - " + self.game.title + " - " + str(self.score)

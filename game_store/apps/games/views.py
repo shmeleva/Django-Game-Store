@@ -5,17 +5,18 @@ from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidde
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
+
 import json
 
-import logging
-logger = logging.getLogger(__name__)
-
+# Import models:
 from .models import Game, GameState
 from game_store.apps.purchases.models import Purchase
 from game_store.apps.users.models import UserProfile
 from game_store.apps.users.models import UserRole
 from game_store.apps.categories.models import Category
 from game_store.apps.results.models import Result
+
+# Import forms:
 from game_store.apps.games.forms import SearchForm, PublishForm, EditForm, DeleteForm
 
 

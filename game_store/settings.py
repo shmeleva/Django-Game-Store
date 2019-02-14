@@ -47,6 +47,11 @@ INSTALLED_APPS = [
     'sass_processor',
     'social_django',
 
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'game_store.apps.api',
+
     'game_store.apps.categories',
     'game_store.apps.users',
     'game_store.apps.games',
@@ -57,6 +62,12 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

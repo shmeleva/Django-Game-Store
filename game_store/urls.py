@@ -22,6 +22,7 @@ from game_store.apps.users import views as users_views
 from game_store.apps.games import views as games_views
 from game_store.apps.results import views as results_views
 from game_store.apps.purchases import views as purchases_views
+from game_store.apps.api import views as api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('verify/<encoded_uid>/<token>/', users_views.verify),
     path('profile/edit/', users_views.edit_profile, name='edit_profile'),
     path('profile/password/', users_views.change_password),
+    path('profile/generate_access_token/', users_views.generate_access_token, name='generate_access_token'),
     path('game/<int:id>', games_views.game, name='game_page'), # Unauthorized users can sign in,
     # players can buy and play a game, developers can edit a game
     path('game/<int:id>/edit', games_views.edit, name='edit'), # Only for developers.
@@ -50,4 +52,10 @@ urlpatterns = [
     path('publish', games_views.publish, name='publish'), # Only for developers.
     path('stats', purchases_views.stats, name='stats'), # Only for developers.
     path('payment/result', purchases_views.payment_result),
+    path('test/test', purchases_views.payment_result),
+    path('api/v1/games/', api_views.ListGamesView.as_view()),
+    path('api/v1/game/<int:id>', api_views.RetrieveGameView.as_view()),
+    path('api/v1/game/<int:id>/scores', api_views.ListResultsView.as_view()),
+    path('api/v1/dev/sales', api_views.ListSalesView.as_view()),
+    path('api/v1/dev/revenue', api_views.ListRevenuesView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

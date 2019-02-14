@@ -16,4 +16,12 @@
     {{ password_form|crispy }}
     <button type="submit" class="btn btn-block bg-primary text-uppercase">Change Password</button>
   </form>
+  {% if user_profile and user_profile.is_developer %}
+    <hr>
+    <form method="POST" action="/profile/generate_access_token/">
+      {% csrf_token %}
+      {{ access_token_form|crispy }}
+      <button type="submit" class="btn btn-block bg-primary text-uppercase">Generate a Developer Access Token</button>
+    </form>
+  {% endif %}
 {% endblock %}

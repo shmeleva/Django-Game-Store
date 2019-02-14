@@ -43,8 +43,10 @@ class ProfileForm(forms.ModelForm):
         else:
             return self.cleaned_data['email']
 
+class AccessTokenForm(forms.Form):
+    access_token = forms.CharField(max_length=128, required=False, widget=forms.TextInput(attrs={'disabled':'disabled'}))
+
 class UserTypeForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('role',)
-        
