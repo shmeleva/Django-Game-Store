@@ -24,8 +24,8 @@ class UsersSerializer(serializers.ModelSerializer):
         fields = ["id", "username"]
 
 class ResultsSerializer(serializers.ModelSerializer):
-    user = UsersSerializer(read_only=True)
+    #user = UsersSerializer(read_only=True)
 
     class Meta:
         model = Result
-        fields = ("id", "user", "score", "timestamp")
+        fields = ("id", "username", "score", "timestamp")
