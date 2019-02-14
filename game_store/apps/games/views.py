@@ -117,10 +117,18 @@ def game(req, id):
     #
     return render(req, 'game.html', context)
 
+@login_required(login_url='/login/')
 def play(req, id):
-    return render(req, 'play.html', { 'game': get_object_or_404(Game, pk=id) })
+    user = UserProfile.get_user_profile_or_none(req.user)
+    game = get_object_or_404(Game, pk=id)
+    if user and user.is_player:
+        if Purchase.objects.get_paid_purchase(user, game):
+            return render(req, 'play.html', { 'game': game, 'user_profile': user, 'is_paid': True, })
+    return redirect("/game/{}".format(game.id))
 
 def update_score(req):
+    if req.method != 'POST':
+        return HttpResponseNotFound()
     user = UserProfile.get_user_profile_or_none(req.user)
     game = get_object_or_404(Game, pk=req.POST['id'])
     if user and user.is_player:
@@ -128,6 +136,8 @@ def update_score(req):
     return HttpResponse()
 
 def save_game(req):
+    if req.method != 'POST':
+        return HttpResponseNotFound()
     user = UserProfile.get_user_profile_or_none(req.user)
     game = get_object_or_404(Game, pk=req.POST['id'])
     if user and user.is_player:
