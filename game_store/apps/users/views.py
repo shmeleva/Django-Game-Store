@@ -100,6 +100,7 @@ def social_auth_redirect(req):
         })
     
     req.user.userprofile.role = req.POST.get('role')
+    req.user.userprofile.verified = True
     req.user.save()
 
     req.session.pop('redirect-url', None)
