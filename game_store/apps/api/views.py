@@ -31,8 +31,14 @@ class ListGamesView(generics.ListAPIView):
                 queryset = queryset.filter(categories__in=categories).distinct()
             else:
                 queryset = Game.objects.none()
-                
+
         return queryset
+
+class RetrieveGameView(generics.RetrieveAPIView):
+    lookup_field = 'id'
+    serializer_class = GamesSerializer
+    queryset = Game.objects.all()
+
 
 #class HelloView(APIView):
 #    def get(self, request):
