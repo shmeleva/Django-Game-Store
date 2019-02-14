@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'sass_processor',
+    'rest_framework',
+
+    'game_store.apps.api',
 
     'game_store.apps.categories',
     'game_store.apps.users',
@@ -56,6 +59,12 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#REST_FRAMEWORK = {
+#    'DEFAULT_PERMISSION_CLASSES': [
+#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#    ]
+#}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

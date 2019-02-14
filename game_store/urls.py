@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from game_store import views
@@ -22,6 +22,7 @@ from game_store.apps.users import views as users_views
 from game_store.apps.games import views as games_views
 from game_store.apps.results import views as results_views
 from game_store.apps.purchases import views as purchases_views
+from game_store.apps.api import views as api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,4 +48,8 @@ urlpatterns = [
     path('publish', games_views.publish, name='publish'), # Only for developers.
     path('stats', purchases_views.stats, name='stats'), # Only for developers.
     path('payment/result', purchases_views.payment_result),
+    path('test/test', purchases_views.payment_result),
+    path('api/games/', api_views.ListGamesView.as_view()),
+    #path('api/games/', include('games.urls')),
+    #re_path('api/(?P<version>(v1|v2))/', include('api.urls', namespace='game_store')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
