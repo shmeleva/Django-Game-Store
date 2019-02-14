@@ -5,12 +5,15 @@ from functools import reduce
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework import permissions
 
 from game_store.apps.games.models import Game
 from game_store.apps.categories.models import Category
 from game_store.apps.results.models import Result
+from game_store.apps.users.models import UserProfile
+from game_store.apps.purchases.models import Purchase
 
-from .serializers import GamesSerializer, ResultsSerializer
+from .serializers import GamesSerializer, ResultsSerializer, PurchasesSerializer
 
 
 class ListGamesView(generics.ListAPIView):
@@ -49,6 +52,15 @@ class ListResultsView(generics.ListAPIView):
     def get_queryset(self):
         game_id = self.kwargs['id']
         queryset = Result.objects.filter(game__id__exact=game_id).order_by("-score")
+        return queryset
+
+class ListSalesView(generics.ListAPIView):
+    serializer_class = PurchasesSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        user_profile = UserProfile.get_user_profile_or_none(self.request.user)
+        queryset = Purchase.objects.get_sales(user_profile)
         return queryset
 
 #permission_classes = (IsAuthenticated,)

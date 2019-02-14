@@ -4,6 +4,7 @@ from game_store.apps.games.models import Game
 from game_store.apps.categories.models import Category
 from game_store.apps.results.models import Result
 from game_store.apps.users.models import UserProfile
+from game_store.apps.purchases.models import Purchase
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
@@ -27,3 +28,8 @@ class ResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
         fields = ("id", "username", "score", "timestamp")
+
+class PurchasesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = "__all__"
