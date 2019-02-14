@@ -33,3 +33,7 @@ class PurchasesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Purchase
         fields = "__all__"
+
+class RevenuesSerializer(serializers.Serializer):
+    date = serializers.CharField(max_length=256)
+    revenue = serializers.CharField(max_length=256)

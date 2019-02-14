@@ -13,7 +13,7 @@ from game_store.apps.results.models import Result
 from game_store.apps.users.models import UserProfile
 from game_store.apps.purchases.models import Purchase
 
-from .serializers import GamesSerializer, ResultsSerializer, PurchasesSerializer
+from .serializers import GamesSerializer, ResultsSerializer, PurchasesSerializer, RevenuesSerializer
 
 
 class ListGamesView(generics.ListAPIView):
@@ -60,7 +60,12 @@ class ListSalesView(generics.ListAPIView):
 
     def get_queryset(self):
         user_profile = UserProfile.get_user_profile_or_none(self.request.user)
-        queryset = Purchase.objects.get_sales(user_profile)
-        return queryset
+        return Purchase.objects.get_sales(user_profile)
 
-#permission_classes = (IsAuthenticated,)
+class ListRevenuesView(generics.ListAPIView):
+    serializer_class = RevenuesSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        user_profile = UserProfile.get_user_profile_or_none(self.request.user)
+        return Purchase.objects.get_revenue_per_date(user_profile)
