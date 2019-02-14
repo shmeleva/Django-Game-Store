@@ -2,9 +2,12 @@
 
 {% block title %}Stats{% endblock %}
 
-{% block body %}
+{% block head %}
   <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
   <script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+{% endblock %}
+
+{% block body %}
   <div class="card mx-auto floating">
     <div class="card-body px-lg-5">
       <div id="revenue-chart-container">{{ chart|safe }}</div>

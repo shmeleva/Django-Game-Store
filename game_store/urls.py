@@ -30,6 +30,8 @@ urlpatterns = [
     # can search games, players can also see their games, developers
     # can only search their own games and add new games.
     path('search', games_views.search, name = 'search'),
+    re_path(r'^auth/', include('social_django.urls', namespace='social')),
+    path('auth/redirect/', users_views.social_auth_redirect),
     path('login/', users_views.login, name='login'), # Only for unauthorized users.
     path('logout/', users_views.logout, name='logout'),
     path('register/', users_views.register, name='register'),
@@ -42,6 +44,7 @@ urlpatterns = [
     path('game/<int:id>/edit', games_views.edit, name='edit'), # Only for developers.
     path('game/<int:id>/delete', games_views.delete, name='delete'), # Only for developers.
     path('game/<int:id>/purchase', purchases_views.purchase, name='purchase'), # Only for players.
+    path('game/<int:id>/purchase/<pid>/cancel', purchases_views.cancel_purchase, name='cancel_purchase'),
     path('game/<int:id>/play', games_views.play, name='play'), # Only for players.
     path('game/update_score', games_views.update_score, name='update_score'),
     path('game/save_game', games_views.save_game, name='save_game'),

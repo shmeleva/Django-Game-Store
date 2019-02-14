@@ -60,6 +60,19 @@ def purchase(req, id):
         'checksum': checksum,
     })
 
+@login_required(login_url='/login/')
+def cancel_purchase(req, id, pid):
+    user_profile = UserProfile.get_user_profile_or_none(req.user)
+
+    if user_profile is None:
+        return HttpResponseForbidden()
+
+    purchase = get_object_or_404(Purchase, id=uuid.UUID(pid), user=user_profile, status=TransactionStatus.Pending.value)
+    purchase.status = TransactionStatus.Canceled.value
+    purchase.save()
+
+    return redirect('/game/{}'.format(id))
+
 # TODO: Render user-friendly UI and improve other error responses
 def payment_result(req):
     formatted_pid = req.GET.get('pid')

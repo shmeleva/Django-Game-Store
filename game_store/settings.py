@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'tpy1^4$erdfy_fi0hp+xx(!qqz$ng-^3hdd+vfym-3$k6@u1g%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'sass_processor',
+    'social_django',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -76,6 +77,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'game_store.apps.users.middleware.UserRoleValidationMiddleware',
 ]
 
 ROOT_URLCONF = 'game_store.urls'
@@ -91,7 +94,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media'
+                'django.template.context_processors.media',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -111,6 +116,18 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Social Auth
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_OAUTH2_SECRET')
+
+LOGIN_REDIRECT_URL = '/auth/redirect/'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

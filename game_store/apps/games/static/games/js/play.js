@@ -53,7 +53,7 @@ window.addEventListener('message', function(evt) {
   } else if(evt.data.messageType === 'SETTING'){
     // Contains attribute 'options' which contains game specific configurations for adjusting the layout if needed
     $(document).ready(function() {
-      $('iframe').css(evt.data.options);
+      $('#game_frame').css(evt.data.options);
     });
   }
 });
