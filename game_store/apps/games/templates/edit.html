@@ -10,11 +10,12 @@
     {{ form|crispy }}
     <button type="submit" class="btn btn-block bg-primary text-uppercase mb-3">Save</button>
   </form>
-  <a href="{% url 'game_page' game.id %}">
+  <form style="display: inline" action="{% url 'game_page' game.id %}" method="get">
     <button class="btn btn-block bg-secondary text-uppercase">Cancel</button>
-  </a>
+  </form>
   <hr>
-  <a href="{% url 'delete' game.id %}">
-    <button class="btn btn-block bg-secondary text-uppercase">Delete</button>
-  </a>
+  <form style="display: inline" action="{% url 'delete' game.id %}" method="get">
+    <button class="btn btn-block bg-primary text-uppercase">Delete</button>
+  </form>
+
 {% endblock %}
