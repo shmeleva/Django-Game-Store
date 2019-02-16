@@ -1,0 +1,16 @@
+.red-text {
+  color: #f00 !important;
+}
+
+.green-text {
+  color: #008000 !important;
+}
+
+.yellow-text {
+  color: #da8900 !important;
+}
+
+#revenue-chart-container {
+  width: 80%;
+  margin: 0px auto 20px;
+}
