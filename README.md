@@ -31,12 +31,10 @@ The goal is to develop an online game store where *(1)* developers can publish a
 * Launch and play games;
 * View leaderboards for individual games;
 * View their own latest and high scores for individual games;
-![Leaderboards](screenshots/Screenshot12.png)
 * Leave public Facebook comments and share games on social media (*see 3.2*).
 
 ##### Security
-* Players should only be able to play games they have purchased;
-* Etc.
+Players should only be able to play games they have purchased. We deliberately do not protect against accessing games through their URL as it is not included in the scope of this project.
 
 ##### Developer Functionalities
 * 200 points;
