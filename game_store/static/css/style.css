@@ -1,7 +1,9 @@
 body {
-  background: #0B0C10; /*#FFBF00;*/ /*#17BEBB;*/
+  background: #0B0C10;
   font-family: 'Anonymous Pro', monospace;
 }
+
+/* Bootstrap 4 Theme */
 
 h1, h2, h3, h4, h5, h6 {
   color: #212529;
@@ -17,7 +19,6 @@ img {
     object-fit: cover;
 }
 
-
 .card, .btn, .form-control, .card-img-top { border-radius: 0; }
 
 .form-control:focus {
@@ -28,9 +29,6 @@ img {
     -webkit-box-shadow: 0 0 0 0.2rem #CCC33149;
     box-shadow: 0 0 0 0.2rem #CCC33149;
 }
-
-/* TODO: Use SASS to set the primary colour and other settings! */
-
 
 .bg-primary {
   background: #C33149 !important;
@@ -91,89 +89,4 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
 
 .dropdown-item:hover, .dropdown-item:focus {
     background-color: #C33149;
-}
-
-/* TODO: Move to game-specific CSS */
-
-.games__card-image {
-
-}
-
-.games__card-image:focus, .games__card-image:hover {
-
-}
-
-.games__card-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  line-height: 24px;
-  max-height: 24px;
-}
-
-.games__card-categories {
-  height: 24px;
-  overflow: hidden;
-}
-
-.games__card-publish {
-  min-height: 21em;
-}
-
-.games__card-publish_plus {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  width: 100%;
-  font-size: 8em;
-  color: #C33149;
-}
-
-.games__card-publish_plus:focus, .games__card-publish_plus:hover {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  width: 100%;
-  font-size: 12em;
-  color: #C33149;
-}
-
-.badge.badge-pill > .form-group {
-  margin-bottom: 0;
-}
-
-.badge.badge-pill > .form-group > .form-check > .form-check-label > .checkboxinput.form-check-input {
-  margin-top: 0 !important;
-}
-
-.badge-primary {
-    color: #fff;
-    background-color: #C33149 !important;
-}
-
-.game__header {
-  color: #C33149 !important;
-}
-
-.red-text {
-  color: #f00 !important;
-}
-
-.green-text {
-  color: #008000 !important;
-}
-
-.yellow-text {
-  color: #da8900 !important;
-}
-
-#revenue-chart-container {
-  width: 80%;
-  margin: 0px auto 20px;
 }

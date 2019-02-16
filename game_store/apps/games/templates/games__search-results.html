@@ -37,7 +37,7 @@
         </div>
       {% endfor %}
     {% elif user_profile is None or not user_profile.is_developer %}
-      <h3>No games to display ¯\_(ツ)_/¯</h3>
+      <h6 class="games__no-results p-1">No games.</h6>
     {% endif %}
   </div>
 </div>
