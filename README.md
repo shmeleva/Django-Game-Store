@@ -26,9 +26,11 @@ The goal is to develop an online game store where *(1)* developers can publish a
 ##### Player Functionalities
 **_300 points_**
 * Search games and filter games by genre and ownership;
+![Search](screenshots/Screenshot10.png)
 * Purchase games via an online payment system;
-* Launch and play games.
+* Launch and play games;
 * View leaderboards for individual games;
+* View their own latest and high scores for individual games;
 * Leave public Facebook comments and share games on social media (*see 3.2*).
 
 ##### Security
