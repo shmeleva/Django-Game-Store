@@ -25,6 +25,7 @@
   transform: translateY(-50%);
   width: 100%;
   font-size: 8em;
+  background-color: transparent;
   color: #C33149;
 }
 
@@ -36,10 +37,12 @@
   transform: translateY(-50%);
   width: 100%;
   font-size: 12em;
+  background-color: transparent;
   color: #C33149;
 }
 
 .games__no-results {
+  background-color: transparent;
   color: #fff;
 }
 
@@ -57,5 +60,6 @@
 }
 
 .game__header {
+  background-color: transparent;
   color: #C33149 !important;
 }
