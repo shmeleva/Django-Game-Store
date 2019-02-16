@@ -9,7 +9,7 @@ from decimal import Decimal
 class GameQuerySet(models.QuerySet):
     # Filter games by query and categories:
     def search(self, query, categories):
-        result = self.filter(title__contains=query)
+        result = self.filter(title__icontains=query)
         if categories.count() != 0:
             result = result.filter(categories__in=categories).distinct()
         return result
