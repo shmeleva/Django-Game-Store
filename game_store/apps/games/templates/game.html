@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}{{game.title}}{% endblock %}
 
+{% block head %}
+  <link rel='stylesheet' type='text/css' href='{% static "games/css/style.css" %}' />
+{% endblock %}
 {% block body %}
 
 <div id="fb-root"></div>
@@ -44,6 +48,4 @@
     </div>
   </div>
 </div>
-
-
 {% endblock %}

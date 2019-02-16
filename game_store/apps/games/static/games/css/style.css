@@ -1,0 +1,61 @@
+.games__card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-height: 24px;
+  max-height: 24px;
+}
+
+.games__card-categories {
+  height: 24px;
+  overflow: hidden;
+}
+
+.games__card-publish {
+  min-height: 21em;
+}
+
+.games__card-publish_plus {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 8em;
+  color: #C33149;
+}
+
+.games__card-publish_plus:focus, .games__card-publish_plus:hover {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  font-size: 12em;
+  color: #C33149;
+}
+
+.games__no-results {
+  color: #fff;
+}
+
+.badge.badge-pill > .form-group {
+  margin-bottom: 0;
+}
+
+.badge.badge-pill > .form-group > .form-check > .form-check-label > .checkboxinput.form-check-input {
+  margin-top: 0 !important;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #C33149 !important;
+}
+
+.game__header {
+  color: #C33149 !important;
+}
