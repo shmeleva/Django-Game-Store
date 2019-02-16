@@ -1,49 +1,50 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}{{game.title}}{% endblock %}
 
+{% block head %}
+  <link rel='stylesheet' type='text/css' href='{% static "games/css/style.css" %}' />
+{% endblock %}
+
 {% block body %}
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<div class="container-fluid px-md-3 px-lg-5">
-  <div class="row justify-content-center">
-    <div class="col col-md-12 col-lg-8">
-      <div class="row p-0" style="background: white;">
-        <div class="col col-12 p-0">
-          {% block game_window %}
-            {% if game.image %}
-              <div class="embed-responsive embed-responsive-16by9">
-                <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="container-fluid px-md-3 px-lg-5">
+    <div class="row justify-content-center">
+      <div class="col col-md-12 col-lg-8">
+        <div class="row p-0" style="background: white;">
+          <div class="col col-12 p-0">
+            {% block game_window %}
+              {% if game.image %}
+                <div class="embed-responsive embed-responsive-16by9">
+                  <img class="embed-responsive-item games__card-image" src="{{ game.image.url }}" alt="game.title"></img>
+                </div>
+              {% endif %}
+            {% endblock %}
+          </div>
+          <div class="col col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+            {% include 'game__description.html' %}
+            <hr/>
+          </div>
+          <div class="col col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+            {% include 'game__highscores.html' %}
+          </div>
+          <div class="col col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+            <div class="card border-0">
+              <div class="card-body pt-0">
+                <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
               </div>
-            {% endif %}
-          {% endblock %}
-        </div>
-        <div class="col col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
-          {% include 'game__description.html' %}
-          <hr/>
-        </div>
-        <div class="col col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
-          {% include 'game__highscores.html' %}
-        </div>
-        <div class="col col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
-          <div class="card border-0">
-            <div class="card-body pt-0">
-              <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
 {% endblock %}
