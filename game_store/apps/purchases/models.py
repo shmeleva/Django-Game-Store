@@ -22,7 +22,7 @@ class TransactionStatus(Enum):
 class PurchaseQuerySet(models.QuerySet):
     # Get all player successful (paid) purchases:
     def get_paid_purchases(self, player):
-        return self.values('game').filter(user__exact=player)
+        return self.values('game').filter(user__exact=player, status=TransactionStatus.Succeeded.value)
 
     # Get a successful (paid) purchase for the specific game or None:
     def get_paid_purchase(self, player, game):
