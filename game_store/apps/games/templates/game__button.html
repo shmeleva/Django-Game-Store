@@ -10,11 +10,11 @@
           <button type="button" class="btn btn-primary text-uppercase">Buy</button>
         {% endif %}
       {% else %}
-        <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+        <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
         <button type="button" class="btn btn-primary text-uppercase">Manage</button>
       {% endif %}
     {% else %}
-      <button type="button" class="btn btn-outline-primary">{{ game.price }}</button>
+      <button type="button" class="btn btn-outline-primary"><i class="fas fa-euro-sign"></i> {{ game.price }}</button>
       <button type="button" class="btn btn-primary">Buy</button>
     {% endif %}
   </div>
