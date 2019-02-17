@@ -65,18 +65,18 @@ Developers can:
 * A substantial part of application logic is located in `QuerySet`s, not in views. This applies, for example, to the _search_ and _sales statistics_. The same code is reused between views and RESTful API.
 * The UI is mobile-friendly (*see 3.2*). For the UI, we selected a dark theme and an [Anonymous Pro](https://fonts.google.com/specimen/Anonymous+Pro) font which seamed appropriated for an online game store. We also used icons provided by [Font Awesome](https://fontawesome.com/).
 * We used [`w3c-validation`](https://atom.io/packages/w3c-validation) package for Atom text editor for validating HTML and CSS files. All features are logically organized and easily accessible.
-![Logo](screenshots/Screenshot14.png)
+
+  ![Logo](screenshots/Screenshot14.png)
 * While testing our responsive design, we used both physical mobile devices and Google Chrome developer tools for emulating a variety of screen sizes.
-* We manually tested app functionalities according to the requirements.
-* We also performed penetration tests.
+* All modules of the application were tested manually. These tests included _penetration tests_.
 
 ##### Non-Functional requirements
-* 200 points;
+**_200 points_**
 We mostly communicated using [Telegram](https://telegram.org/) and, additionally, we were meeting in person for a discussion at least once week or more often, if it was required.
 
-We first started working on mandatory features. At each stage, we divided tasks among team members, so that everyone knew what they should work on next. [Trello](https://trello.com) was used to create, define, assign, and track tasks.
+We first started working on mandatory features. At each stage, we divided tasks among team members, so that everyone knew what they should work on next. [Trello](https://trello.com) was used to create, define, assign, and track tasks:
 
-TODØ: Put screenshots here.
+![Logo](screenshots/Screenshot15.png)
 
 #### 3.2 Extra Features
 
