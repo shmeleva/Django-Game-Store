@@ -5,6 +5,12 @@
 
 {% block head %}
   <link rel='stylesheet' type='text/css' href='{% static "games/css/style.css" %}' />
+  <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c5dae2d83748d0011315322&product=inline-share-buttons' async='async'></script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:title" content="{{ og_title }}">
+  <meta property="og:description" content="{{ og_description }}">
+  <meta property="og:image" content="{{ og_image }}">
 {% endblock %}
 {% block body %}
 
@@ -40,7 +46,7 @@
         <div class="col col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
           <div class="card border-0">
             <div class="card-body pt-0">
-              <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5" data-width="100%"></div>
+              <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5" data-width="100%"></div>
             </div>
           </div>
         </div>

@@ -12,16 +12,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
-    <!-- Social sharing: -->
-    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c5dae2d83748d0011315322&product=inline-share-buttons' async='async'></script>
-    <meta property="og:title" content="{{ og_title }}">
-    <meta property="og:description" content="{{ og_description }}">
-    <meta property="og:image" content="{{ og_image }}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta name="twitter:title" content="{{ og_title }}">
-    <meta name="twitter:description" content="{{ og_description }}">
-    <meta name="twitter:image:src" content="{{ request.build_absolute_uri }}">
-    <meta name="twitter:card" content="summary_large_image">
     <script>{% block script %}{% endblock %}</script>
     {% block head %}{% endblock %}
   </head>
