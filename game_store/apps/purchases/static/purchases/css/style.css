@@ -14,3 +14,12 @@
   width: 80%;
   margin: 0px auto 20px;
 }
+
+.center-box {
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #8d8d8d;
+  text-align: center;
+  display: table;
+  background-color: #fff;
+}
