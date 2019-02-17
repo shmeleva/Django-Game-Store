@@ -125,7 +125,9 @@ We first started working on mandatory features. At each stage, we divided tasks 
 
 ### 4. The Good & the Bad
 
-...
+Overall, we were able to implement all the features that were mentioned in our initial design with some minor changes, e.g. implementing social login with Google, not Facebook.
+
+It was sometimes difficult to figure out where to put a specific piece of code, so at first our project structure did not exactly follow the DRY and SoC principles and we then had to change it and move some code around. In the end, we still have some issues with that. Also, we did not use unit tests even though we probably should have. Some security (see _Player Functionalities_) and scalability issues exist but these lie outside of the scope of this project.
 
 ### 5. Who Did What
 
