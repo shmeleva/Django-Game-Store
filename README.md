@@ -74,7 +74,7 @@ Developers can:
 ##### Non-Functional requirements
 **_200 points_**
 
-We mostly communicated using [Telegram](https://telegram.org/) and, additionally, we were meeting in person for a discussion at least once week or more often, if it was required.
+We mostly communicated using [Telegram](https://telegram.org/) and, additionally, we were meeting in person for a discussion at least once week or more often, if it was required. Sometimes we were meeting to work together for the whole day.
 
 We first started working on mandatory features. At each stage, we divided tasks among team members, so that everyone knew what they should work on next. [Trello](https://trello.com) was used to create, define, assign, and track tasks:
 
