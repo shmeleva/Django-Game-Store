@@ -55,19 +55,18 @@ Developers can:
 
 ##### Game Interactions
 **_200 points_**
-* Once the game is over, the score is posted from the `iframe` that holds the game to its parent with the `window.postMessage()`. Then, the score is posted to the backend using AJAX. The latest and high personal scores and global high scores are updated accordingly.
+* The game runs in the `iframe`. Once it is over, the score is posted from the `iframe` that holds the game to its parent with the `window.postMessage()`. Then, the score is posted to the backend using AJAX. The latest and high personal scores and global high scores are updated accordingly.
 
 ##### Quality of Work
-* 90 points;
-* The essential modules of the application are well-commented;
-* In order to achieve better modularity, we use separate applications for different models, such as `Game`, `User`, `Purchase`, `Result`, `Category`, and place all the logic, templates and styles in corresponding applications. We also have an isolate application for API.
-* In order to achieve better code reusability, we use custom `Manager`s and `QuerySet`s for performing operations on games, purchases and result.
-* A substantial part of the logic is moved out of models into `QuerySet`. This applies, for example, to the game search and sales statistics. This code is reused in views and RESTful API.
-
-TODØ: Put screenshots here.
-
-* We used [`w3c-validation`](https://atom.io/packages/w3c-validation) package for Atom text editor for validating HTML and CSS files.
-* We used Google Chrome developer tools to emulate a variety of screen sizes as well as actual mobile devices.
+**_90 points_**
+* We did not comment each and every line because good code should be self-documenting and that is what we were trying to achieve. Yet, we use comments where necessary, e.g. for providing a description for methods.
+* In order to allow better modularity, we use separate applications for different models, e.g. `games` for `Game` model, `purposes` for `Purchase` model, etc. All logic, forms, templates, styles are placed in corresponding applications. Furthermore, we have an additional application for RESTful API.
+* In order to achieve better code reusability, we use custom `Manager`s and `QuerySet`s for querying games, purchases and results. We also use _template tags_ that can be reused in multiple templates.
+* A substantial part of application logic is located in `QuerySet`s, not in views. This applies, for example, to the _search_ and _sales statistics_. The same code is reused between views and RESTful API.
+* The UI is mobile-friendly (*see 3.2*). For the UI, we selected a dark theme and an [Anonymous Pro](https://fonts.google.com/specimen/Anonymous+Pro) font which seamed appropriated for an online game store. We also used icons provided by [Font Awesome](https://fontawesome.com/).
+* We used [`w3c-validation`](https://atom.io/packages/w3c-validation) package for Atom text editor for validating HTML and CSS files. All features are logically organized and easily accessible.
+![Logo](screenshots/Screenshot14.png)
+* While testing our responsive design, we used both physical mobile devices and Google Chrome developer tools for emulating a variety of screen sizes.
 * We manually tested app functionalities according to the requirements.
 * We also performed penetration tests.
 
