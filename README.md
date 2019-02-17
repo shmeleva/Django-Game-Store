@@ -82,11 +82,11 @@ We first started working on mandatory features. At each stage, we divided tasks 
 
 #### 3.2 Extra Features
 
-##### Save/Load and Resolution Feature
+##### Save / Load and Resolution Feature
 **_100 points_**
 
-* The service supports saving and loading for games with the simple message protocol described in Game Developer Information.
-* The service is able to receive additional style settings which are then applied to the iframe
+* The service supports saving and loading for games with the simple message protocol described in _Game Developer Information_.
+* The service is able to receive additional style settings which are then applied to the `iframe`.
 
 ##### Social Login
 **_100 points_**
@@ -107,8 +107,8 @@ We first started working on mandatory features. At each stage, we divided tasks 
 ##### Own game
 **_100 points_**
 
-* A simple Breakout game using JavaScript;
-* Is able to communicate with the service using `postMessage`. The score is saved once the player loses, the current game progress can be saved and the latest saved game state can be loaded from the server.
+* A simple _Breakout_ game written in JavaScript;
+* The game is able to communicate with the service using `postMessage`. The score is saved once the player loses, the current game progress can be saved and the latest saved game state can be loaded from the backend.
 
 ##### Social Media Sharing
 **_50 points_**
