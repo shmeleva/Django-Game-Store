@@ -25,6 +25,8 @@ The goal is to develop an online game store where *(1)* developers can publish a
 
 ##### Player Functionalities
 **_300 points_**
+
+Players can:
 * Search games and filter games by genre and ownership;
 ![Search](screenshots/Screenshot10.png)
 * Purchase games via an online payment system;
@@ -34,23 +36,26 @@ The goal is to develop an online game store where *(1)* developers can publish a
 * Leave public Facebook comments and share games on social media (*see 3.2*).
 
 ##### Security
-Players should only be able to play games they have purchased. We deliberately do not protect against accessing games through their URL as it is not included in the scope of this project.
+* Players are only able to play games they have purchased: however, we deliberately do not protect against accessing games through their URL as it is not included in the scope of this project;
+* Players are not able to publish games;
+* Etc.
 
 ##### Developer Functionalities
-* 200 points;
+**_200 points_**
+
+Developers can:
+
 * Publish, remove and manage games, including setting and making changes to its URL, description, categories, image and price;
-* View sales statistics including a revenue graph ([FusionCharts](https://www.fusioncharts.com)) and detailed game purchases (pending, canceled, failed, successful).
+* View sales statistics including _a revenue graph_ (implemented with [FusionCharts](https://www.fusioncharts.com)) and detailed game purchases (pending, canceled, failed, successful).
 
 ##### Security
-* Developers should only be able to modify and access statistics of their own games and should not be able to impersonate other developers;
-* Developers should not be able to play games, players should not be able to publish games;
+* Developers can only view, modify and access statistics of their own games and are not be able to impersonate other developers;
+* Developers cannot play games;
 * Etc.
 
 ##### Game Interactions
-* 200 points;
-* Record users' scores sent from the game through postMessage;
-* Show the user's latest and highest scores;
-* Show global top 10 scores.
+**_200 points_**
+* Once the game is over, the score is posted from the `iframe` that holds the game to its parent with the `window.postMessage()`. Then, the score is posted to the backend using AJAX. The latest and high personal scores and global high scores are updated accordingly.
 
 ##### Quality of Work
 * 90 points;
