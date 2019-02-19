@@ -153,10 +153,11 @@ We worked together on the initial design and final document, constantly communic
 
 ### 6. Models
 
-First of all, we will [extend](https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model) the existing `User` model using a one-to-one link:
+We [extended](https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model) the existing `User` model using a one-to-one link:
 
 `UserProfile`
 * `role`
+* `verified`
 * `user = models.OneToOneField(User, on_delete=models.CASCADE)`
 
 `Game`
@@ -166,12 +167,19 @@ First of all, we will [extend](https://docs.djangoproject.com/en/dev/topics/auth
 * `price`
 * `url`
 * `developer = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
-* `categories = models.ManyToManyField(Category, on_delete=models.CASCADE)`
+* `categories = models.ManyToManyField(Category)`
+
+`GameState`
+* `game_state`
+* `game = models.ForeignKey(Game, on_delete=models.CASCADE)`
+* `user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
 
 `Purchase`
 * `user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
 * `game = models.ForeignKey(Game, on_delete=models.CASCADE)`
+* `price`
 * `timestamp`
+* `status`
 
 `Result`
 * `user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)`
