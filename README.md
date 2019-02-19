@@ -97,11 +97,11 @@ We first started working on mandatory features. At each stage, we divided tasks 
 **_100 points_**
 
 * We implemented an API with [Django REST framework](https://www.django-rest-framework.org/). The API provides the following methods:
-  * A public `GET` method for searching games by a keyword and categories;
-  * A public `GET` method for retrieving information about a specific game;
-  * A public `GET` method for retrieving high scores for individual games;
-  * A private `GET` method for retrieving game sale statistics;
-  * A private `GET` method for retrieving game sale revenue.
+  * A public `GET api/v1/games?search=<search>&categories=<category1,category2>` method for searching games by a keyword and categories;
+  * A public `GET api/v1/game/<int:id>` method for retrieving information about a specific game;
+  * A public `GET api/v1/game/<int:id>/scores` method for retrieving high scores for individual games;
+  * A private `GET api/v1/dev/sales` method for retrieving game sale statistics;
+  * A private `GET api/v1/dev/revenue` method for retrieving game sale revenue.
 * Private API can only be accessed with a developer API access token.
 
 ##### Own game
