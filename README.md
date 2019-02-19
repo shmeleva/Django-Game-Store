@@ -223,4 +223,4 @@ Here is a link to Heroku:
 
 https://srf-game-store.herokuapp.com/
 
-**Note:** Images are not displayed in Heroku. It is a know issue.
+**Note:** Images are not displayed in Heroku. It is a known issue.
