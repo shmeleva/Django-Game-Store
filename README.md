@@ -2,9 +2,9 @@
 
 ### 1. Team
 
-* `728010` Sataponn Phutrakul
-* `721130` Ekaterina Shmeleva
-* `528621` Felipe Gonzalez Carceller
+* Sataponn Phutrakul — @nropatas
+* Ekaterina Shmeleva — @shmeleva
+* Felipe Gonzalez Carceller
 
 
 ### 2. Goal
@@ -131,19 +131,19 @@ It was sometimes difficult to figure out where to put a specific piece of code, 
 
 ### 5. Who Did What
 
-* `728010` Sataponn Phutrakul
+* Sataponn Phutrakul
   * Authentication, including email verification and social login with Google;
   * User settings, including password settings;
   * Payments;
   * Stats, including beautiful graphs.
-* `721130` Ekaterina Shmeleva
+* Ekaterina Shmeleva
   * Search, including filtering search results;
   * Personal and global high scores;
   * Game publishing, editing and removal;
   * Mobile-friendly markup and styles, including theming;
   * Social sharing and Facebook comments;
   * RESTful API, including token authentication.
-* `528621` Felipe Gonzalez Carceller
+* Felipe Gonzalez Carceller
   * Prototypes and basic page layout with the _Navbar_, _Sign up_ and _Log in_ buttons;
   * Game interaction, including extended functionalities;
   * Breakout — JavaScript game;
@@ -216,11 +216,3 @@ The thumbnail pictures are taken from [MINICLIP](https://www.miniclip.com/games/
 ![alt text](screenshots/Screenshot5.png)
 
 ![alt text](screenshots/Screenshot6.png)
-
-### 9. Heroku
-
-Here is a link to Heroku:
-
-https://srf-game-store.herokuapp.com/
-
-**Note:** Images are not displayed in Heroku. It is a known issue.
