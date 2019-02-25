@@ -60,14 +60,14 @@ Developers can:
 ##### Quality of Work
 **_90 points_**
 * We did not comment each and every line because good code should be self-documenting and that is what we were trying to achieve. Yet, we use comments where necessary, e.g. for providing a description for methods.
-* In order to allow better modularity, we use separate applications for different models, e.g. `games` for `Game` model, `purposes` for `Purchase` model, etc. All logic, forms, templates, styles are placed in corresponding applications. Furthermore, we have an additional application for RESTful API.
-* In order to achieve better code reusability, we use custom `Manager`s and `QuerySet`s for querying games, purchases and results.
+* In order to allow better modularity, we use separate applications for different models, e.g. `games` for `Game` model, `purposes` for `Purchase` model, etc. All logic, forms, templates, styles are placed in corresponding applications. Furthermore, we have an additional application for RESTful API.
+* In order to achieve better code reusability, we use custom `Manager`s and `QuerySet`s for querying games, purchases and results.
 * We include and extends templates to achieve better reusability and readability. For example, all the pages contain the same navbar — we use template inheritance for that; the _Game_ page contains a couple of different logical blocks (description, leaderboards) that are defined in separate files and included in the main template. We also use _template tags_ for the _Game_ action button (_Buy_, _Play_, _Manage_) that can be reused in multiple templates.
-* A substantial part of application logic is located in `QuerySet`s, not in views. This applies, for example, to the _Search_ and _Sales Statistics_. The same code is reused in different views and RESTful API.
+* A substantial part of application logic is located in `QuerySet`s, not in views. This applies, for example, to the _Search_ and _Sales Statistics_. The same code is reused in different views and RESTful API.
 * The UI is mobile-friendly (*see 3.2*). For the UI, we selected a dark theme and an [Anonymous Pro](https://fonts.google.com/specimen/Anonymous+Pro) font which seamed appropriated for an online game store. We also used icons provided by [Font Awesome](https://fontawesome.com/). All features are logically organized and easily accessible.
 
   ![Logo](screenshots/Screenshot14.png)
-* We used [`w3c-validation`](https://atom.io/packages/w3c-validation) package for Atom text editor for _validating HTML and CSS files_.
+* We used [`w3c-validation`](https://atom.io/packages/w3c-validation) package for Atom text editor for _validating HTML and CSS files_.
 * While _testing our responsive design_, we used both physical mobile devices and Google Chrome developer tools for emulating a variety of screen sizes.
 * All modules of the application were tested manually. These tests included _penetration tests_. We _did not_ use automated unit testing.
 
