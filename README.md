@@ -2,9 +2,9 @@
 
 ### 1. Team
 
-* Sataponn Phutrakul — @nropatas
-* Ekaterina Shmeleva — @shmeleva
-* Felipe Gonzalez Carceller
+* Sataponn Phutrakul — [@nropatas](https://github.com/nropatas)
+* Ekaterina Shmeleva — [@shmeleva](https://github.com/shmeleva)
+* Felipe Gonzalez Carceller — [@speedyjr](https://github.com/speedyjr)
 
 
 ### 2. Goal
